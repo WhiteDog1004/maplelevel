@@ -1,3 +1,4 @@
+import { MuiThemeProvider } from "@/config/MuiThemeProvider";
 import ReactQueryClientProvider from "@/config/ReactQueryClientProvider";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -6,7 +7,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-	title: "메렙지지",
+	title: "레벨지지",
 	description: "maple-level",
 };
 
@@ -16,8 +17,14 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en">
+		<html lang="ko">
 			<head>
+				<link rel="preconnect" href="https://fonts.googleapis.com" />
+				<link rel="preconnect" href="https://fonts.gstatic.com" />
+				<link
+					href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap"
+					rel="stylesheet"
+				/>
 				<link
 					rel="stylesheet"
 					href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
@@ -27,7 +34,11 @@ export default function RootLayout({
 				/>
 			</head>
 			<body className={inter.className}>
-				<ReactQueryClientProvider>{children}</ReactQueryClientProvider>
+				<MuiThemeProvider>
+					<ReactQueryClientProvider>
+						{children}
+					</ReactQueryClientProvider>
+				</MuiThemeProvider>
 			</body>
 		</html>
 	);

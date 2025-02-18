@@ -1,8 +1,4 @@
-import withMT from "@material-tailwind/react/utils/withMT";
-import typography from "@tailwindcss/typography";
-import type { Config } from "tailwindcss";
-
-const config = withMT({
+const config = {
 	content: [
 		"./src/**/*.{js,ts,jsx,tsx,mdx}",
 		"./pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -13,7 +9,7 @@ const config = withMT({
 	theme: {
 		extend: {},
 	},
-	plugins: [typography],
-}) as Config;
+	plugins: [],
+};
 
 export default config;
