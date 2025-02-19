@@ -1,13 +1,17 @@
 import { MuiThemeProvider } from "@/config/MuiThemeProvider";
 import ReactQueryClientProvider from "@/config/ReactQueryClientProvider";
+import { SITE_TITLE } from "@/utils/string";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { IBM_Plex_Sans_KR } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const ibmPlexSans = IBM_Plex_Sans_KR({
+	weight: ["300", "400", "700"],
+	display: "swap",
+});
 
 export const metadata: Metadata = {
-	title: "레벨지지",
+	title: SITE_TITLE,
 	description: "maple-level",
 };
 
@@ -19,12 +23,6 @@ export default function RootLayout({
 	return (
 		<html lang="ko">
 			<head>
-				<link rel="preconnect" href="https://fonts.googleapis.com" />
-				<link rel="preconnect" href="https://fonts.gstatic.com" />
-				<link
-					href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap"
-					rel="stylesheet"
-				/>
 				<link
 					rel="stylesheet"
 					href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
@@ -33,10 +31,10 @@ export default function RootLayout({
 					referrerPolicy="no-referrer"
 				/>
 			</head>
-			<body className={inter.className}>
+			<body className={ibmPlexSans.className}>
 				<MuiThemeProvider>
 					<ReactQueryClientProvider>
-						{children}
+						<div className="bg-zinc-700">{children}</div>
 					</ReactQueryClientProvider>
 				</MuiThemeProvider>
 			</body>

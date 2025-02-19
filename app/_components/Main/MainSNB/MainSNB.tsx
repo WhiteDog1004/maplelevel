@@ -1,3 +1,4 @@
+import { SITE_TITLE } from "@/utils/string";
 import { Typography } from "@mui/material";
 import Link from "next/link";
 import { lists } from "./MainSNB.const";
@@ -5,8 +6,8 @@ import { lists } from "./MainSNB.const";
 export const MainSNB = () => {
 	return (
 		<div className="absolute right-full">
-			<div className="p-8 flex flex-col justify-end border w-max rounded-lg mr-2 gap-6">
-				<Typography variant="h4">레벨지지</Typography>
+			<div className="px-8 py-6 flex flex-col justify-end bg-zinc-800 w-max rounded-lg mr-2 gap-6">
+				<Typography variant="h4">{SITE_TITLE}</Typography>
 				<div className="flex flex-col gap-4 items-end">
 					{lists.map((list) => (
 						<Link

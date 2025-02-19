@@ -27,12 +27,12 @@ export const UserInfomation = () => {
 	});
 	const [selectValue, setSelectValue] = useState("");
 
-	const onSubmit = (value) => {
+	const onSubmit = (value: unknown) => {
 		console.log(value);
 	};
 
 	return (
-		<div className="border px-20 py-12 rounded-lg flex flex-col items-center gap-8">
+		<div className="px-20 py-12 rounded-lg flex flex-col items-center gap-8 bg-zinc-800">
 			<Typography variant="h6">캐릭터 정보 입력</Typography>
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<FormControl className="flex flex-col gap-4">
@@ -58,7 +58,6 @@ export const UserInfomation = () => {
 					</FormControl>
 					<TextField
 						label="레벨"
-						variant="outlined"
 						{...register("level")}
 						error={!!errors.level?.message}
 						placeholder="레벨을 입력해 주세요"
