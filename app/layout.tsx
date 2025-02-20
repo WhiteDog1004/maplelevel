@@ -1,8 +1,10 @@
+import { DarkMode } from "@/config/DarkMode";
 import { MuiThemeProvider } from "@/config/MuiThemeProvider";
 import ReactQueryClientProvider from "@/config/ReactQueryClientProvider";
 import { SITE_TITLE } from "@/utils/string";
 import type { Metadata } from "next";
 import { IBM_Plex_Sans_KR } from "next/font/google";
+import { ToggleDarkMode } from "./_components/Main/ToggleDarkMode";
 import "./globals.css";
 
 const ibmPlexSans = IBM_Plex_Sans_KR({
@@ -32,11 +34,18 @@ export default function RootLayout({
 				/>
 			</head>
 			<body className={ibmPlexSans.className}>
-				<MuiThemeProvider>
-					<ReactQueryClientProvider>
-						<div className="bg-zinc-700">{children}</div>
-					</ReactQueryClientProvider>
-				</MuiThemeProvider>
+				<DarkMode>
+					<MuiThemeProvider>
+						<ReactQueryClientProvider>
+							<div className="dark:bg-zinc-700 bg-white dark:text-white">
+								{children}
+								<div className="fixed right-3 bottom-3">
+									<ToggleDarkMode />
+								</div>
+							</div>
+						</ReactQueryClientProvider>
+					</MuiThemeProvider>
+				</DarkMode>
 			</body>
 		</html>
 	);

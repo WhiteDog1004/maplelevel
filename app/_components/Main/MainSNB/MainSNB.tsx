@@ -5,10 +5,12 @@ import { lists } from "./MainSNB.const";
 
 export const MainSNB = () => {
 	return (
-		<div className="absolute right-full">
-			<div className="px-8 py-6 flex flex-col justify-end bg-zinc-800 w-max rounded-lg mr-2 gap-6">
-				<Typography variant="h4">{SITE_TITLE}</Typography>
-				<div className="flex flex-col gap-4 items-end">
+		<div className="relative md:absolute md:right-full">
+			<div className="px-8 py-6 flex flex-col md:items-end md:justify-end dark:bg-zinc-800 w-full md:w-max rounded-lg mr-2 gap-6">
+				<Typography className="text-center" variant="h4">
+					{SITE_TITLE}
+				</Typography>
+				<div className="flex flex-col gap-4 w-full md:items-end">
 					{lists.map((list) => (
 						<Link
 							key={list.href}
@@ -16,7 +18,10 @@ export const MainSNB = () => {
 							className="hover:text-blue-400 transition"
 						>
 							<div className="flex flex-row">
-								<Typography variant="body1">
+								<Typography
+									className="w-full text-center md:text-right"
+									variant="body1"
+								>
 									{list.label}
 								</Typography>
 							</div>

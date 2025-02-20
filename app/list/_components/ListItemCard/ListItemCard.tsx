@@ -50,7 +50,7 @@ export const ListItemCard = ({ data }: ListItemCardProps) => {
 				</div>
 			}
 		>
-			<div className="flex flex-col px-8 py-6 gap-4 rounded-lg relative bg-zinc-800 hover:-translate-y-2 transition-transform cursor-pointer">
+			<div className="flex flex-col px-8 py-6 gap-4 rounded-lg relative dark:bg-zinc-800 hover:-translate-y-2 transition-transform cursor-pointer">
 				<div className="flex gap-4 items-center justify-between">
 					<div className="w-28 h-28 relative overflow-hidden object-cover">
 						{minimap && (

@@ -32,7 +32,7 @@ export const UserInfomation = () => {
 	};
 
 	return (
-		<div className="px-20 py-12 rounded-lg flex flex-col items-center gap-8 bg-zinc-800">
+		<div className="px-14 py-12 rounded-lg flex flex-col items-center gap-8 dark:bg-zinc-800 bg-white">
 			<Typography variant="h6">캐릭터 정보 입력</Typography>
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<FormControl className="flex flex-col gap-4">
