@@ -1,5 +1,6 @@
 import { JOBS } from "@/utils/jobs";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { Add } from "@mui/icons-material";
 import {
 	Button,
 	FormControl,
@@ -32,7 +33,7 @@ export const UserInfomation = () => {
 	};
 
 	return (
-		<div className="px-14 py-12 rounded-lg flex flex-col items-center gap-8 dark:bg-zinc-800 bg-white">
+		<div className="px-14 py-12 rounded-lg flex flex-col items-center gap-8 dark:bg-zinc-800 bg-zinc-100 border-zinc-200 border-2 dark:border-0">
 			<Typography variant="h6">캐릭터 정보 입력</Typography>
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<FormControl className="flex flex-col gap-4">
@@ -63,15 +64,20 @@ export const UserInfomation = () => {
 						placeholder="레벨을 입력해 주세요"
 						helperText={errors.level?.message}
 					/>
+					<div className="w-full text-center">
+						<Add />
+					</div>
 					<div className="flex flex-col gap-2">
-						<Typography variant="body2">
-							원하는 사냥 방식 선택
+						<Typography variant="body2" color="primary">
+							사냥 스타일
 						</Typography>
 						<Controller
 							name="type"
 							control={control}
+							rules={{ required: "타입을 선택해주세요." }}
 							render={({ field }) => (
 								<ToggleButtonGroup
+									className="bg-white dark:bg-transparent"
 									fullWidth
 									exclusive
 									aria-label="type"
@@ -93,6 +99,11 @@ export const UserInfomation = () => {
 								</ToggleButtonGroup>
 							)}
 						/>
+						{errors.type && (
+							<Typography variant="caption" color="error">
+								최소 하나는 선택해야 합니다.
+							</Typography>
+						)}
 					</div>
 					<Button color="inherit" variant="outlined" type="submit">
 						검색

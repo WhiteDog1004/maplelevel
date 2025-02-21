@@ -6,6 +6,9 @@ export const MuiThemeProvider = ({ children }: React.PropsWithChildren) => {
 	const { darkMode } = useDarkModeStore();
 
 	const theme = createTheme({
+		typography: {
+			fontFamily: "IBM Plex Sans KR, sans-serif", // ✅ 기본 폰트 변경
+		},
 		palette: {
 			mode: darkMode ? "dark" : "light",
 		},
