@@ -13,9 +13,9 @@ interface ListItemCardProps {
 }
 
 export const ListItemCard = ({ data }: ListItemCardProps) => {
-	// const highestMap = data.map.reduce((max, current) => {
-	// 	return current.level.min > max.level.min ? current : max;
-	// });
+	const highestMap = data.map.reduce((max, current) => {
+		return current.level.min > max.level.min ? current : max;
+	});
 
 	const lowestMap = data.map.reduce((min, current) => {
 		return current.level.min < min.level.min ? current : min;
@@ -65,7 +65,7 @@ export const ListItemCard = ({ data }: ListItemCardProps) => {
 						)}
 					</div>
 					<div className="flex flex-col text-end gap-4 min-w-24">
-						<div className="flex flex-col">
+						<div className="flex flex-col gap-1">
 							<div className="flex gap-1 items-center justify-end">
 								<Image
 									width={20}
@@ -117,15 +117,25 @@ export const ListItemCard = ({ data }: ListItemCardProps) => {
 					</div>
 				</div>
 				<div className="flex flex-col items-center gap-2">
-					<div className="flex flex-col">
+					<div className="flex flex-row items-center gap-1">
 						<Typography variant="body2">
 							{
 								getTextByCode(
 									Number(lowestMap.map)
 								)?.kor?.split(":")[1]
-							}{" "}
-							~
-							{/* {getTextByCode(Number(highestMap.map))?.kor} */}
+							}
+						</Typography>
+						~
+						<Typography
+							variant="caption"
+							sx={{ lineHeight: 1 }}
+							color="textDisabled"
+						>
+							{
+								getTextByCode(
+									Number(highestMap.map)
+								)?.kor?.split(":")[1]
+							}
 						</Typography>
 					</div>
 				</div>
