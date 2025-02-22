@@ -12,7 +12,7 @@ const List = async () => {
 	const lists = await GetLists();
 
 	return (
-		<div className="w-full h-screen flex flex-ro">
+		<div className="w-full h-screen flex flex-row">
 			<ListClientPage lists={lists || []} />
 		</div>
 	);
