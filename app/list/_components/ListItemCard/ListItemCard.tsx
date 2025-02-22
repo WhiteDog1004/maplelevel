@@ -70,6 +70,7 @@ export const ListItemCard = ({ data }: ListItemCardProps) => {
 								<Image
 									width={20}
 									height={20}
+									unoptimized
 									src={`/images/class/${getClassImages(
 										getLabelByJobs(data.job)?.id || 0
 									)}.webp`}

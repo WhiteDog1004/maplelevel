@@ -1,4 +1,4 @@
-import { JOBS } from "@/utils/jobs";
+import { getClassImages, JOBS } from "@/utils/jobs";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Add } from "@mui/icons-material";
 import {
@@ -13,6 +13,7 @@ import {
 	ToggleButtonGroup,
 	Typography,
 } from "@mui/material";
+import Image from "next/image";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { infoSchema } from "./UserInformation.const";
@@ -47,7 +48,18 @@ export const UserInfomation = () => {
 						>
 							{JOBS.map((job) => (
 								<MenuItem key={job.id} value={job.name}>
-									{job.label}
+									<div className="flex items-center gap-2">
+										<Image
+											width={20}
+											height={20}
+											unoptimized
+											src={`/images/class/${getClassImages(
+												job.id
+											)}.webp`}
+											alt={"class"}
+										/>
+										{job.label}
+									</div>
 								</MenuItem>
 							))}
 						</Select>
