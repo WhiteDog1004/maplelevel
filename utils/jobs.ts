@@ -4,6 +4,22 @@ export const getLabelByJobs = (type: string) => {
 	return result;
 };
 
+export const getClassImages = (classId: number) => {
+	if (classId < 200) {
+		return "warrior";
+	}
+	if (classId < 300) {
+		return "magician";
+	}
+	if (classId < 400) {
+		return "bowman";
+	}
+	if (classId < 500) {
+		return "thief";
+	}
+	return "pirate";
+};
+
 export const JOBS = [
 	{
 		id: 110,

@@ -1,7 +1,8 @@
 import { Database } from "@/types_db";
-import { getLabelByJobs } from "@/utils/jobs";
+import { getClassImages, getLabelByJobs } from "@/utils/jobs";
 import { getTextByCode } from "@/utils/mapCode";
 import { EXCHANGE_TYPE, ExchangeTypes } from "@/utils/recommendType";
+import { ThumbUp } from "@mui/icons-material";
 import { Avatar, Badge, Chip, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
@@ -40,17 +41,15 @@ export const ListItemCard = ({ data }: ListItemCardProps) => {
 			color={data.like > 5 ? "info" : "warning"}
 			className="w-max"
 			badgeContent={
-				<div className="flex justify-center items-center gap-1 px-1">
-					<Typography variant="caption" color="textPrimary">
-						<i className="fas fa-thumbs-up" />
-					</Typography>
-					<Typography variant="body2" color="textPrimary">
+				<div className="flex justify-center items-center gap-1">
+					<ThumbUp className="text-white size-5" fontSize="inherit" />
+					<Typography variant="body2" className="text-white">
 						{data.like || "0"}
 					</Typography>
 				</div>
 			}
 		>
-			<div className="flex flex-col px-8 py-6 gap-4 rounded-lg relative dark:bg-zinc-800 hover:-translate-y-2 transition-transform cursor-pointer">
+			<div className="flex flex-col px-8 py-6 gap-4 rounded-lg relative border-2 dark:border-0 bg-zinc-100 dark:bg-zinc-800 hover:-translate-y-2 transition-transform cursor-pointer">
 				<div className="flex gap-4 items-center justify-between">
 					<div className="w-28 h-28 relative overflow-hidden object-cover">
 						{minimap && (
@@ -67,19 +66,43 @@ export const ListItemCard = ({ data }: ListItemCardProps) => {
 					</div>
 					<div className="flex flex-col text-end gap-4 min-w-24">
 						<div className="flex flex-col">
-							<Typography variant="body2">
-								{getLabelByJobs(data.job)?.label}
-							</Typography>
-							<Typography variant="body2">
-								레벨 :{" "}
-								{Math.min(
-									...data.map.map((item) => item.level.min)
-								)}{" "}
+							<div className="flex gap-1 items-center justify-end">
+								<Image
+									width={20}
+									height={20}
+									src={`/images/class/${getClassImages(
+										getLabelByJobs(data.job)?.id || 0
+									)}.webp`}
+									alt="class"
+								/>
+								<Typography variant="body2">
+									{getLabelByJobs(data.job)?.label}
+								</Typography>
+							</div>
+							<div className="flex gap-1 items-center justify-end">
+								<Typography variant="body2">
+									레벨 :{" "}
+									{Math.min(
+										...data.map.map(
+											(item) => item.level.min
+										)
+									)}
+								</Typography>
 								~
-								{/* {Math.max(
-									...data.map.map((item) => item.level.max)
-								)} */}
-							</Typography>
+								<Typography
+									sx={{
+										lineHeight: 1,
+									}}
+									variant="caption"
+									color="textDisabled"
+								>
+									{Math.max(
+										...data.map.map(
+											(item) => item.level.max
+										)
+									)}
+								</Typography>
+							</div>
 						</div>
 						<span
 							className={`${
@@ -106,16 +129,18 @@ export const ListItemCard = ({ data }: ListItemCardProps) => {
 					</div>
 				</div>
 				<div className="flex justify-center items-center gap-2">
+					<Typography
+						className="dark:text-zinc-500 text-zinc-400"
+						variant="caption"
+					>
+						작성자 :
+					</Typography>
 					<Chip
 						color="primary"
 						avatar={
 							<Avatar alt="avatar" src="/images/mushroom.png" />
 						}
-						label={
-							<Typography variant="caption">
-								{data.nickname || "익명의 모험가"}
-							</Typography>
-						}
+						label={data.nickname || "익명의 모험가"}
 						variant="outlined"
 					/>
 				</div>
