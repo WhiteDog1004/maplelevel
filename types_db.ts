@@ -6,62 +6,56 @@ export type Json =
 	| { [key: string]: Json | undefined }
 	| Json[];
 
+export type MapDataType = {
+	level: {
+		min: number;
+		max: number;
+	};
+	map: string;
+	caption: string;
+	partyType?: "all" | "exp" | "meso";
+};
+
+export type UserType = {
+	nickname?: string;
+	uuid: string;
+};
+
 export type Database = {
 	public: {
 		Tables: {
 			"recommend-list": {
 				Row: {
 					created_at: string;
+					hunt_type: string | null;
 					id: number;
 					job: string;
 					like: number;
-					map: {
-						level: {
-							min: number;
-							max: number;
-						};
-						map: string;
-						caption: string;
-					}[];
-					nickname: string | null;
-					type: string | null;
+					map_data: MapDataType[];
 					updated_at: string;
+					user: UserType;
 					uuid: string;
 				};
 				Insert: {
 					created_at?: string;
+					hunt_type?: string | null;
 					id?: number;
 					job: string;
-					like: number;
-					map?: {
-						level: {
-							min: number;
-							max: number;
-						};
-						map: string;
-						caption: string;
-					}[];
-					nickname?: string | null;
-					type?: string | null;
+					like?: number;
+					map_data: MapDataType[];
 					updated_at?: string;
+					user: UserType;
 					uuid?: string;
 				};
 				Update: {
 					created_at?: string;
+					hunt_type?: string | null;
 					id?: number;
 					job?: string;
 					like?: number;
-					map?: {
-						level: {
-							min: number;
-							max: number;
-						};
-						map: string;
-						caption: string;
-					}[];
-					nickname?: string | null;
-					type?: string | null;
+					map_data?: MapDataType[];
 					updated_at?: string;
+					user?: UserType;
 					uuid?: string;
 				};
 				Relationships: [];

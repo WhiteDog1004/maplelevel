@@ -13,11 +13,11 @@ interface ListItemCardProps {
 }
 
 export const ListItemCard = ({ data }: ListItemCardProps) => {
-	const highestMap = data.map.reduce((max, current) => {
+	const highestMap = data.map_data.reduce((max, current) => {
 		return current.level.min > max.level.min ? current : max;
 	});
 
-	const lowestMap = data.map.reduce((min, current) => {
+	const lowestMap = data.map_data.reduce((min, current) => {
 		return current.level.min < min.level.min ? current : min;
 	});
 
@@ -84,7 +84,7 @@ export const ListItemCard = ({ data }: ListItemCardProps) => {
 								<Typography variant="body2">
 									레벨 :{" "}
 									{Math.min(
-										...data.map.map(
+										...data.map_data?.map(
 											(item) => item.level.min
 										)
 									)}
@@ -98,7 +98,7 @@ export const ListItemCard = ({ data }: ListItemCardProps) => {
 									color="textDisabled"
 								>
 									{Math.max(
-										...data.map.map(
+										...data.map_data?.map(
 											(item) => item.level.max
 										)
 									)}
@@ -107,11 +107,11 @@ export const ListItemCard = ({ data }: ListItemCardProps) => {
 						</div>
 						<span
 							className={`${
-								getBadgeType[data.type as ExchangeTypes]
+								getBadgeType[data.hunt_type as ExchangeTypes]
 							} justify-center`}
 						>
 							<Typography variant="body2">
-								{EXCHANGE_TYPE[data.type as ExchangeTypes]}
+								{EXCHANGE_TYPE[data.hunt_type as ExchangeTypes]}
 							</Typography>
 						</span>
 					</div>
@@ -151,7 +151,7 @@ export const ListItemCard = ({ data }: ListItemCardProps) => {
 						avatar={
 							<Avatar alt="avatar" src="/images/mushroom.png" />
 						}
-						label={data.nickname || "익명의 모험가"}
+						label={data.user.nickname || "익명의 모험가"}
 						variant="outlined"
 					/>
 				</div>
