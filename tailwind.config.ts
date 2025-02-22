@@ -7,7 +7,9 @@ const config = {
 		"./node_modules/@material-tailwind/react/**/*.{js,ts,jsx,tsx}",
 	],
 	theme: {
-		extend: {},
+		fontFamily: {
+			pretendard: ["var(--font-pretendard)"],
+		},
 	},
 	plugins: [],
 	darkMode: "class",

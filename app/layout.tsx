@@ -3,13 +3,14 @@ import { MuiThemeProvider } from "@/config/MuiThemeProvider";
 import ReactQueryClientProvider from "@/config/ReactQueryClientProvider";
 import { SITE_TITLE } from "@/utils/string";
 import type { Metadata } from "next";
-import { IBM_Plex_Sans_KR } from "next/font/google";
+import localFont from "next/font/local";
 import { ToggleDarkMode } from "./_components/Main/ToggleDarkMode";
 import "./globals.css";
 
-const ibmPlexSans = IBM_Plex_Sans_KR({
-	weight: ["300", "400", "700"],
+const pretendard = localFont({
+	src: "../fonts/PretendardVariable.woff2",
 	display: "swap",
+	variable: "--font-pretendard",
 });
 
 export const metadata: Metadata = {
@@ -33,7 +34,7 @@ export default function RootLayout({
 					referrerPolicy="no-referrer"
 				/>
 			</head>
-			<body className={ibmPlexSans.className}>
+			<body className={pretendard.className}>
 				<DarkMode>
 					<MuiThemeProvider>
 						<ReactQueryClientProvider>
