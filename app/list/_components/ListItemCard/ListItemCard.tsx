@@ -84,7 +84,7 @@ export const ListItemCard = ({ data }: ListItemCardProps) => {
 								<Typography variant="body2">
 									레벨 :{" "}
 									{Math.min(
-										...data.map_data?.map(
+										...data.map_data.map(
 											(item) => item.level.min
 										)
 									)}
@@ -98,7 +98,7 @@ export const ListItemCard = ({ data }: ListItemCardProps) => {
 									color="textDisabled"
 								>
 									{Math.max(
-										...data.map_data?.map(
+										...data.map_data.map(
 											(item) => item.level.max
 										)
 									)}

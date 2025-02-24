@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 const LevelAdd = async () => {
 	return (
-		<div className="w-full h-screen flex flex-row">
+		<div className="w-full h-screen flex flex-row justify-center items-start">
 			<AddClientPage />
 		</div>
 	);

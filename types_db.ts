@@ -12,6 +12,7 @@ export type MapDataType = {
 		max: number;
 	};
 	map: string;
+	dropItem?: number[];
 	caption: string;
 	partyType?: "all" | "exp" | "meso";
 };
