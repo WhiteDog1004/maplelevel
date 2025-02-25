@@ -2676,11 +2676,6 @@ export const MAP_CODE = [
 		eng: "Herb Town: Red-Nose Pirate Den 3",
 	},
 	{
-		code: 251010404,
-		kor: "히든스트리트: 무릉도원 파티 퀘스트",
-		eng: "Herb Town: Over the Pirate Ship",
-	},
-	{
 		code: 251010500,
 		kor: "무릉도원: 외딴 습지",
 		eng: "Herb Town: Isolated Swamp",

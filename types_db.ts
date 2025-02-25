@@ -27,6 +27,7 @@ export type Database = {
 		Tables: {
 			"recommend-list": {
 				Row: {
+					title: string;
 					created_at: string;
 					hunt_type: string | null;
 					id: number;
@@ -38,6 +39,7 @@ export type Database = {
 					uuid: string;
 				};
 				Insert: {
+					title: string;
 					created_at?: string;
 					hunt_type?: string | null;
 					id?: number;
@@ -49,6 +51,7 @@ export type Database = {
 					uuid?: string;
 				};
 				Update: {
+					title?: string;
 					created_at?: string;
 					hunt_type?: string | null;
 					id?: number;

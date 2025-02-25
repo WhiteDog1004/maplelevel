@@ -1,7 +1,9 @@
+import { RecommendMapProps } from "@/types/add";
 import { MAP_CODE } from "@/utils/mapCode";
-import { AddCircle } from "@mui/icons-material";
+import { AddCircle, Edit } from "@mui/icons-material";
 import {
 	Autocomplete,
+	Button,
 	Modal,
 	Stack,
 	TextField,
@@ -11,7 +13,15 @@ import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { SyntheticEvent, useEffect, useState } from "react";
 
-export const SelectMap = () => {
+interface SelectMapProps {
+	recommendMap: RecommendMapProps["recommendMap"];
+	setRecommendMap: RecommendMapProps["setRecommendMap"];
+}
+
+export const SelectMap = ({
+	recommendMap,
+	setRecommendMap,
+}: SelectMapProps) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [selectMap, setSelectMap] = useState("");
 	const [search, setSearch] = useState("");
@@ -48,7 +58,6 @@ export const SelectMap = () => {
 		if (search) {
 			const queryArray = search.split("");
 
-			// 자동완성 항목을 필터링하는 로직
 			const filteredSuggestions = MAP_CODE.filter((item) => {
 				const itemLabel =
 					item.kor.split(":")[1]?.trimStart() || item.kor;
@@ -65,16 +74,37 @@ export const SelectMap = () => {
 	return (
 		<>
 			<div
-				className="w-full flex flex-col justify-center items-center gap-2 cursor-pointer dark:bg-zinc-900 bg-zinc-200 hover:bg-zinc-300 dark:hover:bg-zinc-950 rounded-lg px-6 py-4"
+				className="group relative w-full flex flex-col justify-center items-center gap-2 cursor-pointer dark:bg-zinc-900 bg-zinc-200 hover:bg-zinc-300 dark:hover:bg-zinc-950 rounded-lg px-6 py-4"
 				onClick={handleModal}
 			>
-				<AddCircle className="text-zinc-600" />
-				<Typography variant="caption" color="textDisabled">
-					사냥터 목록
-				</Typography>
+				{recommendMap.minimap && (
+					<div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 group-hover:visible invisible p-4 bg-zinc-600 bg-opacity-50 rounded-full z-10">
+						<Edit className="text-white" />
+					</div>
+				)}
+				{recommendMap.minimap ? (
+					<div className="relative w-full max-h-60 min-h-48 flex flex-col gap-4 justify-center items-center">
+						<Image
+							className="object-contain h-60"
+							width={240}
+							height={240}
+							objectFit="contain"
+							unoptimized
+							alt={"select_map"}
+							src={recommendMap.minimap}
+						/>
+					</div>
+				) : (
+					<div className="flex flex-col justify-center items-center gap-2 min-h-48">
+						<AddCircle className="text-zinc-600" />
+						<Typography variant="caption" color="textDisabled">
+							사냥터 목록
+						</Typography>
+					</div>
+				)}
 			</div>
 			<Modal open={isOpen} onClose={handleModal}>
-				<div className="bg-zinc-600 rounded-lg p-10 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+				<div className="flex flex-col gap-4 bg-zinc-100 dark:bg-zinc-600 rounded-lg p-10 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
 					<Stack width={240}>
 						<Autocomplete
 							freeSolo
@@ -96,6 +126,7 @@ export const SelectMap = () => {
 									}}
 								/>
 							)}
+							defaultValue={recommendMap.label ?? ""}
 							onChange={(e, value) => {
 								setSelectMap(
 									value?.split(":")[1]?.trimStart() || ""
@@ -108,17 +139,47 @@ export const SelectMap = () => {
 							options={suggestions}
 						/>
 					</Stack>
-					{minimap && (
-						<div className="w-full h-40 relative flex justify-center">
-							<Image
-								fill
-								objectFit="contain"
-								unoptimized
-								alt={"select_map"}
-								src={minimap.url}
-							/>
+					<div>
+						<div className="w-full h-40 relative flex flex-col gap-4 justify-center items-center mb-4">
+							{minimap ? (
+								<Image
+									fill
+									objectFit="contain"
+									unoptimized
+									alt={"select_map"}
+									src={minimap.url}
+								/>
+							) : (
+								<div>
+									<Typography
+										variant="caption"
+										color="textDisabled"
+									>
+										맵을 선택해 주세요
+									</Typography>
+								</div>
+							)}
 						</div>
-					)}
+						<Button
+							fullWidth
+							variant="outlined"
+							color="success"
+							disabled={!minimap}
+							onClick={() => {
+								if (!minimap) return;
+								setRecommendMap({
+									minimap: minimap.url,
+									code: MAP_CODE.filter((map) =>
+										map.kor.includes(selectMap)
+									)[0].code,
+									label: selectMap,
+								});
+								handleModal();
+							}}
+						>
+							선택
+						</Button>
+					</div>
 				</div>
 			</Modal>
 		</>

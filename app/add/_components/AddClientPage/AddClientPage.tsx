@@ -13,8 +13,8 @@ export const AddClientPage = () => {
 				</Typography>
 				<Typography variant="h3">사냥터 추천</Typography>
 			</div>
-			<EmptyCard />
 			<SelectCard />
+			<EmptyCard />
 		</div>
 	);
 };
