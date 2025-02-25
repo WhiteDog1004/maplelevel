@@ -3,6 +3,7 @@
 import { Typography } from "@mui/material";
 import { EmptyCard } from "../EmptyCard";
 import { SelectCard } from "../SelectCard";
+import { TitleInformation } from "../TitleInformation";
 
 export const AddClientPage = () => {
 	return (
@@ -13,6 +14,7 @@ export const AddClientPage = () => {
 				</Typography>
 				<Typography variant="h3">사냥터 추천</Typography>
 			</div>
+			<TitleInformation />
 			<SelectCard />
 			<EmptyCard />
 		</div>

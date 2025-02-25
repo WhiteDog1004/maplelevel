@@ -76,8 +76,9 @@ export const SelectInformation = ({ recommendMap }: SelectInformationProps) => {
 				</div>
 
 				<div className="flex flex-row items-start gap-2">
-					<div className="h-max">
+					<div className="flex-1 h-max">
 						<TextField
+							fullWidth
 							label="최소레벨"
 							{...register("minLevel")}
 							error={!!errors.minLevel?.message}
@@ -85,8 +86,9 @@ export const SelectInformation = ({ recommendMap }: SelectInformationProps) => {
 							helperText={errors.minLevel?.message}
 						/>
 					</div>
-					<div className="h-max">
+					<div className="flex-1 h-max">
 						<TextField
+							fullWidth
 							label="최대레벨"
 							{...register("maxLevel")}
 							error={!!errors.maxLevel?.message}

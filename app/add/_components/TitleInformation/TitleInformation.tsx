@@ -1,8 +1,6 @@
 import { getClassImages, JOBS } from "@/utils/jobs";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Add } from "@mui/icons-material";
 import {
-	Button,
 	FormControl,
 	FormHelperText,
 	InputLabel,
@@ -16,35 +14,42 @@ import {
 import Image from "next/image";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { infoSchema } from "./UserInformation.const";
+import { titleInfoSchema } from "./TitleInformation.const";
 
-export const UserInfomation = () => {
+export const TitleInformation = () => {
+	const [selectJob, setSelectJob] = useState("");
 	const {
 		control,
 		register,
 		handleSubmit,
 		formState: { errors },
 	} = useForm({
-		resolver: yupResolver(infoSchema),
+		resolver: yupResolver(titleInfoSchema),
+		mode: "onChange",
 	});
-	const [selectValue, setSelectValue] = useState("");
-
-	const onSubmit = (value: unknown) => {
-		console.log(value);
-	};
 
 	return (
-		<div className="px-8 py-12 w-full rounded-lg flex flex-col items-center gap-8 dark:bg-zinc-800 bg-zinc-100 border-zinc-200 border-2 dark:border-0">
-			<Typography variant="h6">캐릭터 정보 입력</Typography>
-			<form className="w-full" onSubmit={handleSubmit(onSubmit)}>
-				<FormControl className="flex flex-col w-full gap-4">
-					<FormControl error={!!errors.job?.message}>
+		<div className="flex flex-col gap-4 w-full justify-between p-4 bg-zinc-100 dark:bg-zinc-800 rounded-lg">
+			<div className="flex flex-col w-full gap-4">
+				<div className="flex gap-4">
+					<TextField
+						label="제목"
+						className="flex-1"
+						{...register("title")}
+					/>
+				</div>
+				<div className="flex flex-col sm:flex-row items-center gap-4">
+					<FormControl
+						fullWidth
+						className="flex-1"
+						error={!!errors.job?.message}
+					>
 						<InputLabel>직업</InputLabel>
 						<Select
 							label="직업"
-							value={selectValue}
+							value={selectJob}
 							{...register("job")}
-							onChange={(e) => setSelectValue(e.target.value)}
+							onChange={(e) => setSelectJob(e.target.value)}
 						>
 							{JOBS.map((job) => (
 								<MenuItem key={job.id} value={job.name}>
@@ -69,26 +74,14 @@ export const UserInfomation = () => {
 							</FormHelperText>
 						)}
 					</FormControl>
-					<TextField
-						label="레벨"
-						{...register("level")}
-						error={!!errors.level?.message}
-						placeholder="레벨을 입력해 주세요"
-						helperText={errors.level?.message}
-					/>
-					<div className="w-full text-center">
-						<Add />
-					</div>
-					<div className="flex flex-col gap-2">
-						<Typography variant="body2" color="primary">
-							사냥 스타일
-						</Typography>
+					<div className="flex w-full flex-1 gap-2">
 						<Controller
 							name="type"
 							control={control}
 							rules={{ required: "타입을 선택해주세요." }}
 							render={({ field }) => (
 								<ToggleButtonGroup
+									sx={{ height: 56 }}
 									className="bg-white dark:bg-transparent"
 									fullWidth
 									exclusive
@@ -117,11 +110,8 @@ export const UserInfomation = () => {
 							</Typography>
 						)}
 					</div>
-					<Button color="inherit" variant="outlined" type="submit">
-						검색
-					</Button>
-				</FormControl>
-			</form>
+				</div>
+			</div>
 		</div>
 	);
 };
