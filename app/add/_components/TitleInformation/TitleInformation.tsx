@@ -1,117 +1,102 @@
-import { getClassImages, JOBS } from "@/utils/jobs";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { useWriteStore } from '@/store/useWriteValueStore';
+import { getClassImages, JOBS } from '@/utils/jobs';
+import { yupResolver } from '@hookform/resolvers/yup';
 import {
-	FormControl,
-	FormHelperText,
-	InputLabel,
-	MenuItem,
-	Select,
-	TextField,
-	ToggleButton,
-	ToggleButtonGroup,
-	Typography,
-} from "@mui/material";
-import Image from "next/image";
-import { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
-import { titleInfoSchema } from "./TitleInformation.const";
+  FormControl,
+  FormHelperText,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+  ToggleButton,
+  ToggleButtonGroup,
+  Typography,
+} from '@mui/material';
+import Image from 'next/image';
+import { Controller, useForm } from 'react-hook-form';
+import { titleInfoSchema } from './TitleInformation.const';
 
 export const TitleInformation = () => {
-	const [selectJob, setSelectJob] = useState("");
-	const {
-		control,
-		register,
-		handleSubmit,
-		formState: { errors },
-	} = useForm({
-		resolver: yupResolver(titleInfoSchema),
-		mode: "onChange",
-	});
+  const { writeValues, setWriteValues } = useWriteStore();
+  const {
+    control,
+    register,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(titleInfoSchema),
+    mode: 'onChange',
+  });
 
-	return (
-		<div className="flex flex-col gap-4 w-full justify-between p-4 bg-zinc-100 dark:bg-zinc-800 rounded-lg">
-			<div className="flex flex-col w-full gap-4">
-				<div className="flex gap-4">
-					<TextField
-						label="제목"
-						className="flex-1"
-						{...register("title")}
-					/>
-				</div>
-				<div className="flex flex-col sm:flex-row items-center gap-4">
-					<FormControl
-						fullWidth
-						className="flex-1"
-						error={!!errors.job?.message}
-					>
-						<InputLabel>직업</InputLabel>
-						<Select
-							label="직업"
-							value={selectJob}
-							{...register("job")}
-							onChange={(e) => setSelectJob(e.target.value)}
-						>
-							{JOBS.map((job) => (
-								<MenuItem key={job.id} value={job.name}>
-									<div className="flex items-center gap-2">
-										<Image
-											width={20}
-											height={20}
-											unoptimized
-											src={`/images/class/${getClassImages(
-												job.id
-											)}.webp`}
-											alt={"class"}
-										/>
-										{job.label}
-									</div>
-								</MenuItem>
-							))}
-						</Select>
-						{errors.job?.message && (
-							<FormHelperText>
-								{errors.job.message}
-							</FormHelperText>
-						)}
-					</FormControl>
-					<div className="flex w-full flex-1 gap-2">
-						<Controller
-							name="type"
-							control={control}
-							rules={{ required: "타입을 선택해주세요." }}
-							render={({ field }) => (
-								<ToggleButtonGroup
-									sx={{ height: 56 }}
-									className="bg-white dark:bg-transparent"
-									fullWidth
-									exclusive
-									aria-label="type"
-									value={field.value}
-									onChange={(_, value) => {
-										if (!value) return;
-										field.onChange(value);
-									}}
-								>
-									<ToggleButton value="all">
-										둘다
-									</ToggleButton>
-									<ToggleButton value="exp">
-										경험치
-									</ToggleButton>
-									<ToggleButton value="meso">
-										메소벌이
-									</ToggleButton>
-								</ToggleButtonGroup>
-							)}
-						/>
-						{errors.type && (
-							<Typography variant="caption" color="error">
-								최소 하나는 선택해야 합니다.
-							</Typography>
-						)}
-					</div>
-				</div>
-			</div>
-		</div>
-	);
+  return (
+    <div className='flex flex-col gap-4 w-full justify-between p-4 bg-zinc-100 dark:bg-zinc-800 rounded-lg'>
+      <div className='flex flex-col w-full gap-4'>
+        <div className='flex gap-4'>
+          <TextField
+            label='제목'
+            className='flex-1'
+            {...register('title', {
+              onBlur: (e) => setWriteValues({ ...writeValues, title: e.currentTarget.value }),
+            })}
+          />
+        </div>
+        <div className='flex flex-col sm:flex-row gap-4'>
+          <FormControl fullWidth className='flex-1' error={!!errors.job?.message}>
+            <InputLabel>직업</InputLabel>
+            <Select
+              label='직업'
+              value={writeValues.job || ''}
+              {...register('job')}
+              onChange={(e) => setWriteValues({ ...writeValues, job: e.target.value })}
+            >
+              {JOBS.map((job) => (
+                <MenuItem key={job.id} value={job.name}>
+                  <div className='flex items-center gap-2'>
+                    <Image
+                      width={20}
+                      height={20}
+                      unoptimized
+                      src={`/images/class/${getClassImages(job.id)}.webp`}
+                      alt={'class'}
+                    />
+                    {job.label}
+                  </div>
+                </MenuItem>
+              ))}
+            </Select>
+            {errors.job?.message && <FormHelperText>{errors.job.message}</FormHelperText>}
+          </FormControl>
+          <div className='flex w-full flex-1 gap-2'>
+            <Controller
+              name='type'
+              control={control}
+              rules={{ required: '타입을 선택해주세요.' }}
+              render={() => (
+                <ToggleButtonGroup
+                  sx={{ height: 56 }}
+                  className='bg-white dark:bg-transparent'
+                  fullWidth
+                  exclusive
+                  aria-label='type'
+                  value={writeValues.huntType}
+                  onChange={(_, value) => {
+                    if (!value) return;
+                    setWriteValues({ ...writeValues, huntType: value });
+                  }}
+                >
+                  <ToggleButton value='all'>둘다</ToggleButton>
+                  <ToggleButton value='exp'>경험치</ToggleButton>
+                  <ToggleButton value='meso'>메소벌이</ToggleButton>
+                </ToggleButtonGroup>
+              )}
+            />
+            {errors.type && (
+              <Typography variant='caption' color='error'>
+                최소 하나는 선택해야 합니다.
+              </Typography>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
