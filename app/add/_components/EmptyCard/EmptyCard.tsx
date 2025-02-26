@@ -1,6 +1,7 @@
 import { useWriteStore } from '@/store/useWriteValueStore';
 import { AddCircle } from '@mui/icons-material';
 import { Typography } from '@mui/material';
+import { v4 as uuidv4 } from 'uuid';
 
 export const EmptyCard = () => {
   const { writeValues, setWriteValues } = useWriteStore();
@@ -15,6 +16,7 @@ export const EmptyCard = () => {
           options: [
             ...(writeValues.options ?? []),
             {
+              uuid: uuidv4(),
               minLevel: undefined,
               maxLevel: undefined,
               partyType: undefined,

@@ -1,4 +1,5 @@
 import { WriteValueOptions } from '@/types/add';
+import { v4 as uuidv4 } from 'uuid';
 import { create } from 'zustand';
 
 interface WriteStore {
@@ -13,6 +14,7 @@ const initialValues: WriteValueOptions = {
   huntType: undefined,
   options: [
     {
+      uuid: uuidv4(),
       minLevel: undefined,
       maxLevel: undefined,
       partyType: undefined,

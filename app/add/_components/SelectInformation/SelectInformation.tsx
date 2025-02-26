@@ -56,6 +56,7 @@ export const SelectInformation = ({ recommendMap, id }: SelectInformationProps) 
       options: (writeValues.options || []).map((option, index) => {
         if (index === id) {
           return {
+            ...option,
             minLevel: data.minLevel,
             maxLevel: data.maxLevel,
             partyType: data.type as partyTypes,
