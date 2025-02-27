@@ -40,8 +40,11 @@ export const AddClientPage = () => {
       <TitleInformation />
       {writeValues.options?.map((list, index) => (
         <Badge
+          className='group'
           badgeContent={
             <IconButton
+              className='group-hover:visible invisible'
+              color='error'
               onClick={() => {
                 setOpen({ open: true, index });
               }}
