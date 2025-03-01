@@ -25,6 +25,7 @@ export const SelectInformation = ({ recommendMap, id }: SelectInformationProps) 
   const {
     control,
     register,
+    setError,
     handleSubmit,
     formState: { errors },
   } = useForm({
@@ -46,7 +47,7 @@ export const SelectInformation = ({ recommendMap, id }: SelectInformationProps) 
 
   const onSubmit = handleSubmit((data) => {
     if (data.minLevel > data.maxLevel) {
-      return alert('최소레벨이 최대레벨보다 클 수 없습니다.');
+      return setError('minLevel', { message: '최소 레벨이 너무 큽니다' });
     }
 
     return setWriteValues({
@@ -157,7 +158,7 @@ export const SelectInformation = ({ recommendMap, id }: SelectInformationProps) 
         />
       </div>
 
-      <Button variant='outlined' onClick={onSubmit}>
+      <Button variant='outlined' color='success' size='large' onClick={onSubmit}>
         확정
       </Button>
     </div>

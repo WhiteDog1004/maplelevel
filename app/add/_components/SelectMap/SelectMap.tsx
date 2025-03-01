@@ -1,7 +1,17 @@
 import { RecommendMapProps } from '@/types/add';
 import { MAP_CODE } from '@/utils/mapCode';
 import { AddCircle, Edit } from '@mui/icons-material';
-import { Autocomplete, Button, Modal, Stack, TextField, Typography } from '@mui/material';
+import {
+  Autocomplete,
+  Button,
+  Card,
+  CardActionArea,
+  CircularProgress,
+  Modal,
+  Stack,
+  TextField,
+  Typography,
+} from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import { SyntheticEvent, useEffect, useState } from 'react';
@@ -22,7 +32,7 @@ export const SelectMap = ({ recommendMap, setRecommendMap }: SelectMapProps) => 
     return setIsOpen(true);
   };
 
-  const { data: minimap } = useQuery({
+  const { data: minimap, isLoading } = useQuery({
     queryKey: ['minimap', selectMap],
     queryFn: async () => {
       const response = await fetch(
@@ -57,9 +67,9 @@ export const SelectMap = ({ recommendMap, setRecommendMap }: SelectMapProps) => 
   }, [search]);
 
   return (
-    <>
-      <div
-        className='group relative w-full flex flex-col justify-center items-center gap-2 cursor-pointer dark:bg-zinc-900 bg-zinc-200 hover:bg-zinc-300 dark:hover:bg-zinc-950 rounded-lg px-6 py-4'
+    <Card variant='outlined'>
+      <CardActionArea
+        className='group relative w-full flex flex-col justify-center items-center gap-2 px-6 py-4'
         onClick={handleModal}
       >
         {recommendMap.minimap && (
@@ -87,9 +97,12 @@ export const SelectMap = ({ recommendMap, setRecommendMap }: SelectMapProps) => 
             </Typography>
           </div>
         )}
-      </div>
+      </CardActionArea>
       <Modal open={isOpen} onClose={handleModal}>
-        <div className='flex flex-col gap-4 bg-zinc-100 dark:bg-zinc-600 rounded-lg p-10 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'>
+        <Card
+          variant='outlined'
+          className='flex flex-col dark:bg-zinc-800 gap-4 p-10 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'
+        >
           <Stack width={240}>
             <Autocomplete
               freeSolo
@@ -126,9 +139,13 @@ export const SelectMap = ({ recommendMap, setRecommendMap }: SelectMapProps) => 
                 <Image fill objectFit='contain' unoptimized alt={'select_map'} src={minimap.url} />
               ) : (
                 <div>
-                  <Typography variant='caption' color='textDisabled'>
-                    맵을 선택해 주세요
-                  </Typography>
+                  {isLoading ? (
+                    <CircularProgress />
+                  ) : (
+                    <Typography variant='caption' color='textDisabled'>
+                      맵을 선택해 주세요
+                    </Typography>
+                  )}
                 </div>
               )}
             </div>
@@ -150,8 +167,8 @@ export const SelectMap = ({ recommendMap, setRecommendMap }: SelectMapProps) => 
               선택
             </Button>
           </div>
-        </div>
+        </Card>
       </Modal>
-    </>
+    </Card>
   );
 };

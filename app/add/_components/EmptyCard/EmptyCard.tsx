@@ -1,14 +1,33 @@
 import { useWriteStore } from '@/store/useWriteValueStore';
-import { AddCircle } from '@mui/icons-material';
-import { Typography } from '@mui/material';
+import { AddCircle, Lock } from '@mui/icons-material';
+import { Card, CardActionArea, CardContent, Typography } from '@mui/material';
+import { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 export const EmptyCard = () => {
   const { writeValues, setWriteValues } = useWriteStore();
+  const [isAddCard, setIsAddCard] = useState(false);
+
+  useEffect(() => {
+    const lastOption = writeValues.options?.slice(-1)[0];
+    if (
+      lastOption !== undefined &&
+      (!lastOption?.mapCode ||
+        !lastOption?.minLevel ||
+        !lastOption?.maxLevel ||
+        !lastOption?.partyType)
+    ) {
+      return setIsAddCard(true);
+    }
+    setIsAddCard(false);
+  }, [writeValues]);
+
   return (
-    <div
-      className='flex flex-col gap-2 w-full justify-center items-center bg-zinc-100 hover:bg-zinc-200 dark:hover:bg-zinc-900 dark:bg-zinc-800 px-20 py-6 rounded-lg cursor-pointer'
-      onClick={() =>
+    <Card
+      variant='outlined'
+      className='w-full h-max'
+      onClick={() => {
+        if (isAddCard) return;
         setWriteValues({
           job: writeValues.job,
           huntType: writeValues.huntType,
@@ -24,13 +43,19 @@ export const EmptyCard = () => {
               mapCode: undefined,
             },
           ],
-        })
-      }
+        });
+      }}
     >
-      <AddCircle className='text-zinc-600 hover:text-zinc-800' />
-      <Typography variant='caption' color='textDisabled'>
-        이곳을 눌러 사냥터를 추가해 보세요
-      </Typography>
-    </div>
+      <CardActionArea>
+        <CardContent className='flex flex-col w-full px-20 py-6 gap-2 justify-center items-center'>
+          {isAddCard ? <Lock /> : <AddCircle className='text-zinc-600 hover:text-zinc-800' />}
+          <Typography variant='caption' color='textDisabled'>
+            {isAddCard
+              ? '추가하시려면 먼저 생성한 사냥터를 완성해 주세요'
+              : '이곳을 눌러 사냥터를 추가해 보세요'}
+          </Typography>
+        </CardContent>
+      </CardActionArea>
+    </Card>
   );
 };

@@ -2,7 +2,7 @@
 
 import { useWriteStore } from '@/store/useWriteValueStore';
 import { Close } from '@mui/icons-material';
-import { Badge, Button, IconButton, Modal, Typography } from '@mui/material';
+import { Button, Card, CardActionArea, Modal, Typography } from '@mui/material';
 import { useState } from 'react';
 import { EmptyCard } from '../EmptyCard';
 import { SelectCard } from '../SelectCard';
@@ -39,30 +39,36 @@ export const AddClientPage = () => {
       </div>
       <TitleInformation />
       {writeValues.options?.map((list, index) => (
-        <Badge
-          className='group'
-          badgeContent={
-            <IconButton
-              className='group-hover:visible invisible'
-              color='error'
+        <div className='relative w-full' key={`select-card-${list.uuid}`}>
+          <Card
+            sx={{
+              border: 'none',
+              borderStartStartRadius: 0,
+              borderEndStartRadius: 0,
+            }}
+            variant='outlined'
+            className='absolute top-0 left-full'
+          >
+            <CardActionArea
+              color='inherit'
               onClick={() => {
                 setOpen({ open: true, index });
               }}
             >
               <Close />
-            </IconButton>
-          }
-          key={`select-card-${list.uuid}`}
-          sx={{ width: '100%' }}
-        >
+            </CardActionArea>
+          </Card>
           <SelectCard id={index} />
-        </Badge>
+        </div>
       ))}
 
-      <EmptyCard />
+      {writeValues.options && writeValues.options?.length <= 9 && <EmptyCard />}
 
       <Modal open={open.open} onClose={handleCloseModal}>
-        <div className='flex flex-col gap-4 bg-zinc-100 dark:bg-zinc-700 rounded-lg p-10 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'>
+        <Card
+          variant='outlined'
+          className='flex flex-col gap-4 p-10 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'
+        >
           <Typography color='error'>해당 사냥터를 삭제하시겠어요?</Typography>
           <div className='flex flex-row gap-2'>
             <Button fullWidth variant='outlined' onClick={handleCloseModal}>
@@ -77,7 +83,7 @@ export const AddClientPage = () => {
               확인
             </Button>
           </div>
-        </div>
+        </Card>
       </Modal>
     </div>
   );
