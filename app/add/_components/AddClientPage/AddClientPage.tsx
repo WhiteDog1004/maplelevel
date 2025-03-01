@@ -1,22 +1,44 @@
 'use client';
 
+import { createLists } from '@/actions/listActions';
 import { useWriteStore } from '@/store/useWriteValueStore';
 import { Close } from '@mui/icons-material';
 import { Button, Card, CardActionArea, Modal, Typography } from '@mui/material';
+import { useMutation } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { EmptyCard } from '../EmptyCard';
 import { SelectCard } from '../SelectCard';
 import { TitleInformation } from '../TitleInformation';
 
 export const AddClientPage = () => {
-  const { writeValues, setWriteValues } = useWriteStore();
-  const [open, setOpen] = useState<{ open: boolean; index: number | undefined }>({
-    open: false,
+  const router = useRouter();
+  const { writeValues, setWriteValues, resetWriteValues } = useWriteStore();
+  const [open, setOpen] = useState<{
+    open: 'success' | 'delete' | undefined;
+    index: number | undefined;
+  }>({
+    open: undefined,
     index: undefined,
   });
 
+  const createAddMutation = useMutation({
+    mutationFn: () =>
+      createLists(writeValues, {
+        uuid: 'test',
+        nickname: 'test',
+      }),
+
+    onSuccess: () => {
+      setOpen({
+        open: 'success',
+        index: open.index,
+      });
+    },
+  });
+
   const handleCloseModal = () => {
-    setOpen({ open: false, index: undefined });
+    setOpen({ open: undefined, index: undefined });
   };
 
   const handleDeleteSelectCard = (index?: number) => {
@@ -27,6 +49,23 @@ export const AddClientPage = () => {
       options: writeValues.options?.filter((_, i) => i !== index),
     });
     handleCloseModal();
+  };
+
+  const handleAddPosting = () => {
+    const lastOption = writeValues.options?.slice(-1)[0];
+    if (
+      !writeValues.huntType ||
+      !writeValues.job ||
+      !writeValues.title ||
+      (lastOption !== undefined &&
+        (!lastOption?.mapCode ||
+          !lastOption?.minLevel ||
+          !lastOption?.maxLevel ||
+          !lastOption?.partyType))
+    ) {
+      return console.log('작성실패');
+    }
+    createAddMutation.mutate();
   };
 
   return (
@@ -52,7 +91,7 @@ export const AddClientPage = () => {
             <CardActionArea
               color='inherit'
               onClick={() => {
-                setOpen({ open: true, index });
+                setOpen({ open: 'delete', index });
               }}
             >
               <Close />
@@ -64,7 +103,11 @@ export const AddClientPage = () => {
 
       {writeValues.options && writeValues.options?.length <= 9 && <EmptyCard />}
 
-      <Modal open={open.open} onClose={handleCloseModal}>
+      <Button fullWidth variant='contained' color='success' size='large' onClick={handleAddPosting}>
+        작성완료
+      </Button>
+
+      <Modal open={open.open === 'delete'} onClose={handleCloseModal}>
         <Card
           variant='outlined'
           className='flex flex-col gap-4 p-10 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'
@@ -79,6 +122,33 @@ export const AddClientPage = () => {
               variant='outlined'
               color='error'
               onClick={() => handleDeleteSelectCard(open.index)}
+            >
+              확인
+            </Button>
+          </div>
+        </Card>
+      </Modal>
+
+      <Modal open={open.open === 'success'} onClose={handleCloseModal}>
+        <Card
+          variant='outlined'
+          className='flex flex-col gap-4 p-10 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'
+        >
+          <Typography textAlign='center'>
+            작성해주셔서 감사합니다!
+            <br />
+            지금 바로 목록에 가서 확인해 보세요!
+          </Typography>
+          <div className='flex flex-row gap-2'>
+            <Button
+              fullWidth
+              variant='outlined'
+              color='success'
+              onClick={() => {
+                router.push('/list');
+                resetWriteValues();
+                handleCloseModal();
+              }}
             >
               확인
             </Button>

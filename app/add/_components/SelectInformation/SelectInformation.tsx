@@ -4,6 +4,7 @@ import { MAP_CODE } from '@/utils/mapCode';
 import { yupResolver } from '@hookform/resolvers/yup';
 import {
   Avatar,
+  Box,
   Button,
   Skeleton,
   TextField,
@@ -33,7 +34,7 @@ export const SelectInformation = ({ recommendMap, id }: SelectInformationProps) 
     mode: 'onChange',
   });
 
-  const { data: mapIcon } = useQuery({
+  const { data: mapIcon, isLoading } = useQuery({
     queryKey: ['minimap', recommendMap.code],
     queryFn: async () => {
       const response = await fetch(
@@ -76,8 +77,10 @@ export const SelectInformation = ({ recommendMap, id }: SelectInformationProps) 
         <div className='flex flex-row items-center gap-2'>
           {mapIcon ? (
             <Avatar variant='rounded' src={mapIcon.url} />
-          ) : (
+          ) : isLoading ? (
             <Skeleton variant='rounded' animation='wave' width={40} height={40} />
+          ) : (
+            <Box width={40} height={40} />
           )}
           <div className='flex flex-col'>
             <Typography variant='caption' color='textDisabled'>

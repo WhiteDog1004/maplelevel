@@ -81,8 +81,8 @@ export const SelectMap = ({ recommendMap, setRecommendMap }: SelectMapProps) => 
           <div className='relative w-full max-h-60 min-h-48 flex flex-col gap-4 justify-center items-center'>
             <Image
               className='object-contain h-60'
-              width={240}
-              height={240}
+              width={200}
+              height={200}
               objectFit='contain'
               unoptimized
               alt={'select_map'}
