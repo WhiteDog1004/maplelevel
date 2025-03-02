@@ -5,6 +5,7 @@ import { useWriteStore } from '@/store/useWriteValueStore';
 import { Close } from '@mui/icons-material';
 import { Button, Card, CardActionArea, Modal, Typography } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { EmptyCard } from '../EmptyCard';
@@ -110,10 +111,11 @@ export const AddClientPage = () => {
       <Modal open={open.open === 'delete'} onClose={handleCloseModal}>
         <Card
           variant='outlined'
-          className='flex flex-col gap-4 p-10 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'
+          className='flex flex-col items-center gap-4 p-10 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'
         >
+          <Image width={44} height={37} src={'/images/husky/hungry_0.png'} alt='husky' />
           <Typography color='error'>해당 사냥터를 삭제하시겠어요?</Typography>
-          <div className='flex flex-row gap-2'>
+          <div className='flex flex-row w-full gap-2'>
             <Button fullWidth variant='outlined' onClick={handleCloseModal}>
               취소
             </Button>
@@ -132,14 +134,17 @@ export const AddClientPage = () => {
       <Modal open={open.open === 'success'} onClose={handleCloseModal}>
         <Card
           variant='outlined'
-          className='flex flex-col gap-4 p-10 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'
+          className='flex flex-col items-center gap-4 p-3 md:p-10 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'
         >
-          <Typography textAlign='center'>
+          <Image width={44} height={37} src={'/images/husky/chat_4.png'} alt='husky' />
+          <Typography variant='body2' textAlign='center'>
             작성해주셔서 감사합니다!
             <br />
-            지금 바로 목록에 가서 확인해 보세요!
+            이 사냥터가 다른 모험가님께
+            <br />
+            많은 도움이 될 거예요!
           </Typography>
-          <div className='flex flex-row gap-2'>
+          <div className='flex flex-row gap-2 w-full'>
             <Button
               fullWidth
               variant='outlined'
