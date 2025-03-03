@@ -1,3 +1,4 @@
+import { Loading } from '@/app/_components/Loading';
 import { RecommendMapProps } from '@/types/add';
 import { MAP_CODE } from '@/utils/mapCode';
 import { AddCircle, Edit } from '@mui/icons-material';
@@ -6,7 +7,6 @@ import {
   Button,
   Card,
   CardActionArea,
-  CircularProgress,
   Modal,
   Stack,
   TextField,
@@ -140,7 +140,7 @@ export const SelectMap = ({ recommendMap, setRecommendMap }: SelectMapProps) => 
               ) : (
                 <div>
                   {isLoading ? (
-                    <CircularProgress />
+                    <Loading />
                   ) : (
                     <Typography variant='caption' color='textDisabled'>
                       맵을 선택해 주세요
