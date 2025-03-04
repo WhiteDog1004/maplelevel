@@ -20,6 +20,7 @@ const initialValues: WriteValueOptions = {
       partyType: undefined,
       caption: undefined,
       mapCode: undefined,
+      mobs: undefined,
     },
   ],
 };

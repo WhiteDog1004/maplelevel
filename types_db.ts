@@ -7,6 +7,7 @@ export type MapDataType = {
   };
   map?: number;
   caption?: string;
+  mobs?: number[];
   partyType?: 'all' | 'solo' | 'party';
 };
 

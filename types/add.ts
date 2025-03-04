@@ -23,5 +23,6 @@ export interface WriteValueOptions {
     maxLevel?: number;
     partyType?: partyTypes;
     caption?: string;
+    mobs?: number[];
   }[];
 }

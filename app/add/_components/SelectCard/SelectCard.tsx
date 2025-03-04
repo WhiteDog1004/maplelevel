@@ -19,7 +19,7 @@ export const SelectCard = ({ id }: { id: number }) => {
     >
       <div className='flex-1 h-max flex flex-col gap-2'>
         <SelectMap recommendMap={recommendMap} setRecommendMap={setRecommendMap} />
-        <SelectMob recommendMap={recommendMap} />
+        <SelectMob id={id} recommendMap={recommendMap} />
       </div>
       <div className='flex-1'>
         <SelectInformation id={id} recommendMap={recommendMap} />

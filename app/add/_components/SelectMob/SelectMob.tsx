@@ -1,4 +1,5 @@
 import { Loading } from '@/app/_components/Loading';
+import { useWriteStore } from '@/store/useWriteValueStore';
 import { RecommendMapProps } from '@/types/add';
 import { Card, Typography } from '@mui/material';
 import { useQueries, useQuery } from '@tanstack/react-query';
@@ -7,10 +8,12 @@ import { useEffect, useState } from 'react';
 
 interface SelectMobProps {
   recommendMap: RecommendMapProps['recommendMap'];
+  id: number;
 }
 
-export const SelectMob = ({ recommendMap }: SelectMobProps) => {
-  const [mobs, setMobs] = useState([]);
+export const SelectMob = ({ recommendMap, id }: SelectMobProps) => {
+  const { writeValues, setWriteValues } = useWriteStore();
+  const [mobs, setMobs] = useState<number[]>([]);
 
   const { data: getMap, isLoading } = useQuery({
     queryKey: ['selectmap', recommendMap.code],
@@ -43,6 +46,19 @@ export const SelectMob = ({ recommendMap }: SelectMobProps) => {
 
     setMobs(Array.from(new Set(getMap.mobs.map((mob: { id: string }) => mob.id))));
   }, [getMap, recommendMap]);
+
+  useEffect(() => {
+    if (mobs.length === 0) return;
+
+    setWriteValues({
+      ...writeValues,
+      options: writeValues.options?.map((option, index) =>
+        id === index ? { ...option, mobs } : option
+      ),
+    });
+  }, [mobs]);
+
+  console.log(writeValues);
 
   return (
     mobs.length > 0 && (
