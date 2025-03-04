@@ -29,7 +29,7 @@ export const FailedSnackBar = ({ isSnackBar, setIsSnackBar }: FailedSnackBarProp
       <Alert
         onClose={handleSnackBarClose}
         severity='error'
-        variant='outlined'
+        variant='standard'
         sx={{ width: '100%' }}
       >
         작성되지 않은 부분이 있어요!

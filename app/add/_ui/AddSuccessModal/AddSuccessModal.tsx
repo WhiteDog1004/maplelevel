@@ -27,6 +27,9 @@ export const AddSuccessModal = ({ open, setOpen }: AddSuccessModalProps) => {
         variant='outlined'
         className='flex flex-col items-center gap-4 p-3 md:p-10 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'
       >
+        <Typography variant='h5' color='success'>
+          작성 완료
+        </Typography>
         <Image width={44} height={37} src={'/images/husky/chat_4.png'} alt='husky' />
         <Typography variant='body2' textAlign='center'>
           작성해주셔서 감사합니다!

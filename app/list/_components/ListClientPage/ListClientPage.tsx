@@ -1,20 +1,21 @@
-"use client";
+'use client';
 
-import { Database } from "@/types_db";
-import { ListItemCard } from "../ListItemCard";
+import { Database } from '@/types_db';
+import { Box } from '@mui/material';
+import { ListItemCard } from '../ListItemCard';
 
 interface ListClientPageProps {
-	lists: Database["public"]["Tables"]["recommend-list"]["Row"][];
+  lists: Database['public']['Tables']['recommend-list']['Row'][];
 }
 
 export const ListClientPage = ({ lists }: ListClientPageProps) => {
-	console.log(lists);
+  console.log(lists);
 
-	return (
-		<div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] justify-items-center w-full h-max gap-8 p-16">
-			{lists.map((list) => (
-				<ListItemCard key={list.uuid} data={list} />
-			))}
-		</div>
-	);
+  return (
+    <Box className='grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] justify-items-center w-full h-max gap-8 py-16 px-8 md:px-16'>
+      {lists.map((list) => (
+        <ListItemCard key={list.uuid} data={list} />
+      ))}
+    </Box>
+  );
 };
