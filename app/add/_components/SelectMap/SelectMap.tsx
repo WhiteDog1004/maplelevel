@@ -4,6 +4,7 @@ import { MAP_CODE } from '@/utils/mapCode';
 import { AddCircle, Edit } from '@mui/icons-material';
 import {
   Autocomplete,
+  Box,
   Button,
   Card,
   CardActionArea,
@@ -73,12 +74,12 @@ export const SelectMap = ({ recommendMap, setRecommendMap }: SelectMapProps) => 
         onClick={handleModal}
       >
         {recommendMap.minimap && (
-          <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 group-hover:visible invisible p-4 bg-zinc-600 bg-opacity-50 rounded-full z-10'>
+          <Box className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 group-hover:visible invisible p-4 bg-zinc-600 bg-opacity-50 rounded-full z-10'>
             <Edit className='text-white' />
-          </div>
+          </Box>
         )}
         {recommendMap.minimap ? (
-          <div className='relative w-full max-h-60 min-h-48 flex flex-col gap-4 justify-center items-center'>
+          <Box className='relative w-full max-h-60 min-h-48 flex flex-col gap-4 justify-center items-center'>
             <Image
               className='object-contain h-60'
               width={200}
@@ -88,7 +89,7 @@ export const SelectMap = ({ recommendMap, setRecommendMap }: SelectMapProps) => 
               alt={'select_map'}
               src={recommendMap.minimap}
             />
-          </div>
+          </Box>
         ) : (
           <div className='flex flex-col justify-center items-center gap-2 min-h-48'>
             <AddCircle className='text-zinc-600' />
@@ -133,12 +134,12 @@ export const SelectMap = ({ recommendMap, setRecommendMap }: SelectMapProps) => 
               options={suggestions}
             />
           </Stack>
-          <div>
-            <div className='w-full h-40 relative flex flex-col gap-4 justify-center items-center mb-4'>
+          <Box>
+            <Box className='w-full h-40 relative flex flex-col gap-4 justify-center items-center mb-4'>
               {minimap ? (
                 <Image fill objectFit='contain' unoptimized alt={'select_map'} src={minimap.url} />
               ) : (
-                <div>
+                <Box>
                   {isLoading ? (
                     <Loading />
                   ) : (
@@ -146,9 +147,9 @@ export const SelectMap = ({ recommendMap, setRecommendMap }: SelectMapProps) => 
                       맵을 선택해 주세요
                     </Typography>
                   )}
-                </div>
+                </Box>
               )}
-            </div>
+            </Box>
             <Button
               fullWidth
               variant='outlined'
@@ -166,7 +167,7 @@ export const SelectMap = ({ recommendMap, setRecommendMap }: SelectMapProps) => 
             >
               선택
             </Button>
-          </div>
+          </Box>
         </Card>
       </Modal>
     </Card>

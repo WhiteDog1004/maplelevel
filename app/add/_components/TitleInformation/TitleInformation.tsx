@@ -2,6 +2,7 @@ import { useWriteStore } from '@/store/useWriteValueStore';
 import { getClassImages, JOBS } from '@/utils/jobs';
 import { yupResolver } from '@hookform/resolvers/yup';
 import {
+  Box,
   Card,
   CardContent,
   FormControl,
@@ -32,8 +33,8 @@ export const TitleInformation = () => {
   return (
     <Card className='w-full' variant='outlined'>
       <CardContent className='flex flex-col gap-4 justify-between p-4'>
-        <div className='flex flex-col w-full gap-4'>
-          <div className='flex gap-4'>
+        <Box className='flex flex-col w-full gap-4'>
+          <Box className='flex gap-4'>
             <TextField
               label='제목'
               className='flex-1'
@@ -41,8 +42,8 @@ export const TitleInformation = () => {
                 onBlur: (e) => setWriteValues({ ...writeValues, title: e.currentTarget.value }),
               })}
             />
-          </div>
-          <div className='flex flex-col sm:flex-row gap-4'>
+          </Box>
+          <Box className='flex flex-col sm:flex-row gap-4'>
             <FormControl fullWidth className='flex-1' error={!!errors.job?.message}>
               <InputLabel>직업</InputLabel>
               <Select
@@ -53,7 +54,7 @@ export const TitleInformation = () => {
               >
                 {JOBS.map((job) => (
                   <MenuItem key={job.id} value={job.name}>
-                    <div className='flex items-center gap-2'>
+                    <Box className='flex items-center gap-2'>
                       <Image
                         width={20}
                         height={20}
@@ -62,13 +63,13 @@ export const TitleInformation = () => {
                         alt={'class'}
                       />
                       {job.label}
-                    </div>
+                    </Box>
                   </MenuItem>
                 ))}
               </Select>
               {errors.job?.message && <FormHelperText>{errors.job.message}</FormHelperText>}
             </FormControl>
-            <div className='flex w-full flex-1 gap-2'>
+            <Box className='flex w-full flex-1 gap-2'>
               <Controller
                 name='type'
                 control={control}
@@ -97,9 +98,9 @@ export const TitleInformation = () => {
                   최소 하나는 선택해야 합니다.
                 </Typography>
               )}
-            </div>
-          </div>
-        </div>
+            </Box>
+          </Box>
+        </Box>
       </CardContent>
     </Card>
   );

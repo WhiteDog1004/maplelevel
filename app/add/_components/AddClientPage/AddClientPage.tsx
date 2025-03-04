@@ -3,7 +3,7 @@
 import { createLists } from '@/actions/listActions';
 import { useWriteStore } from '@/store/useWriteValueStore';
 import { Close } from '@mui/icons-material';
-import { Button, Card, CardActionArea, Modal, Typography } from '@mui/material';
+import { Box, Button, Card, CardActionArea, Modal, Typography } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -70,16 +70,16 @@ export const AddClientPage = () => {
   };
 
   return (
-    <div className='w-full flex flex-col gap-6 items-center p-10 max-w-3xl'>
-      <div className='flex flex-col gap-1'>
+    <Box className='w-full flex flex-col gap-6 items-center p-10 max-w-3xl'>
+      <Box className='flex flex-col gap-1'>
         <Typography variant='body2' color='textSecondary'>
           당신이 걸어오셨던 여정을 공유해 보세요
         </Typography>
         <Typography variant='h3'>사냥터 추천</Typography>
-      </div>
+      </Box>
       <TitleInformation />
       {writeValues.options?.map((list, index) => (
-        <div className='relative w-full' key={`select-card-${list.uuid}`}>
+        <Box className='relative w-full' key={`select-card-${list.uuid}`}>
           <Card
             sx={{
               border: 'none',
@@ -99,7 +99,7 @@ export const AddClientPage = () => {
             </CardActionArea>
           </Card>
           <SelectCard id={index} />
-        </div>
+        </Box>
       ))}
 
       {writeValues.options && writeValues.options?.length <= 9 && <EmptyCard />}
@@ -115,7 +115,7 @@ export const AddClientPage = () => {
         >
           <Image width={44} height={37} src={'/images/husky/hungry_0.png'} alt='husky' />
           <Typography color='error'>해당 사냥터를 삭제하시겠어요?</Typography>
-          <div className='flex flex-row w-full gap-2'>
+          <Box className='flex flex-row w-full gap-2'>
             <Button fullWidth variant='outlined' onClick={handleCloseModal}>
               취소
             </Button>
@@ -127,7 +127,7 @@ export const AddClientPage = () => {
             >
               확인
             </Button>
-          </div>
+          </Box>
         </Card>
       </Modal>
 
@@ -144,7 +144,7 @@ export const AddClientPage = () => {
             <br />
             많은 도움이 될 거예요!
           </Typography>
-          <div className='flex flex-row gap-2 w-full'>
+          <Box className='flex flex-row gap-2 w-full'>
             <Button
               fullWidth
               variant='outlined'
@@ -157,9 +157,9 @@ export const AddClientPage = () => {
             >
               확인
             </Button>
-          </div>
+          </Box>
         </Card>
       </Modal>
-    </div>
+    </Box>
   );
 };

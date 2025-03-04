@@ -72,9 +72,9 @@ export const SelectInformation = ({ recommendMap, id }: SelectInformationProps) 
   });
 
   return (
-    <div className='flex flex-col gap-4 justify-center'>
-      <div className='flex flex-col gap-6 justify-center'>
-        <div className='flex flex-row items-center gap-2'>
+    <Box className='flex flex-col gap-4 justify-center'>
+      <Box className='flex flex-col gap-6 justify-center'>
+        <Box className='flex flex-row items-center gap-2'>
           {mapIcon ? (
             <Avatar variant='rounded' src={mapIcon.url} />
           ) : isLoading ? (
@@ -82,16 +82,16 @@ export const SelectInformation = ({ recommendMap, id }: SelectInformationProps) 
           ) : (
             <Box width={40} height={40} />
           )}
-          <div className='flex flex-col'>
+          <Box className='flex flex-col'>
             <Typography variant='caption' color='textDisabled'>
               {MAP_CODE.filter((map) => map.code === recommendMap.code)[0]?.kor.split(':')[0]}
             </Typography>
             <Typography color='textSecondary'>{recommendMap.label}</Typography>
-          </div>
-        </div>
+          </Box>
+        </Box>
 
-        <div className='flex flex-row items-start gap-2'>
-          <div className='flex-1 h-max'>
+        <Box className='flex flex-row items-start gap-2'>
+          <Box className='flex-1 h-max'>
             <TextField
               autoComplete='off'
               fullWidth
@@ -101,8 +101,8 @@ export const SelectInformation = ({ recommendMap, id }: SelectInformationProps) 
               placeholder='최소레벨 입력'
               helperText={errors.minLevel?.message}
             />
-          </div>
-          <div className='flex-1 h-max'>
+          </Box>
+          <Box className='flex-1 h-max'>
             <TextField
               autoComplete='off'
               fullWidth
@@ -112,11 +112,11 @@ export const SelectInformation = ({ recommendMap, id }: SelectInformationProps) 
               placeholder='최대레벨 입력'
               helperText={errors.maxLevel?.message}
             />
-          </div>
-        </div>
-      </div>
+          </Box>
+        </Box>
+      </Box>
 
-      <div className='flex flex-col w-full gap-2'>
+      <Box className='flex flex-col w-full gap-2'>
         <Typography variant='body2' color='primary'>
           사냥 방식
         </Typography>
@@ -147,9 +147,9 @@ export const SelectInformation = ({ recommendMap, id }: SelectInformationProps) 
             최소 하나는 선택해야 합니다.
           </Typography>
         )}
-      </div>
+      </Box>
 
-      <div className='flex flex-col w-full gap-2'>
+      <Box className='flex flex-col w-full gap-2'>
         <Typography variant='body2' color='primary'>
           간단한 설명
         </Typography>
@@ -159,11 +159,11 @@ export const SelectInformation = ({ recommendMap, id }: SelectInformationProps) 
           size='small'
           {...register('caption')}
         />
-      </div>
+      </Box>
 
       <Button variant='outlined' color='success' size='large' onClick={onSubmit}>
         확정
       </Button>
-    </div>
+    </Box>
   );
 };

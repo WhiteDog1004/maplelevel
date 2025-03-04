@@ -1,7 +1,7 @@
 import { Loading } from '@/app/_components/Loading';
 import { useWriteStore } from '@/store/useWriteValueStore';
 import { RecommendMapProps } from '@/types/add';
-import { Card, Typography } from '@mui/material';
+import { Box, Card, Typography } from '@mui/material';
 import { useQueries, useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
@@ -58,17 +58,15 @@ export const SelectMob = ({ recommendMap, id }: SelectMobProps) => {
     });
   }, [mobs]);
 
-  console.log(writeValues);
-
   return (
     mobs.length > 0 && (
-      <div className='flex flex-col gap-1'>
+      <Box className='flex flex-col gap-1'>
         <Typography>등장 몬스터</Typography>
         <Card variant='outlined'>
           {recommendMap.code ? (
-            <div className='grid grid-cols-[repeat(auto-fit,minmax(80px,1fr))] justify-items-center gap-1 p-1 max-h-36 overflow-y-auto'>
+            <Box className='grid grid-cols-[repeat(auto-fit,minmax(80px,1fr))] justify-items-center gap-1 p-1 max-h-36 overflow-y-auto'>
               {queries.map((mob, index) => (
-                <div className='w-max h-max m-h-16 max-w-16' key={index}>
+                <Box className='w-max h-max m-h-16 max-w-16' key={index}>
                   {mob.isLoading || isLoading ? (
                     <Loading />
                   ) : (
@@ -80,14 +78,14 @@ export const SelectMob = ({ recommendMap, id }: SelectMobProps) => {
                       alt='mob'
                     />
                   )}
-                </div>
+                </Box>
               ))}
-            </div>
+            </Box>
           ) : (
             <Typography>{recommendMap.code}</Typography>
           )}
         </Card>
-      </div>
+      </Box>
     )
   );
 };
