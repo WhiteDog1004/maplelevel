@@ -1,20 +1,23 @@
 'use client';
 
 import { createLists } from '@/actions/listActions';
+import { useDarkModeStore } from '@/store/useDarkModeStore';
 import { useWriteStore } from '@/store/useWriteValueStore';
 import { Close } from '@mui/icons-material';
-import { Box, Button, Card, CardActionArea, Modal, Typography } from '@mui/material';
+import { Box, Button, Card, CardActionArea, Typography } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { AddDeleteModal } from '../../_ui/AddDeleteModal/AddDeleteModal';
+import { AddSuccessModal } from '../../_ui/AddSuccessModal';
+import { FailedSnackBar } from '../../_ui/FailedSnackBar';
 import { EmptyCard } from '../EmptyCard';
 import { SelectCard } from '../SelectCard';
 import { TitleInformation } from '../TitleInformation';
 
 export const AddClientPage = () => {
-  const router = useRouter();
-  const { writeValues, setWriteValues, resetWriteValues } = useWriteStore();
+  const { darkMode } = useDarkModeStore();
+  const { writeValues } = useWriteStore();
+  const [isSnackBar, setIsSnackBar] = useState(false);
   const [open, setOpen] = useState<{
     open: 'success' | 'delete' | undefined;
     index: number | undefined;
@@ -38,20 +41,6 @@ export const AddClientPage = () => {
     },
   });
 
-  const handleCloseModal = () => {
-    setOpen({ open: undefined, index: undefined });
-  };
-
-  const handleDeleteSelectCard = (index?: number) => {
-    setWriteValues({
-      job: writeValues.job,
-      huntType: writeValues.huntType,
-      title: writeValues.title,
-      options: writeValues.options?.filter((_, i) => i !== index),
-    });
-    handleCloseModal();
-  };
-
   const handleAddPosting = () => {
     const lastOption = writeValues.options?.slice(-1)[0];
     if (
@@ -64,7 +53,7 @@ export const AddClientPage = () => {
           !lastOption?.maxLevel ||
           !lastOption?.partyType))
     ) {
-      return console.log('작성실패');
+      return setIsSnackBar(true);
     }
     createAddMutation.mutate();
   };
@@ -82,12 +71,13 @@ export const AddClientPage = () => {
         <Box className='relative w-full' key={`select-card-${list.uuid}`}>
           <Card
             sx={{
-              border: 'none',
+              border: darkMode ? 'none' : undefined,
+              borderLeftColor: 'white',
               borderStartStartRadius: 0,
               borderEndStartRadius: 0,
             }}
             variant='outlined'
-            className='absolute top-0 left-full'
+            className='absolute top-0 left-full -ml-px'
           >
             <CardActionArea
               color='inherit'
@@ -108,58 +98,11 @@ export const AddClientPage = () => {
         작성완료
       </Button>
 
-      <Modal open={open.open === 'delete'} onClose={handleCloseModal}>
-        <Card
-          variant='outlined'
-          className='flex flex-col items-center gap-4 p-10 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'
-        >
-          <Image width={44} height={37} src={'/images/husky/hungry_0.png'} alt='husky' />
-          <Typography color='error'>해당 사냥터를 삭제하시겠어요?</Typography>
-          <Box className='flex flex-row w-full gap-2'>
-            <Button fullWidth variant='outlined' onClick={handleCloseModal}>
-              취소
-            </Button>
-            <Button
-              fullWidth
-              variant='outlined'
-              color='error'
-              onClick={() => handleDeleteSelectCard(open.index)}
-            >
-              확인
-            </Button>
-          </Box>
-        </Card>
-      </Modal>
+      <AddDeleteModal open={open} setOpen={setOpen} />
 
-      <Modal open={open.open === 'success'} onClose={handleCloseModal}>
-        <Card
-          variant='outlined'
-          className='flex flex-col items-center gap-4 p-3 md:p-10 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'
-        >
-          <Image width={44} height={37} src={'/images/husky/chat_4.png'} alt='husky' />
-          <Typography variant='body2' textAlign='center'>
-            작성해주셔서 감사합니다!
-            <br />
-            이 사냥터가 다른 모험가님께
-            <br />
-            많은 도움이 될 거예요!
-          </Typography>
-          <Box className='flex flex-row gap-2 w-full'>
-            <Button
-              fullWidth
-              variant='outlined'
-              color='success'
-              onClick={() => {
-                router.push('/list');
-                resetWriteValues();
-                handleCloseModal();
-              }}
-            >
-              확인
-            </Button>
-          </Box>
-        </Card>
-      </Modal>
+      <AddSuccessModal open={open} setOpen={setOpen} />
+
+      <FailedSnackBar isSnackBar={isSnackBar} setIsSnackBar={setIsSnackBar} />
     </Box>
   );
 };

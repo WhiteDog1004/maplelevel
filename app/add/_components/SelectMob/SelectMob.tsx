@@ -61,7 +61,7 @@ export const SelectMob = ({ recommendMap, id }: SelectMobProps) => {
   return (
     mobs.length > 0 && (
       <Box className='flex flex-col gap-1'>
-        <Typography>등장 몬스터</Typography>
+        <Typography color='textDisabled'>등장 몬스터</Typography>
         <Card variant='outlined'>
           {recommendMap.code ? (
             <Box className='grid grid-cols-[repeat(auto-fit,minmax(80px,1fr))] justify-items-center gap-1 p-1 max-h-36 overflow-y-auto'>
