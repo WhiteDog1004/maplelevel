@@ -18,6 +18,7 @@ export const AddClientPage = () => {
   const { darkMode } = useDarkModeStore();
   const { writeValues } = useWriteStore();
   const [isSnackBar, setIsSnackBar] = useState(false);
+  const [completedCard, setCompletedCard] = useState<number[]>([]);
   const [open, setOpen] = useState<{
     open: 'success' | 'delete' | undefined;
     index: number | undefined;
@@ -88,7 +89,11 @@ export const AddClientPage = () => {
               <Close />
             </CardActionArea>
           </Card>
-          <SelectCard id={index} />
+          <SelectCard
+            id={index}
+            setCompletedCard={setCompletedCard}
+            completedCard={completedCard}
+          />
         </Box>
       ))}
 
@@ -98,7 +103,12 @@ export const AddClientPage = () => {
         작성완료
       </Button>
 
-      <AddDeleteModal open={open} setOpen={setOpen} />
+      <AddDeleteModal
+        open={open}
+        setOpen={setOpen}
+        setCompletedCard={setCompletedCard}
+        completedCard={completedCard}
+      />
 
       <AddSuccessModal open={open} setOpen={setOpen} />
 

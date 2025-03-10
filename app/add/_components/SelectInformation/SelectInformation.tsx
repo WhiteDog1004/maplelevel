@@ -13,15 +13,23 @@ import {
   Typography,
 } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
+import { Dispatch, SetStateAction } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { selectInfoSchema } from './SelectInformation.const';
 
 interface SelectInformationProps {
   recommendMap: RecommendMapProps['recommendMap'];
   id: number;
+  completedCard: number[];
+  setCompletedCard: Dispatch<SetStateAction<SelectInformationProps['completedCard']>>;
 }
 
-export const SelectInformation = ({ recommendMap, id }: SelectInformationProps) => {
+export const SelectInformation = ({
+  recommendMap,
+  id,
+  completedCard,
+  setCompletedCard,
+}: SelectInformationProps) => {
   const { writeValues, setWriteValues } = useWriteStore();
   const {
     control,
@@ -51,6 +59,7 @@ export const SelectInformation = ({ recommendMap, id }: SelectInformationProps) 
       return setError('minLevel', { message: '최소 레벨이 너무 큽니다' });
     }
 
+    setCompletedCard([...completedCard, id]);
     return setWriteValues({
       job: writeValues.job,
       huntType: writeValues.huntType,

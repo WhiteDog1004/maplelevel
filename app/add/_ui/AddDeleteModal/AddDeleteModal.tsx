@@ -9,9 +9,16 @@ interface AddDeleteModalProps {
     index: number | undefined;
   };
   setOpen: Dispatch<SetStateAction<AddDeleteModalProps['open']>>;
+  completedCard: number[];
+  setCompletedCard: Dispatch<SetStateAction<AddDeleteModalProps['completedCard']>>;
 }
 
-export const AddDeleteModal = ({ open, setOpen }: AddDeleteModalProps) => {
+export const AddDeleteModal = ({
+  open,
+  setOpen,
+  setCompletedCard,
+  completedCard,
+}: AddDeleteModalProps) => {
   // 모달 핸들러
   const handleCloseModal = () => {
     setOpen({ open: undefined, index: undefined });
@@ -19,6 +26,11 @@ export const AddDeleteModal = ({ open, setOpen }: AddDeleteModalProps) => {
 
   const { writeValues, setWriteValues } = useWriteStore();
   const handleDeleteSelectCard = (index?: number) => {
+    setCompletedCard(
+      completedCard
+        .filter((num) => num !== index)
+        .map((item) => (item > (index || 0) ? item - 1 : item))
+    );
     setWriteValues({
       job: writeValues.job,
       huntType: writeValues.huntType,
