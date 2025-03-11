@@ -12,7 +12,7 @@ export const ListClientPage = ({ lists }: ListClientPageProps) => {
   console.log(lists);
 
   return (
-    <Box className='grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] justify-items-center w-full h-max gap-8 py-16 px-8 md:px-16'>
+    <Box className='grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] justify-items-center w-full h-max gap-8 py-16 px-8'>
       {lists.map((list) => (
         <ListItemCard key={list.uuid} data={list} />
       ))}

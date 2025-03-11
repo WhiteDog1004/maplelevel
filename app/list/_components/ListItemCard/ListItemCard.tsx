@@ -47,11 +47,10 @@ export const ListItemCard = ({ data }: ListItemCardProps) => {
         </Box>
       }
     >
-      <Card variant='outlined' sx={{ width: 300 }}>
+      <Card variant='outlined' sx={{ width: 280 }}>
         <CardActionArea
           sx={{
-            px: 3,
-            py: 2,
+            p: 2,
           }}
           className='flex flex-col gap-4 relative'
         >
