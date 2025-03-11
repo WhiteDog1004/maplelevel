@@ -2,6 +2,7 @@
 
 import { SITE_MAP } from '@/utils/sitemap';
 import { ExitToApp, Notifications } from '@mui/icons-material';
+import MenuIcon from '@mui/icons-material/Menu';
 import {
   AppBar,
   Avatar,
@@ -15,20 +16,23 @@ import {
 } from '@mui/material';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { ToggleDarkMode } from '../ToggleDarkMode';
 
 export const Header = () => {
   const router = useRouter();
   const pathname = usePathname();
   const [profileOpen, setProfileOpen] = useState<HTMLElement | null>(null);
+  const [menuOpen, setMenuOpen] = useState<HTMLElement | null>(null);
   const menuItemStyles = 'flex gap-2 h-12';
 
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    setProfileOpen(event.currentTarget);
-  };
-  const handleProfileClose = () => {
-    setProfileOpen(null);
+  const handleClick =
+    (setState: Dispatch<SetStateAction<HTMLElement | null>>) =>
+    (event: React.MouseEvent<HTMLElement>) => {
+      setState(event.currentTarget);
+    };
+  const handleMenuListClose = (setState: Dispatch<SetStateAction<HTMLElement | null>>) => {
+    setState(null);
   };
   const handleMenuRouting = (page: string) => {
     if (pathname === page) return;
@@ -54,7 +58,7 @@ export const Header = () => {
               레벨지지
             </Typography>
           </Button>
-          <Box className='flex gap-2'>
+          <Box className='hidden md:flex gap-2'>
             <Button color='inherit' onClick={() => handleMenuRouting(SITE_MAP.LIST)}>
               <Typography
                 color={pathname === SITE_MAP.LIST ? 'warning' : 'textDisabled'}
@@ -75,8 +79,42 @@ export const Header = () => {
         </Box>
 
         <Box className='flex items-center gap-1'>
+          <Box className='flex md:hidden'>
+            <IconButton onClick={handleClick(setMenuOpen)}>
+              <MenuIcon />
+            </IconButton>
+            <Menu
+              transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+              anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+              open={!!menuOpen}
+              anchorEl={menuOpen}
+              onClose={() => handleMenuListClose(setMenuOpen)}
+              onClick={() => handleMenuListClose(setMenuOpen)}
+            >
+              <MenuItem>
+                <Button color='inherit' onClick={() => handleMenuRouting(SITE_MAP.LIST)}>
+                  <Typography
+                    color={pathname === SITE_MAP.LIST ? 'warning' : 'textDisabled'}
+                    variant='body2'
+                  >
+                    레벨업 리스트
+                  </Typography>
+                </Button>
+              </MenuItem>
+              <MenuItem>
+                <Button color='inherit' onClick={() => handleMenuRouting(SITE_MAP.ADD)}>
+                  <Typography
+                    color={pathname === SITE_MAP.ADD ? 'warning' : 'textDisabled'}
+                    variant='body2'
+                  >
+                    사냥터 추천하기
+                  </Typography>
+                </Button>
+              </MenuItem>
+            </Menu>
+          </Box>
           <ToggleDarkMode />
-          <IconButton onClick={handleClick}>
+          <IconButton onClick={handleClick(setProfileOpen)}>
             <Avatar src='/images/mushroom.png' />
           </IconButton>
           <Menu
@@ -84,8 +122,8 @@ export const Header = () => {
             anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             open={!!profileOpen}
             anchorEl={profileOpen}
-            onClose={handleProfileClose}
-            onClick={handleProfileClose}
+            onClose={() => handleMenuListClose(setProfileOpen)}
+            onClick={() => handleMenuListClose(setProfileOpen)}
           >
             <MenuItem className={menuItemStyles}>
               <Avatar
