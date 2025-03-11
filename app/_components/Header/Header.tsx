@@ -30,21 +30,49 @@ export const Header = () => {
   const handleProfileClose = () => {
     setProfileOpen(null);
   };
+  const handleMenuRouting = (page: string) => {
+    if (pathname === page) return;
+    router.push(page);
+  };
 
   return (
-    <AppBar className='items-center' position={pathname === '/' ? 'fixed' : 'sticky'}>
+    <AppBar
+      color='default'
+      className='items-center'
+      position={pathname === '/' ? 'fixed' : 'sticky'}
+    >
       <Box className='max-w-5xl w-full flex justify-between items-center p-2'>
-        <Button
-          onClick={() => router.push(SITE_MAP.HOME)}
-          variant='text'
-          className='flex items-center gap-4 w-max'
-          color='inherit'
-        >
-          <Image src='/images/husky/eat_0.png' alt='logo' width={44} height={37} />
-          <Typography variant='h5' whiteSpace='nowrap'>
-            레벨지지
-          </Typography>
-        </Button>
+        <Box className='flex items-center gap-2'>
+          <Button
+            onClick={() => router.push(SITE_MAP.HOME)}
+            variant='text'
+            className='flex items-center gap-4 w-max'
+            color='inherit'
+          >
+            <Image src='/images/husky/eat_0.png' alt='logo' width={44} height={37} />
+            <Typography variant='h5' whiteSpace='nowrap'>
+              레벨지지
+            </Typography>
+          </Button>
+          <Box className='flex gap-2'>
+            <Button color='inherit' onClick={() => handleMenuRouting(SITE_MAP.LIST)}>
+              <Typography
+                color={pathname === SITE_MAP.LIST ? 'warning' : 'textDisabled'}
+                variant='body2'
+              >
+                레벨업 리스트
+              </Typography>
+            </Button>
+            <Button color='inherit' onClick={() => handleMenuRouting(SITE_MAP.ADD)}>
+              <Typography
+                color={pathname === SITE_MAP.ADD ? 'warning' : 'textDisabled'}
+                variant='body2'
+              >
+                사냥터 추천하기
+              </Typography>
+            </Button>
+          </Box>
+        </Box>
 
         <Box className='flex items-center gap-1'>
           <ToggleDarkMode />
