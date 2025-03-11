@@ -91,25 +91,21 @@ export const Header = () => {
               onClose={() => handleMenuListClose(setMenuOpen)}
               onClick={() => handleMenuListClose(setMenuOpen)}
             >
-              <MenuItem>
-                <Button color='inherit' onClick={() => handleMenuRouting(SITE_MAP.LIST)}>
-                  <Typography
-                    color={pathname === SITE_MAP.LIST ? 'warning' : 'textDisabled'}
-                    variant='body2'
-                  >
-                    레벨업 리스트
-                  </Typography>
-                </Button>
+              <MenuItem className={menuItemStyles} onClick={() => handleMenuRouting(SITE_MAP.LIST)}>
+                <Typography
+                  color={pathname === SITE_MAP.LIST ? 'warning' : 'textDisabled'}
+                  variant='body2'
+                >
+                  레벨업 리스트
+                </Typography>
               </MenuItem>
-              <MenuItem>
-                <Button color='inherit' onClick={() => handleMenuRouting(SITE_MAP.ADD)}>
-                  <Typography
-                    color={pathname === SITE_MAP.ADD ? 'warning' : 'textDisabled'}
-                    variant='body2'
-                  >
-                    사냥터 추천하기
-                  </Typography>
-                </Button>
+              <MenuItem className={menuItemStyles} onClick={() => handleMenuRouting(SITE_MAP.ADD)}>
+                <Typography
+                  color={pathname === SITE_MAP.ADD ? 'warning' : 'textDisabled'}
+                  variant='body2'
+                >
+                  사냥터 추천하기
+                </Typography>
               </MenuItem>
             </Menu>
           </Box>
@@ -133,16 +129,16 @@ export const Header = () => {
                 }}
                 src='/images/mushroom.png'
               />
-              마이 페이지
+              <Typography variant='body2'>마이 페이지</Typography>
             </MenuItem>
             <MenuItem className={menuItemStyles}>
               <Notifications />
-              공지사항
+              <Typography variant='body2'>공지사항</Typography>
             </MenuItem>
             <Divider />
             <MenuItem className={menuItemStyles}>
               <ExitToApp />
-              로그아웃
+              <Typography variant='body2'>로그아웃</Typography>
             </MenuItem>
           </Menu>
         </Box>
