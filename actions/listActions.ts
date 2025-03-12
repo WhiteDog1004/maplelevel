@@ -1,7 +1,7 @@
 'use server';
 
 import { createServerSupabaseClient } from '@/supabase/server';
-import { WriteValueOptions } from '@/types/add';
+import { WriteValueOptions } from '@/types/common';
 import { UserType } from '@/types_db';
 import { PostgrestError } from '@supabase/postgrest-js';
 
