@@ -1,5 +1,5 @@
 import { useWriteStore } from '@/store/useWriteValueStore';
-import { partyTypes, RecommendMapProps } from '@/types/add';
+import { partyTypes } from '@/types/common';
 import { MAP_CODE } from '@/utils/mapCode';
 import { yupResolver } from '@hookform/resolvers/yup';
 import {
@@ -15,6 +15,7 @@ import {
 import { useQuery } from '@tanstack/react-query';
 import { Dispatch, SetStateAction } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import { RecommendMapProps } from '../../_types/add';
 import { selectInfoSchema } from './SelectInformation.const';
 
 interface SelectInformationProps {

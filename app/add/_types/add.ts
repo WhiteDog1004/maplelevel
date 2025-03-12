@@ -1,7 +1,5 @@
+import { huntTypes, partyTypes } from '@/types/common';
 import { Dispatch, SetStateAction } from 'react';
-
-export type huntTypes = 'all' | 'meso' | 'exp';
-export type partyTypes = 'all' | 'party' | 'solo';
 
 export interface RecommendMapProps {
   recommendMap: {

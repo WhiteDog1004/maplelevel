@@ -1,8 +1,8 @@
 import { useDarkModeStore } from '@/store/useDarkModeStore';
-import { RecommendMapProps } from '@/types/add';
 import { EditNote, FactCheck } from '@mui/icons-material';
 import { Box, Button, Card, Typography } from '@mui/material';
 import { Dispatch, SetStateAction, useState } from 'react';
+import { RecommendMapProps } from '../../_types/add';
 import { SelectInformation } from '../SelectInformation';
 import { SelectMap } from '../SelectMap';
 import { SelectMob } from '../SelectMob';

@@ -1,10 +1,10 @@
 import { Loading } from '@/app/_components/Loading';
 import { useWriteStore } from '@/store/useWriteValueStore';
-import { RecommendMapProps } from '@/types/add';
 import { Box, Card, Typography } from '@mui/material';
 import { useQueries, useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import { RecommendMapProps } from '../../_types/add';
 
 interface SelectMobProps {
   recommendMap: RecommendMapProps['recommendMap'];

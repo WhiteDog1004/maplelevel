@@ -1,5 +1,4 @@
 import { Loading } from '@/app/_components/Loading';
-import { RecommendMapProps } from '@/types/add';
 import { MAP_CODE } from '@/utils/mapCode';
 import { AddCircle, Edit } from '@mui/icons-material';
 import {
@@ -16,6 +15,7 @@ import {
 import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import { SyntheticEvent, useEffect, useState } from 'react';
+import { RecommendMapProps } from '../../_types/add';
 
 interface SelectMapProps {
   recommendMap: RecommendMapProps['recommendMap'];

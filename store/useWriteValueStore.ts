@@ -1,4 +1,4 @@
-import { WriteValueOptions } from '@/types/add';
+import { WriteValueOptions } from '@/app/add/_types/add';
 import { v4 as uuidv4 } from 'uuid';
 import { create } from 'zustand';
 
