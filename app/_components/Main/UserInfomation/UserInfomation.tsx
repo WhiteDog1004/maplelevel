@@ -1,3 +1,4 @@
+import { SearchInfoTypes } from '@/types/common';
 import { getClassImages, JOBS } from '@/utils/jobs';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Add } from '@mui/icons-material';
@@ -18,12 +19,6 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { infoSchema } from './UserInformation.const';
-
-type SearchInfoTypes = {
-  job: string;
-  level: number;
-  type: string;
-};
 
 export const UserInfomation = () => {
   const router = useRouter();

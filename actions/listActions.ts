@@ -1,7 +1,7 @@
 'use server';
 
 import { createServerSupabaseClient } from '@/supabase/server';
-import { WriteValueOptions } from '@/types/common';
+import { SearchInfoTypes, WriteValueOptions } from '@/types/common';
 import { UserType } from '@/types_db';
 import { PostgrestError } from '@supabase/postgrest-js';
 
@@ -11,13 +11,48 @@ const handleError = (error: PostgrestError | null) => {
   }
 };
 
-export const getLists = async () => {
+export const getLists = async (searchParams: SearchInfoTypes) => {
   const supabase = await createServerSupabaseClient();
 
-  const { data, error } = await supabase
-    .from('recommend-list')
-    .select('*')
-    .order('like', { ascending: false });
+  let queryBuilder = supabase.from('recommend-list').select('*');
+
+  if (searchParams?.job) {
+    queryBuilder = queryBuilder.eq('job', searchParams?.job);
+  }
+
+  if (searchParams?.level) {
+    const level = Number(searchParams.level);
+    if (!isNaN(level)) {
+      const { data, error } = await queryBuilder;
+
+      if (error) {
+        return handleError(error);
+      }
+
+      let filteredData = data.filter((item) => {
+        return item.map_data.some((map) => {
+          const minLevel = map.level.min;
+          const maxLevel = map.level.max;
+
+          return level >= (minLevel || 0) && level <= (maxLevel || 0);
+        });
+      });
+
+      if (searchParams?.type) {
+        const type = searchParams.type;
+        filteredData = filteredData.filter((item) => {
+          if (type === 'all') return true;
+          return item.hunt_type === type;
+        });
+      }
+
+      return filteredData;
+    }
+  }
+
+  queryBuilder = queryBuilder.order('created_at', { ascending: false });
+
+  const { data, error } = await queryBuilder;
 
   handleError(error);
 
