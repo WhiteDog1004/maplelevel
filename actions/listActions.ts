@@ -42,7 +42,7 @@ export const getLists = async (searchParams: SearchInfoTypes) => {
         const type = searchParams.type;
         filteredData = filteredData.filter((item) => {
           if (type === 'all') return true;
-          return item.hunt_type === type;
+          return item.hunt_type === 'all' || item.hunt_type === type;
         });
       }
 
