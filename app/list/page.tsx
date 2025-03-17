@@ -1,6 +1,7 @@
 import { getLists } from '@/actions/listActions';
 import { SearchInfoTypes } from '@/types/common';
 import { SITE_TITLE } from '@/utils/string';
+import { Box } from '@mui/material';
 import { Metadata } from 'next';
 import { ListClientPage } from './_components/ListClientPage';
 
@@ -10,12 +11,13 @@ export const metadata: Metadata = {
 };
 
 const List = async ({ searchParams }: { searchParams: SearchInfoTypes }) => {
-  const lists = await getLists(searchParams);
+  const params = await searchParams;
+  const lists = await getLists(params);
 
   return (
-    <div className='w-full min-h-screen max-w-5xl m-auto h-full flex flex-row'>
+    <Box className='w-full min-h-screen max-w-5xl m-auto h-full flex flex-row'>
       <ListClientPage lists={lists || []} />
-    </div>
+    </Box>
   );
 };
 

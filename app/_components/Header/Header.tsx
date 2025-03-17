@@ -1,5 +1,6 @@
 'use client';
 
+import { useErrorStore } from '@/store/useErrorStore';
 import { SITE_MAP } from '@/utils/sitemap';
 import { ExitToApp, Notifications } from '@mui/icons-material';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -22,6 +23,7 @@ import { ToggleDarkMode } from '../ToggleDarkMode';
 export const Header = () => {
   const router = useRouter();
   const pathname = usePathname();
+  const { isError } = useErrorStore();
   const [profileOpen, setProfileOpen] = useState<HTMLElement | null>(null);
   const [menuOpen, setMenuOpen] = useState<HTMLElement | null>(null);
   const menuItemStyles = 'flex gap-2 h-12';
@@ -43,7 +45,7 @@ export const Header = () => {
     <AppBar
       color='default'
       className='items-center'
-      position={pathname === '/' ? 'fixed' : 'sticky'}
+      position={pathname === '/' || isError ? 'fixed' : 'sticky'}
     >
       <Box className='max-w-5xl w-full flex justify-between items-center p-2'>
         <Box className='flex items-center gap-2'>

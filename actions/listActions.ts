@@ -16,11 +16,11 @@ export const getLists = async (searchParams: SearchInfoTypes) => {
 
   let queryBuilder = supabase.from('recommend-list').select('*');
 
-  if (searchParams?.job) {
+  if (searchParams.job) {
     queryBuilder = queryBuilder.eq('job', searchParams?.job);
   }
 
-  if (searchParams?.level) {
+  if (searchParams.level) {
     const level = Number(searchParams.level);
     if (!isNaN(level)) {
       const { data, error } = await queryBuilder;
@@ -38,7 +38,7 @@ export const getLists = async (searchParams: SearchInfoTypes) => {
         });
       });
 
-      if (searchParams?.type) {
+      if (searchParams.type) {
         const type = searchParams.type;
         filteredData = filteredData.filter((item) => {
           if (type === 'all') return true;
