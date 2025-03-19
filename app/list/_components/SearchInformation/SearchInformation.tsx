@@ -32,10 +32,11 @@ export const SearchInformation = () => {
   } = useForm<SearchInfoTypes>();
 
   const onSubmit = (value?: SearchInfoTypes) => {
-    if (value?.job || value?.level || value?.type) {
+    if (value?.job || value?.level || value?.type || value?.title) {
       const query = new URLSearchParams({
-        job: value.job,
-        level: value.level.toString(),
+        ...(value.title && { title: value.title }),
+        ...(value.job && { job: value.job }),
+        ...(value.level && { level: value.level.toString() }),
         type: value.type || 'all',
       }).toString();
 
@@ -66,13 +67,24 @@ export const SearchInformation = () => {
         <Typography variant='body2'>필터</Typography>
       </Button>
       <Dialog
+        fullWidth
+        maxWidth='xs'
         transitionDuration={{ enter: 200, exit: 200 }}
         open={isOpenFilter}
         onClose={() => setIsOpenFilter(false)}
       >
-        <Box className='py-12 px-8'>
+        <Box className='flex flex-col gap-4 py-6 px-8'>
+          <Box className='flex flex-col'>
+            <Typography variant='h6' textAlign='center'>
+              필터 검색
+            </Typography>
+            <Typography variant='caption' color='textDisabled' textAlign='center'>
+              원하는 항목만 입력하여 검색할 수 있습니다.
+            </Typography>
+          </Box>
           <form className='w-full' onSubmit={handleSubmit(onSubmit)}>
             <FormControl className='flex flex-col w-full gap-4'>
+              <TextField fullWidth label='제목' {...register('title')} />
               <FormControl error={!!errors.job?.message}>
                 <InputLabel>직업</InputLabel>
                 <Select

@@ -17,6 +17,7 @@ export interface WriteValueOptions {
 }
 
 export type SearchInfoTypes = {
+  title?: string;
   job: string;
   level: number;
   type: string;
