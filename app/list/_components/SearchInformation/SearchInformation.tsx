@@ -15,12 +15,13 @@ import {
   Typography,
 } from '@mui/material';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
 export const SearchInformation = () => {
   const router = useRouter();
+  const params = useSearchParams();
   const [isOpenFilter, setIsOpenFilter] = useState(false);
   const [selectValue, setSelectValue] = useState('');
   const {
@@ -53,6 +54,21 @@ export const SearchInformation = () => {
     reset();
     return router.replace('/list');
   };
+
+  useEffect(() => {
+    reset({
+      title: params.get('title') || undefined,
+      job: params.get('job') || undefined,
+      level: Number(params.get('level')) || undefined,
+      type: params.get('type') || undefined,
+    });
+  }, [isOpenFilter, params, reset]);
+
+  useEffect(() => {
+    if (params.get('job')) {
+      setSelectValue(params.get('job') || '');
+    }
+  }, []);
 
   return (
     <>
