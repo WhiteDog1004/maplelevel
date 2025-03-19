@@ -1,3 +1,4 @@
+import { useDarkModeStore } from '@/store/useDarkModeStore';
 import { Database } from '@/types_db';
 import { getClassImages, getLabelByJobs } from '@/utils/jobs';
 import { getTextByCode } from '@/utils/mapCode';
@@ -16,6 +17,7 @@ interface ListItemCardProps {
 }
 
 export const ListItemCard = ({ data }: ListItemCardProps) => {
+  const { darkMode } = useDarkModeStore();
   const searchParams = useSearchParams();
   const searchLevel = searchParams.get('level');
   const result = data.map_data.filter(
@@ -160,6 +162,7 @@ export const ListItemCard = ({ data }: ListItemCardProps) => {
                 <Paper
                   className='flex justify-center items-center py-1 px-2'
                   sx={{ width: '100%' }}
+                  variant={darkMode ? 'elevation' : 'outlined'}
                 >
                   {lowestMap.caption ? (
                     <Typography

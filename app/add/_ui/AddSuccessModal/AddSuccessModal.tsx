@@ -25,7 +25,7 @@ export const AddSuccessModal = ({ open, setOpen }: AddSuccessModalProps) => {
     <Modal open={open.open === 'success'} onClose={handleCloseModal}>
       <Card
         variant='outlined'
-        className='flex flex-col items-center gap-4 p-3 md:p-10 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'
+        className='flex flex-col items-center gap-4 px-8 py-6 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'
       >
         <Typography variant='h5' color='success'>
           작성 완료
