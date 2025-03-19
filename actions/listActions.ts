@@ -16,6 +16,10 @@ export const getLists = async (searchParams: SearchInfoTypes) => {
 
   let queryBuilder = supabase.from('recommend-list').select('*');
 
+  if (searchParams.title) {
+    queryBuilder = queryBuilder.ilike('title', `%${searchParams?.title}%`);
+  }
+
   if (searchParams.job) {
     queryBuilder = queryBuilder.eq('job', searchParams?.job);
   }
@@ -29,7 +33,7 @@ export const getLists = async (searchParams: SearchInfoTypes) => {
         return handleError(error);
       }
 
-      let filteredData = data.filter((item) => {
+      const filteredData = data.filter((item) => {
         return item.map_data.some((map) => {
           const minLevel = map.level.min;
           const maxLevel = map.level.max;
@@ -37,17 +41,23 @@ export const getLists = async (searchParams: SearchInfoTypes) => {
           return level >= (minLevel || 0) && level <= (maxLevel || 0);
         });
       });
-
-      if (searchParams.type) {
-        const type = searchParams.type;
-        filteredData = filteredData.filter((item) => {
-          if (type === 'all') return true;
-          return item.hunt_type === 'all' || item.hunt_type === type;
-        });
-      }
-
       return filteredData;
     }
+  }
+
+  if (searchParams.type) {
+    const type = searchParams.type;
+
+    const { data, error } = await queryBuilder;
+
+    if (error) return handleError(error);
+
+    const filteredData = data.filter((item) => {
+      if (type === 'all') return true;
+      return item.hunt_type === 'all' || item.hunt_type === type;
+    });
+
+    return filteredData;
   }
 
   queryBuilder = queryBuilder.order('created_at', { ascending: false });
