@@ -2,12 +2,13 @@ import { Database } from '@/types_db';
 import { getClassImages, getLabelByJobs } from '@/utils/jobs';
 import { getTextByCode } from '@/utils/mapCode';
 import { EXCHANGE_TYPE, ExchangeTypes } from '@/utils/recommendType';
-import { ManageSearch, ThumbUp } from '@mui/icons-material';
-import { Avatar, Badge, Box, Card, CardActionArea, Chip, Typography } from '@mui/material';
+import { Favorite, ManageSearch } from '@mui/icons-material';
+import { Avatar, Badge, Box, Card, CardActionArea, Chip, Paper, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
+import { useEffect } from 'react';
 import { getBadgeType } from './ListItemCard.const';
 
 interface ListItemCardProps {
@@ -31,7 +32,7 @@ export const ListItemCard = ({ data }: ListItemCardProps) => {
     return (current.level.min || 0) < (min.level.min || 0) ? current : min;
   });
 
-  const { data: minimap } = useQuery({
+  const { data: minimap, refetch } = useQuery({
     queryKey: ['minimap', resultData.uuid],
     queryFn: async () => {
       const response = await fetch(`https://maplestory.io/api/gms/62/map/${lowestMap.map}/minimap`);
@@ -39,29 +40,34 @@ export const ListItemCard = ({ data }: ListItemCardProps) => {
       return response;
     },
   });
+
+  useEffect(() => {
+    refetch();
+  }, [lowestMap]);
   return (
     <Badge
       anchorOrigin={{
         vertical: 'top',
         horizontal: 'right',
       }}
+      sx={{ width: 280 }}
       color={data.like > 5 ? 'error' : 'info'}
-      className='w-max'
+      className='w-max md:w-full'
       badgeContent={
         <Box className='flex justify-center items-center gap-1'>
-          <ThumbUp className='text-white size-5' fontSize='inherit' />
+          <Favorite className='text-white size-5' fontSize='inherit' />
           <Typography variant='body2' className='text-white'>
             {data.like || '0'}
           </Typography>
         </Box>
       }
     >
-      <Card variant='outlined' sx={{ width: 280 }}>
+      <Card variant='outlined' className='md:w-full' sx={{ width: 280 }}>
         <CardActionArea
           sx={{
             p: 2,
           }}
-          className='flex flex-col gap-4 relative'
+          className='flex flex-col gap-4 relative h-full'
         >
           <Typography maxWidth={200} noWrap color='textPrimary'>
             {data.title}
@@ -151,20 +157,26 @@ export const ListItemCard = ({ data }: ListItemCardProps) => {
                     </Typography>
                   </Box>
                 )}
-                <Typography
-                  width='100%'
-                  textAlign='center'
-                  noWrap
-                  variant='caption'
-                  color='textSecondary'
+                <Paper
+                  className='flex justify-center items-center py-1 px-2'
+                  sx={{ width: '100%' }}
                 >
-                  {lowestMap.caption}
-                </Typography>
-                {!lowestMap.caption && (
-                  <Typography variant='caption' color='textDisabled'>
-                    설명 없음
-                  </Typography>
-                )}
+                  {lowestMap.caption ? (
+                    <Typography
+                      width='100%'
+                      textAlign='center'
+                      noWrap
+                      variant='caption'
+                      color='textSecondary'
+                    >
+                      {lowestMap.caption}
+                    </Typography>
+                  ) : (
+                    <Typography variant='caption' color='textDisabled'>
+                      설명 없음
+                    </Typography>
+                  )}
+                </Paper>
               </Box>
               <Box className='flex justify-between items-center' color='GrayText'>
                 <Box className='flex items-end gap-2'>

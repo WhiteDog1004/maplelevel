@@ -15,7 +15,7 @@ const List = async ({ searchParams }: { searchParams: SearchInfoTypes }) => {
   const lists = await getLists(params);
 
   return (
-    <Box className='w-full min-h-screen max-w-5xl m-auto h-full flex flex-row'>
+    <Box className='w-full min-h-screen relative max-w-5xl m-auto h-full flex flex-row'>
       <ListClientPage lists={lists || []} />
     </Box>
   );
