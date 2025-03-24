@@ -24,6 +24,12 @@ export const getLists = async (searchParams: SearchInfoTypes) => {
     queryBuilder = queryBuilder.eq('job', searchParams?.job);
   }
 
+  if (searchParams.type) {
+    if (searchParams.type && searchParams.type !== 'all') {
+      queryBuilder = queryBuilder.or(`hunt_type.eq.all,hunt_type.eq.${searchParams.type}`);
+    }
+  }
+
   if (searchParams.level) {
     const level = Number(searchParams.level);
     if (!isNaN(level)) {
@@ -43,21 +49,6 @@ export const getLists = async (searchParams: SearchInfoTypes) => {
       });
       return filteredData;
     }
-  }
-
-  if (searchParams.type) {
-    const type = searchParams.type;
-
-    const { data, error } = await queryBuilder;
-
-    if (error) return handleError(error);
-
-    const filteredData = data.filter((item) => {
-      if (type === 'all') return true;
-      return item.hunt_type === 'all' || item.hunt_type === type;
-    });
-
-    return filteredData;
   }
 
   queryBuilder = queryBuilder.order('created_at', { ascending: false });
