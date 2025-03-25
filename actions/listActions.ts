@@ -24,10 +24,16 @@ export const getLists = async (searchParams: SearchInfoTypes) => {
     queryBuilder = queryBuilder.eq('job', searchParams?.job);
   }
 
-  if (searchParams.type) {
-    if (searchParams.type && searchParams.type !== 'all') {
-      queryBuilder = queryBuilder.or(`hunt_type.eq.all,hunt_type.eq.${searchParams.type}`);
-    }
+  if (searchParams.type && searchParams.type !== 'all') {
+    queryBuilder = queryBuilder.or(`hunt_type.eq.all,hunt_type.eq.${searchParams.type}`);
+  }
+
+  if (searchParams.partyType && searchParams.partyType !== 'all') {
+    queryBuilder = queryBuilder.filter(
+      'map_data',
+      'cs',
+      JSON.stringify([{ partyType: searchParams.partyType }])
+    );
   }
 
   if (searchParams.level) {
@@ -55,6 +61,7 @@ export const getLists = async (searchParams: SearchInfoTypes) => {
 
   const { data, error } = await queryBuilder;
 
+  console.log(error);
   handleError(error);
 
   return data;

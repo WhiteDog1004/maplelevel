@@ -26,17 +26,24 @@ export const ListItemCard = ({ data }: ListItemCardProps) => {
   );
   const resultData = searchLevel ? { ...data, map_data: result } : data;
 
-  const highestMap = resultData.map_data.reduce((max, current) => {
-    return (current.level.min || 0) > (max.level.min || 0) ? current : max;
-  });
+  const highestMap =
+    resultData.map_data.length > 0
+      ? resultData.map_data.reduce((max, current) => {
+          return (current.level.min || 0) > (max.level.min || 0) ? current : max;
+        })
+      : null;
 
-  const lowestMap = resultData.map_data.reduce((min, current) => {
-    return (current.level.min || 0) < (min.level.min || 0) ? current : min;
-  });
+  const lowestMap =
+    resultData.map_data.length > 0
+      ? resultData.map_data.reduce((min, current) => {
+          return (current.level.min || 0) < (min.level.min || 0) ? current : min;
+        })
+      : null;
 
   const { data: minimap, refetch } = useQuery({
     queryKey: ['minimap', resultData.uuid],
     queryFn: async () => {
+      if (!lowestMap) return;
       const response = await fetch(`https://maplestory.io/api/gms/62/map/${lowestMap.map}/minimap`);
 
       return response;
@@ -118,7 +125,7 @@ export const ListItemCard = ({ data }: ListItemCardProps) => {
                       color='textDisabled'
                     >
                       {searchLevel
-                        ? Math.max(resultData.map_data[0].level.max || 0)
+                        ? Math.max(resultData.map_data[0]?.level.max || 0)
                         : Math.max(...resultData.map_data.map((item) => item.level.max || 0))}
                     </Typography>
                   </Box>
@@ -139,12 +146,12 @@ export const ListItemCard = ({ data }: ListItemCardProps) => {
               <Box className='flex flex-col items-center gap-1'>
                 {resultData.map_data.length <= 1 || searchLevel ? (
                   <Typography variant='body2'>
-                    {getTextByCode(Number(lowestMap.map))?.kor?.split(':')[1]}
+                    {getTextByCode(Number(lowestMap?.map))?.kor?.split(':')[1]}
                   </Typography>
                 ) : (
                   <Box className='flex flex-row items-center gap-1 max-w-60'>
                     <Typography noWrap variant='body2'>
-                      {getTextByCode(Number(lowestMap.map))?.kor?.split(':')[1]}
+                      {getTextByCode(Number(lowestMap?.map))?.kor?.split(':')[1]}
                     </Typography>
                     <Typography variant='caption' color='textDisabled'>
                       ~
@@ -155,7 +162,7 @@ export const ListItemCard = ({ data }: ListItemCardProps) => {
                       sx={{ lineHeight: 1 }}
                       color='textDisabled'
                     >
-                      {getTextByCode(Number(highestMap.map))?.kor?.split(':')[1]}
+                      {getTextByCode(Number(highestMap?.map))?.kor?.split(':')[1]}
                     </Typography>
                   </Box>
                 )}
@@ -164,7 +171,7 @@ export const ListItemCard = ({ data }: ListItemCardProps) => {
                   sx={{ width: '100%' }}
                   variant={darkMode ? 'elevation' : 'outlined'}
                 >
-                  {lowestMap.caption ? (
+                  {lowestMap?.caption ? (
                     <Typography
                       width='100%'
                       textAlign='center'
@@ -172,7 +179,7 @@ export const ListItemCard = ({ data }: ListItemCardProps) => {
                       variant='caption'
                       color='textSecondary'
                     >
-                      {lowestMap.caption}
+                      {lowestMap?.caption}
                     </Typography>
                   ) : (
                     <Typography variant='caption' color='textDisabled'>

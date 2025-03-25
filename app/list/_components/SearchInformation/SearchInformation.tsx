@@ -33,26 +33,27 @@ export const SearchInformation = () => {
   } = useForm<SearchInfoTypes>();
 
   const onSubmit = (value?: SearchInfoTypes) => {
-    if (value?.job || value?.level || value?.type || value?.title) {
+    if (value?.job || value?.level || value?.type || value?.title || value?.partyType) {
       const query = new URLSearchParams({
         ...(value.title && { title: value.title }),
         ...(value.job && { job: value.job }),
         ...(value.level && { level: value.level.toString() }),
-        type: value.type || 'all',
+        ...(value.type && { type: value.type }),
+        ...(value.partyType && { partyType: value.partyType }),
       }).toString();
 
       setIsOpenFilter(false);
-      return router.replace(`/list?${query}`);
+      return router.push(`/list?${query}`);
     }
     setIsOpenFilter(false);
-    return router.replace('/list');
+    return router.push('/list');
   };
 
   const handleReset = () => {
     setIsOpenFilter(false);
     setSelectValue('');
     reset();
-    return router.replace('/list');
+    return router.push('/list');
   };
 
   useEffect(() => {
@@ -61,6 +62,7 @@ export const SearchInformation = () => {
       job: params.get('job') || undefined,
       level: Number(params.get('level')) || undefined,
       type: params.get('type') || undefined,
+      partyType: params.get('partyType') || undefined,
     });
   }, [isOpenFilter, params, reset]);
 
@@ -71,11 +73,10 @@ export const SearchInformation = () => {
   }, []);
 
   return (
-    <>
+    <Box className='flex justify-end w-full max-w-5xl m-auto'>
       <Button
         sx={{ zIndex: 999 }}
         size='medium'
-        color='inherit'
         variant='contained'
         onClick={() => setIsOpenFilter(true)}
       >
@@ -90,7 +91,8 @@ export const SearchInformation = () => {
         onClose={() => setIsOpenFilter(false)}
       >
         <Box className='flex flex-col gap-4 py-6 px-8'>
-          <Box className='flex flex-col'>
+          <Box className='flex flex-col items-center'>
+            <Image src='/images/husky/chat_4.png' alt='notFound' width={44} height={37} />
             <Typography variant='h6' textAlign='center'>
               필터 검색
             </Typography>
@@ -131,7 +133,7 @@ export const SearchInformation = () => {
                 error={!!errors.level?.message}
                 placeholder='레벨을 입력해 주세요'
               />
-              <Box className='flex flex-col whitespace-nowrap gap-2'>
+              <Box className='flex flex-col whitespace-nowrap gap-4'>
                 <Typography variant='body2' color='primary'>
                   사냥 스타일
                 </Typography>
@@ -150,9 +152,30 @@ export const SearchInformation = () => {
                         field.onChange(value);
                       }}
                     >
-                      <ToggleButton value='all'>둘다</ToggleButton>
+                      <ToggleButton value='all'>모두</ToggleButton>
                       <ToggleButton value='exp'>경험치</ToggleButton>
                       <ToggleButton value='meso'>메소벌이</ToggleButton>
+                    </ToggleButtonGroup>
+                  )}
+                />
+                <Controller
+                  name='partyType'
+                  control={control}
+                  render={({ field }) => (
+                    <ToggleButtonGroup
+                      className='bg-white dark:bg-transparent'
+                      fullWidth
+                      exclusive
+                      aria-label='partyType'
+                      value={field.value || ''}
+                      onChange={(_, value) => {
+                        if (!value) return;
+                        field.onChange(value);
+                      }}
+                    >
+                      <ToggleButton value='all'>상관없음</ToggleButton>
+                      <ToggleButton value='solo'>솔로</ToggleButton>
+                      <ToggleButton value='party'>파티</ToggleButton>
                     </ToggleButtonGroup>
                   )}
                 />
@@ -169,6 +192,6 @@ export const SearchInformation = () => {
           </form>
         </Box>
       </Dialog>
-    </>
+    </Box>
   );
 };

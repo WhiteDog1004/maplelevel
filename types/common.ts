@@ -21,4 +21,5 @@ export type SearchInfoTypes = {
   job: string;
   level: number;
   type: string;
+  partyType?: string;
 };

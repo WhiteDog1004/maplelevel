@@ -26,14 +26,14 @@ export const ListClientPage = ({ lists }: ListClientPageProps) => {
   }, [lists]);
 
   return (
-    <Box className='flex flex-col w-full py-16 px-8'>
-      <Box className='fixed z-50 right-4 bottom-4'>
+    <Box className='flex flex-col gap-4 w-full py-16 px-8'>
+      <Box className='fixed z-50 w-full right-0 bottom-4'>
         <SearchInformation />
       </Box>
       {lists.length ? (
         <Box className='grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] justify-items-center w-full h-max gap-8'>
           {lists.map((list) => (
-            <ListItemCard key={list.uuid} data={list} />
+            <ListItemCard key={list.uuid} data={list || []} />
           ))}
         </Box>
       ) : (
