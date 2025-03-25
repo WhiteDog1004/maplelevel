@@ -22,4 +22,5 @@ export type SearchInfoTypes = {
   level: number;
   type: string;
   partyType?: string;
+  sort?: string;
 };

@@ -57,11 +57,16 @@ export const getLists = async (searchParams: SearchInfoTypes) => {
     }
   }
 
-  queryBuilder = queryBuilder.order('created_at', { ascending: false });
+  if (searchParams.sort) {
+    queryBuilder = queryBuilder
+      .order('like', { ascending: false, nullsFirst: false })
+      .order('created_at', { ascending: false });
+  } else {
+    queryBuilder = queryBuilder.order('created_at', { ascending: false });
+  }
 
   const { data, error } = await queryBuilder;
 
-  console.log(error);
   handleError(error);
 
   return data;

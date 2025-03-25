@@ -9,6 +9,7 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  Stack,
   TextField,
   ToggleButton,
   ToggleButtonGroup,
@@ -18,6 +19,7 @@ import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import { SearchSortSwitch } from './SearchInformation.const';
 
 export const SearchInformation = () => {
   const router = useRouter();
@@ -33,20 +35,28 @@ export const SearchInformation = () => {
   } = useForm<SearchInfoTypes>();
 
   const onSubmit = (value?: SearchInfoTypes) => {
-    if (value?.job || value?.level || value?.type || value?.title || value?.partyType) {
+    if (
+      value?.job ||
+      value?.level ||
+      value?.type ||
+      value?.title ||
+      value?.partyType ||
+      value?.sort
+    ) {
       const query = new URLSearchParams({
         ...(value.title && { title: value.title }),
         ...(value.job && { job: value.job }),
         ...(value.level && { level: value.level.toString() }),
         ...(value.type && { type: value.type }),
         ...(value.partyType && { partyType: value.partyType }),
+        ...(value.sort === 'like' && { sort: value.sort }),
       }).toString();
 
       setIsOpenFilter(false);
       return router.push(`/list?${query}`);
     }
     setIsOpenFilter(false);
-    return router.push('/list');
+    return router.push(`/list`);
   };
 
   const handleReset = () => {
@@ -63,6 +73,7 @@ export const SearchInformation = () => {
       level: Number(params.get('level')) || undefined,
       type: params.get('type') || undefined,
       partyType: params.get('partyType') || undefined,
+      sort: params.get('sort') || undefined,
     });
   }, [isOpenFilter, params, reset]);
 
@@ -103,38 +114,41 @@ export const SearchInformation = () => {
           <form className='w-full' onSubmit={handleSubmit(onSubmit)}>
             <FormControl className='flex flex-col w-full gap-4'>
               <TextField fullWidth label='제목' {...register('title')} />
-              <FormControl error={!!errors.job?.message}>
-                <InputLabel>직업</InputLabel>
-                <Select
-                  label='직업'
-                  value={selectValue}
-                  {...register('job')}
-                  onChange={(e) => setSelectValue(e.target.value)}
-                >
-                  {JOBS.map((job) => (
-                    <MenuItem key={job.id} value={job.name}>
-                      <Box className='flex items-center gap-2'>
-                        <Image
-                          width={20}
-                          height={20}
-                          unoptimized
-                          src={`/images/class/${getClassImages(job.id)}.webp`}
-                          alt={'class'}
-                        />
-                        {job.label}
-                      </Box>
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-              <TextField
-                label='레벨'
-                {...register('level')}
-                error={!!errors.level?.message}
-                placeholder='레벨을 입력해 주세요'
-              />
+              <Box className='flex flex-col sm:flex-row gap-4 w-full'>
+                <FormControl className='w-full' error={!!errors.job?.message}>
+                  <InputLabel>직업</InputLabel>
+                  <Select
+                    label='직업'
+                    value={selectValue}
+                    {...register('job')}
+                    onChange={(e) => setSelectValue(e.target.value)}
+                  >
+                    {JOBS.map((job) => (
+                      <MenuItem key={job.id} value={job.name}>
+                        <Box className='flex items-center gap-2'>
+                          <Image
+                            width={20}
+                            height={20}
+                            unoptimized
+                            src={`/images/class/${getClassImages(job.id)}.webp`}
+                            alt={'class'}
+                          />
+                          {job.label}
+                        </Box>
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+                <TextField
+                  className='w-full'
+                  label='레벨'
+                  {...register('level')}
+                  error={!!errors.level?.message}
+                  placeholder='레벨을 입력해 주세요'
+                />
+              </Box>
               <Box className='flex flex-col whitespace-nowrap gap-4'>
-                <Typography variant='body2' color='primary'>
+                <Typography textAlign='center' variant='body2' color='textSecondary'>
                   사냥 스타일
                 </Typography>
                 <Controller
@@ -180,7 +194,38 @@ export const SearchInformation = () => {
                   )}
                 />
               </Box>
-              <Box className='flex justify-between gap-4 pt-6'>
+              <Box className='flex justify-center'>
+                <Controller
+                  name='sort'
+                  control={control}
+                  render={({ field }) => (
+                    <Stack direction='row' spacing={1} sx={{ alignItems: 'center' }}>
+                      <Typography
+                        width={48}
+                        textAlign='end'
+                        variant={!field.value ? 'body1' : 'body2'}
+                        color={!field.value ? 'primary' : 'textDisabled'}
+                      >
+                        최신순
+                      </Typography>
+                      <SearchSortSwitch
+                        checked={field.value === 'like'}
+                        onChange={(_, value) => {
+                          field.onChange(value ? 'like' : '');
+                        }}
+                      />
+                      <Typography
+                        width={48}
+                        color={field.value === 'like' ? 'primary' : 'textDisabled'}
+                        variant={field.value === 'like' ? 'body1' : 'body2'}
+                      >
+                        추천순
+                      </Typography>
+                    </Stack>
+                  )}
+                />
+              </Box>
+              <Box className='flex justify-between gap-4 pt-4'>
                 <Button color='warning' variant='outlined' fullWidth onClick={handleReset}>
                   리셋
                 </Button>
