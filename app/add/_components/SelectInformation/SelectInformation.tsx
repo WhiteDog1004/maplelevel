@@ -1,3 +1,4 @@
+import { useMapIcon } from '@/hooks/api';
 import { useWriteStore } from '@/store/useWriteValueStore';
 import { partyTypes } from '@/types/common';
 import { MAP_CODE } from '@/utils/mapCode';
@@ -12,7 +13,6 @@ import {
   ToggleButtonGroup,
   Typography,
 } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
 import { Dispatch, SetStateAction } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { RecommendMapProps } from '../../_types/add';
@@ -43,15 +43,9 @@ export const SelectInformation = ({
     mode: 'onChange',
   });
 
-  const { data: mapIcon, isLoading } = useQuery({
-    queryKey: ['minimap', recommendMap.code],
-    queryFn: async () => {
-      const response = await fetch(
-        `https://maplestory.io/api/gms/62/map/${recommendMap.code}/icon`
-      );
-
-      return response;
-    },
+  const { data: mapIcon, isLoading } = useMapIcon({
+    code: recommendMap.code,
+    uuid: recommendMap.code.toString(),
     enabled: !!recommendMap.minimap,
   });
 
@@ -74,6 +68,7 @@ export const SelectInformation = ({
             partyType: data.type as partyTypes,
             caption: data.caption,
             mapCode: recommendMap.code,
+            mobs: option.mobs,
           };
         }
         return option;

@@ -1,4 +1,5 @@
 import { Loading } from '@/app/_components/Loading';
+import { useMinimap } from '@/hooks/api';
 import { MAP_CODE } from '@/utils/mapCode';
 import { AddCircle, Edit } from '@mui/icons-material';
 import {
@@ -12,7 +13,6 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import { SyntheticEvent, useEffect, useState } from 'react';
 import { RecommendMapProps } from '../../_types/add';
@@ -33,17 +33,9 @@ export const SelectMap = ({ recommendMap, setRecommendMap }: SelectMapProps) => 
     return setIsOpen(true);
   };
 
-  const { data: minimap, isLoading } = useQuery({
-    queryKey: ['minimap', selectMap],
-    queryFn: async () => {
-      const response = await fetch(
-        `https://maplestory.io/api/gms/62/map/${
-          MAP_CODE.filter((map) => map.kor.includes(selectMap))[0].code
-        }/minimap`
-      );
-
-      return response;
-    },
+  const { data: minimap, isLoading } = useMinimap({
+    code: MAP_CODE.filter((map) => map.kor.includes(selectMap))[0]?.code,
+    uuid: selectMap,
     enabled: !!selectMap,
   });
 
@@ -158,6 +150,7 @@ export const SelectMap = ({ recommendMap, setRecommendMap }: SelectMapProps) => 
               onClick={() => {
                 if (!minimap) return;
                 setRecommendMap({
+                  isJms: !!MAP_CODE.filter((map) => map.kor.includes(selectMap))[0].region,
                   minimap: minimap.url,
                   code: MAP_CODE.filter((map) => map.kor.includes(selectMap))[0].code,
                   label: selectMap,

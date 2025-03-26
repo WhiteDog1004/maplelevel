@@ -88,6 +88,7 @@ export const createLists = async (list: WriteValueOptions, user: UserType) => {
         map: option.mapCode,
         partyType: option.partyType,
         caption: option.caption,
+        mobs: option.mobs,
       })) ?? [],
     user: {
       uuid: user.uuid,

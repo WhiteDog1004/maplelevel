@@ -5,6 +5,7 @@ export interface RecommendMapProps {
     minimap: string;
     code: number;
     label: string;
+    isJms?: boolean;
   };
   setRecommendMap: Dispatch<SetStateAction<RecommendMapProps['recommendMap']>>;
 }

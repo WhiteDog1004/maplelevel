@@ -1,3 +1,4 @@
+import { useMinimap } from '@/hooks/api';
 import { useDarkModeStore } from '@/store/useDarkModeStore';
 import { Database } from '@/types_db';
 import { getClassImages, getLabelByJobs } from '@/utils/jobs';
@@ -5,7 +6,6 @@ import { getTextByCode } from '@/utils/mapCode';
 import { EXCHANGE_TYPE, ExchangeTypes } from '@/utils/recommendType';
 import { Favorite, ManageSearch } from '@mui/icons-material';
 import { Avatar, Badge, Box, Card, CardActionArea, Chip, Paper, Typography } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -41,19 +41,15 @@ export const ListItemCard = ({ data }: ListItemCardProps) => {
         })
       : null;
 
-  const { data: minimap, refetch } = useQuery({
-    queryKey: ['minimap', resultData.uuid],
-    queryFn: async () => {
-      if (!lowestMap) return;
-      const response = await fetch(`https://maplestory.io/api/gms/62/map/${lowestMap.map}/minimap`);
-
-      return response;
-    },
+  const { data: minimap, refetch } = useMinimap({
+    code: lowestMap?.map,
+    uuid: resultData.uuid,
   });
 
   useEffect(() => {
     refetch();
   }, [lowestMap]);
+
   return (
     <Badge
       anchorOrigin={{
