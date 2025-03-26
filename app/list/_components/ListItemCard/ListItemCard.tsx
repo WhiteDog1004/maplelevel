@@ -8,7 +8,7 @@ import { Avatar, Badge, Box, Card, CardActionArea, Chip, Paper, Typography } fro
 import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import Image from 'next/image';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 import { getBadgeType } from './ListItemCard.const';
 
@@ -17,6 +17,7 @@ interface ListItemCardProps {
 }
 
 export const ListItemCard = ({ data }: ListItemCardProps) => {
+  const router = useRouter();
   const { darkMode } = useDarkModeStore();
   const searchParams = useSearchParams();
   const searchLevel = searchParams.get('level');
@@ -73,6 +74,7 @@ export const ListItemCard = ({ data }: ListItemCardProps) => {
     >
       <Card variant='outlined' className='md:w-full' sx={{ width: 280 }}>
         <CardActionArea
+          onClick={() => router.push(`/list/${data.uuid}`)}
           sx={{
             p: 2,
           }}

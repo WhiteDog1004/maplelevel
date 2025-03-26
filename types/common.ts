@@ -1,3 +1,5 @@
+import { Database } from '@/types_db';
+
 export type huntTypes = 'all' | 'meso' | 'exp';
 export type partyTypes = 'all' | 'party' | 'solo';
 
@@ -24,3 +26,7 @@ export type SearchInfoTypes = {
   partyType?: string;
   sort?: string;
 };
+
+export interface ListDetailOptions {
+  list: Database['public']['Tables']['recommend-list']['Row'];
+}

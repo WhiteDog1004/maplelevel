@@ -99,3 +99,17 @@ export const createLists = async (list: WriteValueOptions, user: UserType) => {
 
   return data;
 };
+
+export const getDetailList = async (uuid: string) => {
+  const supabase = await createServerSupabaseClient();
+
+  const { data, error } = await supabase
+    .from('recommend-list')
+    .select('*')
+    .eq('uuid', uuid)
+    .single();
+
+  handleError(error);
+
+  return data;
+};
