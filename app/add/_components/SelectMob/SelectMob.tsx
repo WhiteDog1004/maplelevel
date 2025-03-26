@@ -1,7 +1,7 @@
 import { Loading } from '@/app/_components/Loading';
+import { useGetMap, useMobs } from '@/hooks/api';
 import { useWriteStore } from '@/store/useWriteValueStore';
 import { Box, Card, Typography } from '@mui/material';
-import { useQueries, useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { RecommendMapProps } from '../../_types/add';
@@ -15,37 +15,16 @@ export const SelectMob = ({ recommendMap, id }: SelectMobProps) => {
   const { writeValues, setWriteValues } = useWriteStore();
   const [mobs, setMobs] = useState<number[]>([]);
 
-  const { data: getMap, isLoading } = useQuery({
-    queryKey: ['selectmap', recommendMap.code],
-    queryFn: async () => {
-      const response = await fetch(
-        `https://maplestory.io/api/${recommendMap.isJms ? 'jms/393' : 'gms/62'}/map/${
-          recommendMap.code
-        }`
-      );
-
-      return response.json();
-    },
+  const { data: getMap, isLoading } = useGetMap({
+    map: recommendMap,
     enabled: !!recommendMap.code,
   });
 
-  const queries = useQueries({
-    queries: mobs.map((mob) => ({
-      enabled: mobs.length > 0,
-      queryKey: ['getmob', mob],
-      queryFn: async () => {
-        const response = await fetch(
-          `https://maplestory.io/api/${recommendMap.isJms ? 'jms/393' : 'gms/62'}/mob/${mob}/icon`
-        );
-
-        if (!response.ok) {
-          return '/images/husky/cry_0.png';
-        }
-
-        return response.url;
-      },
-    })),
+  const queries = useMobs({
+    mobs,
+    recommendMap,
   });
+
   useEffect(() => {
     setMobs([]);
     if (!getMap) return;
