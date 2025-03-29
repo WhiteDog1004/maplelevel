@@ -86,6 +86,7 @@ export const SearchInformation = () => {
   return (
     <Box className='flex justify-end w-full max-w-5xl m-auto'>
       <Button
+        className='pointer-events-auto'
         sx={{ zIndex: 999 }}
         size='medium'
         variant='contained'

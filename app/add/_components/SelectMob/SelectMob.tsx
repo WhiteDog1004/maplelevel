@@ -16,13 +16,13 @@ export const SelectMob = ({ recommendMap, id }: SelectMobProps) => {
   const [mobs, setMobs] = useState<number[]>([]);
 
   const { data: getMap, isLoading } = useGetMap({
-    map: recommendMap,
+    code: recommendMap.code,
     enabled: !!recommendMap.code,
   });
 
   const queries = useMobs({
     mobs,
-    recommendMap,
+    code: recommendMap.code,
   });
 
   useEffect(() => {

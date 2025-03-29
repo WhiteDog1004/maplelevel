@@ -12,11 +12,11 @@ export const metadata: Metadata = {
 
 const List = async ({ searchParams }: { searchParams: SearchInfoTypes }) => {
   const params = await searchParams;
-  const lists = await getLists(params);
+  const { data, count } = await getLists(params);
 
   return (
     <Box className='w-full min-h-screen relative max-w-5xl m-auto h-full flex flex-row'>
-      <ListClientPage lists={lists || []} />
+      <ListClientPage lists={data || []} count={count} />
     </Box>
   );
 };

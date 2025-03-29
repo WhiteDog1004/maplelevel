@@ -2,7 +2,8 @@
 
 import { createServerSupabaseClient } from '@/supabase/server';
 import { SearchInfoTypes, WriteValueOptions } from '@/types/common';
-import { UserType } from '@/types_db';
+import { Database, UserType } from '@/types_db';
+import { PAGE_SIZE } from '@/utils/pageSize';
 import { PostgrestError } from '@supabase/postgrest-js';
 
 const handleError = (error: PostgrestError | null) => {
@@ -11,10 +12,17 @@ const handleError = (error: PostgrestError | null) => {
   }
 };
 
-export const getLists = async (searchParams: SearchInfoTypes) => {
+export const getLists = async (
+  searchParams: SearchInfoTypes
+): Promise<{ data: Database['public']['Tables']['recommend-list']['Row'][]; count: number }> => {
   const supabase = await createServerSupabaseClient();
 
-  let queryBuilder = supabase.from('recommend-list').select('*');
+  const offset = ((searchParams.page || 1) - 1) * PAGE_SIZE;
+
+  let queryBuilder = supabase
+    .from('recommend-list')
+    .select('*', { count: 'exact' })
+    .range(offset, offset + PAGE_SIZE - 1);
 
   if (searchParams.title) {
     queryBuilder = queryBuilder.ilike('title', `%${searchParams?.title}%`);
@@ -36,27 +44,6 @@ export const getLists = async (searchParams: SearchInfoTypes) => {
     );
   }
 
-  if (searchParams.level) {
-    const level = Number(searchParams.level);
-    if (!isNaN(level)) {
-      const { data, error } = await queryBuilder;
-
-      if (error) {
-        return handleError(error);
-      }
-
-      const filteredData = data.filter((item) => {
-        return item.map_data.some((map) => {
-          const minLevel = map.level.min;
-          const maxLevel = map.level.max;
-
-          return level >= (minLevel || 0) && level <= (maxLevel || 0);
-        });
-      });
-      return filteredData;
-    }
-  }
-
   if (searchParams.sort) {
     queryBuilder = queryBuilder
       .order('like', { ascending: false, nullsFirst: false })
@@ -65,11 +52,30 @@ export const getLists = async (searchParams: SearchInfoTypes) => {
     queryBuilder = queryBuilder.order('created_at', { ascending: false });
   }
 
-  const { data, error } = await queryBuilder;
+  if (searchParams.level) {
+    const level = Number(searchParams.level);
+    if (!isNaN(level)) {
+      const { data, error } = await queryBuilder;
+
+      handleError(error);
+
+      const filteredData = data?.filter((item) => {
+        return item.map_data.some((map) => {
+          const minLevel = map.level.min;
+          const maxLevel = map.level.max;
+
+          return level >= (minLevel || 0) && level <= (maxLevel || 0);
+        });
+      });
+      return { data: filteredData ?? [], count: filteredData?.length ?? 0 };
+    }
+  }
+
+  const { data, count, error } = await queryBuilder;
 
   handleError(error);
 
-  return data;
+  return { data: data ?? [], count: count ?? 0 };
 };
 
 export const createLists = async (list: WriteValueOptions, user: UserType) => {

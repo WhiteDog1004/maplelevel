@@ -8,13 +8,15 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { ListItemCard } from '../ListItemCard';
+import { ListPagination } from '../ListPagination';
 import { SearchInformation } from '../SearchInformation';
 
 interface ListClientPageProps {
   lists: Database['public']['Tables']['recommend-list']['Row'][];
+  count: number;
 }
 
-export const ListClientPage = ({ lists }: ListClientPageProps) => {
+export const ListClientPage = ({ lists, count }: ListClientPageProps) => {
   const router = useRouter();
   const setIsError = useErrorStore((state) => state.setIsError);
 
@@ -26,16 +28,20 @@ export const ListClientPage = ({ lists }: ListClientPageProps) => {
   }, [lists]);
 
   return (
-    <Box className='flex flex-col gap-4 w-full py-16 px-8'>
-      <Box className='fixed z-50 w-full right-0 bottom-4'>
+    <Box className='flex flex-col gap-8 w-full py-16 px-8'>
+      <Box className='fixed z-50 w-full right-0 bottom-4 pointer-events-none'>
         <SearchInformation />
       </Box>
       {lists.length ? (
-        <Box className='grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] justify-items-center w-full h-max gap-8'>
-          {lists.map((list) => (
-            <ListItemCard key={list.uuid} data={list || []} />
-          ))}
-        </Box>
+        <>
+          <Box className='grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] justify-items-center w-full h-max gap-8'>
+            {lists.map((list) => (
+              <ListItemCard key={list.uuid} data={list || []} />
+            ))}
+          </Box>
+
+          <ListPagination count={count} />
+        </>
       ) : (
         <Box className='flex flex-col gap-4 justify-center items-center w-full h-screen'>
           <Box className='flex flex-col gap-2 items-center'>
