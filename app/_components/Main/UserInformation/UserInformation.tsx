@@ -20,7 +20,7 @@ import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { infoSchema } from './UserInformation.const';
 
-export const UserInfomation = () => {
+export const UserInformation = () => {
   const router = useRouter();
   const {
     control,

@@ -25,7 +25,7 @@ export type SearchInfoTypes = {
   type: string;
   partyType?: string;
   sort?: string;
-  page: number;
+  page?: number;
 };
 
 export interface ListDetailOptions {
