@@ -50,7 +50,7 @@ export const SearchInformation = () => {
         ...(value.type && { type: value.type }),
         ...(value.partyType && { partyType: value.partyType }),
         ...(value.sort === 'like' && { sort: value.sort }),
-        ...(params.get('page') && { page: params.get('page') || '1' }),
+        ...{ page: '1' },
       }).toString();
 
       setIsOpenFilter(false);
