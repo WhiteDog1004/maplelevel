@@ -19,10 +19,7 @@ export const getLists = async (
 
   const offset = ((searchParams.page || 1) - 1) * PAGE_SIZE;
 
-  let queryBuilder = supabase
-    .from('recommend-list')
-    .select('*', { count: 'exact' })
-    .range(offset, offset + PAGE_SIZE - 1);
+  let queryBuilder = supabase.from('recommend-list').select('*', { count: 'exact' });
 
   if (searchParams.title) {
     queryBuilder = queryBuilder.ilike('title', `%${searchParams?.title}%`);
@@ -54,6 +51,7 @@ export const getLists = async (
 
   if (searchParams.level) {
     const level = Number(searchParams.level);
+
     if (!isNaN(level)) {
       const { data, error } = await queryBuilder;
 
@@ -67,11 +65,17 @@ export const getLists = async (
           return level >= (minLevel || 0) && level <= (maxLevel || 0);
         });
       });
-      return { data: filteredData ?? [], count: filteredData?.length ?? 0 };
+
+      return {
+        data:
+          filteredData?.filter((_, index) => offset <= index && offset + PAGE_SIZE - 1 >= index) ??
+          [],
+        count: filteredData?.length ?? 0,
+      };
     }
   }
 
-  const { data, count, error } = await queryBuilder;
+  const { data, count, error } = await queryBuilder.range(offset, offset + PAGE_SIZE - 1);
 
   handleError(error);
 
