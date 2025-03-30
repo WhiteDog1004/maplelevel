@@ -57,7 +57,7 @@ export const SearchInformation = () => {
       return router.push(`/list?${query}`);
     }
     setIsOpenFilter(false);
-    return router.push(`/list`);
+    return router.push(`/list?page=1`);
   };
 
   const handleReset = () => {
