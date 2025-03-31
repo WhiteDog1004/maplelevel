@@ -10,7 +10,7 @@ interface DetailContentGetInfoProps {
 
 export const DetailContentGetInfo = ({ data }: DetailContentGetInfoProps) => {
   return (
-    <Paper elevation={4} className='flex flex-col gap-4 w-full p-4 justify-between'>
+    <Box className='flex flex-col gap-4 w-full justify-between'>
       <Box className='flex flex-col gap-2 items-start'>
         <Box>
           <Box className={`${getBadgeType[data.partyType as partyTypes]} justify-center`}>
@@ -46,6 +46,6 @@ export const DetailContentGetInfo = ({ data }: DetailContentGetInfoProps) => {
           {data.caption}
         </Paper>
       </Box>
-    </Paper>
+    </Box>
   );
 };
