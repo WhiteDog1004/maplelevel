@@ -74,13 +74,13 @@ export const DetailContentGetMap = ({ data: list }: DetailContentGetMapProps) =>
                       </Typography>
                     </Box>
                   </Box>
-                  <Box>
-                    <Typography variant='body2' color='textSecondary'>
-                      등장 몬스터
-                    </Typography>
-                    <Box className='grid grid-cols-[repeat(3,1fr)] justify-items-center gap-1 max-h-40 overflow-y-auto'>
-                      {(list.mobs || []).length > 0 &&
-                        queries.map((mob, index) => (
+                  {(list.mobs || []).length > 0 && (
+                    <Box>
+                      <Typography variant='body2' color='textSecondary'>
+                        등장 몬스터
+                      </Typography>
+                      <Box className='grid grid-cols-[repeat(3,1fr)] gap-y-4 justify-items-center gap-1 max-h-40 overflow-y-auto'>
+                        {queries.map((mob, index) => (
                           <Box className='w-max h-max m-h-16 max-w-16' key={index}>
                             {mob.isLoading || isLoading ? (
                               <Loading />
@@ -103,8 +103,9 @@ export const DetailContentGetMap = ({ data: list }: DetailContentGetMapProps) =>
                             )}
                           </Box>
                         ))}
+                      </Box>
                     </Box>
-                  </Box>
+                  )}
                 </Box>
               )}
             </>

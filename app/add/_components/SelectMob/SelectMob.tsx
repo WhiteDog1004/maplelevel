@@ -49,7 +49,7 @@ export const SelectMob = ({ recommendMap, id }: SelectMobProps) => {
         <Typography color='textDisabled'>등장 몬스터</Typography>
         <Card variant='outlined'>
           {recommendMap.code ? (
-            <Box className='grid grid-cols-[repeat(auto-fit,minmax(80px,1fr))] justify-items-center gap-1 px-1 py-3 max-h-40 overflow-y-auto'>
+            <Box className='grid grid-cols-[repeat(3,1fr)] justify-items-center gap-1 px-1 py-3 max-h-40 overflow-y-auto'>
               {queries.map((mob, index) => (
                 <Box className='w-max h-max m-h-16 max-w-16' key={index}>
                   {mob.isLoading || isLoading ? (

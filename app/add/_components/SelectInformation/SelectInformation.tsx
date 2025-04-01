@@ -69,6 +69,7 @@ export const SelectInformation = ({
             caption: data.caption,
             mapCode: recommendMap.code,
             mobs: option.mobs,
+            uuid: option.uuid,
           };
         }
         return option;
@@ -163,6 +164,8 @@ export const SelectInformation = ({
             fullWidth
             placeholder='ex) 5분당 5만 경험치 먹어요!'
             size='small'
+            multiline
+            maxRows={4}
             {...register('caption')}
           />
         </Box>
