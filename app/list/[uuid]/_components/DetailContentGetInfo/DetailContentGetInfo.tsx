@@ -42,7 +42,11 @@ export const DetailContentGetInfo = ({ data }: DetailContentGetInfoProps) => {
         <Typography variant='body2' color='textSecondary'>
           설명
         </Typography>
-        <Paper className='p-2 h-28 overflow-y-auto' variant='outlined'>
+        <Paper
+          className='p-2 h-28 overflow-y-auto'
+          variant='outlined'
+          sx={{ whiteSpace: 'pre-wrap' }}
+        >
           {data.caption}
         </Paper>
       </Box>

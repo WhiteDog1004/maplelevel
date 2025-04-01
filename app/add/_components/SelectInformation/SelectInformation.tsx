@@ -167,7 +167,13 @@ export const SelectInformation = ({
             multiline
             maxRows={4}
             {...register('caption')}
+            error={!!errors.caption?.message}
           />
+          {errors.caption && (
+            <Typography variant='caption' color='error'>
+              {errors.caption.message}
+            </Typography>
+          )}
         </Box>
       </Box>
       <Button variant='outlined' color='success' size='large' onClick={onSubmit}>

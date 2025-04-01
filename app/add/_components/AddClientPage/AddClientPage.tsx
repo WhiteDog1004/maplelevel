@@ -99,7 +99,14 @@ export const AddClientPage = () => {
 
       {writeValues.options && writeValues.options?.length <= 9 && <EmptyCard />}
 
-      <Button fullWidth variant='contained' color='success' size='large' onClick={handleAddPosting}>
+      <Button
+        fullWidth
+        loading={createAddMutation.isPending}
+        variant='contained'
+        color='success'
+        size='large'
+        onClick={handleAddPosting}
+      >
         작성완료
       </Button>
 
