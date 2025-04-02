@@ -2,16 +2,27 @@ import { Loading } from '@/app/_components/Loading';
 import { useMapIcon, useMinimap, useMobs } from '@/hooks/api';
 import { MapDataType } from '@/types_db';
 import { MAP_CODE } from '@/utils/mapCode';
-import { Avatar, Box, Button, Card, CardMedia, Divider, Skeleton, Typography } from '@mui/material';
+import {
+  Avatar,
+  Box,
+  Button,
+  Card,
+  CardMedia,
+  Divider,
+  Paper,
+  Skeleton,
+  Typography,
+} from '@mui/material';
 import Image from 'next/image';
 import Link from 'next/link';
 import { DetailContentGetInfo } from '../DetailContentGetInfo';
 
 interface DetailContentGetMapProps {
   data: MapDataType;
+  job: string;
 }
 
-export const DetailContentGetMap = ({ data: list }: DetailContentGetMapProps) => {
+export const DetailContentGetMap = ({ data: list, job }: DetailContentGetMapProps) => {
   const { data, error, isPending, refetch } = useMinimap({
     code: list.map,
     uuid: (list.map || 0).toString(),
@@ -31,7 +42,7 @@ export const DetailContentGetMap = ({ data: list }: DetailContentGetMapProps) =>
   return (
     <Box className='flex sm:flex-row flex-col justify-center sm:gap-4 gap-2 w-full'>
       <Card elevation={4} className='w-full flex sm:flex-row flex-col p-4 gap-6'>
-        <Box className='w-full flex flex-col sm:max-w-80'>
+        <Box className='w-full flex flex-col justify-between sm:max-w-80'>
           {isPending ? (
             <Box className='flex justify-center items-center h-full'>
               <Loading />
@@ -75,11 +86,14 @@ export const DetailContentGetMap = ({ data: list }: DetailContentGetMapProps) =>
                     </Box>
                   </Box>
                   {(list.mobs || []).length > 0 && (
-                    <Box>
-                      <Typography variant='body2' color='textSecondary'>
+                    <Box className='flex flex-col gap-2'>
+                      <Typography noWrap variant='body2' color='textSecondary'>
                         등장 몬스터
                       </Typography>
-                      <Box className='grid grid-cols-[repeat(3,1fr)] gap-y-4 justify-items-center gap-1 max-h-40 overflow-y-auto'>
+                      <Paper
+                        variant='outlined'
+                        className='grid grid-cols-[repeat(3,1fr)] gap-y-4 justify-items-center gap-1 max-h-40 px-2 py-4 overflow-y-auto'
+                      >
                         {queries.map((mob, index) => (
                           <Box className='w-max h-max m-h-16 max-w-16' key={index}>
                             {mob.isLoading || isLoading ? (
@@ -103,6 +117,14 @@ export const DetailContentGetMap = ({ data: list }: DetailContentGetMapProps) =>
                             )}
                           </Box>
                         ))}
+                      </Paper>
+                      <Box className='flex flex-col'>
+                        <Typography variant='caption' color='textSecondary'>
+                          몬스터를 클릭하면 정보를 확인할 수 있어요!
+                        </Typography>
+                        <Typography variant='caption' color='textDisabled'>
+                          by. 메랜디비
+                        </Typography>
                       </Box>
                     </Box>
                   )}
@@ -113,7 +135,7 @@ export const DetailContentGetMap = ({ data: list }: DetailContentGetMapProps) =>
         </Box>
         <Divider orientation='vertical' className='sm:flex hidden' />
         <Divider orientation='horizontal' className='flex sm:hidden' />
-        <DetailContentGetInfo data={list} />
+        <DetailContentGetInfo data={list} job={job} />
       </Card>
     </Box>
   );

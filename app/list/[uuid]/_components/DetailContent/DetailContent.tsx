@@ -10,7 +10,7 @@ export const DetailContent = ({ list }: ListDetailOptions) => {
         .sort((a, b) => (a.level.min || 0) - (b.level.min || 0))
         .map((data, index) => (
           <Box className='flex flex-col items-center gap-8' key={index}>
-            <DetailContentGetMap data={data || []} />
+            <DetailContentGetMap data={data || []} job={list.job} />
             {list.map_data.length !== index + 1 && <ArrowDropDown />}
           </Box>
         ))}
