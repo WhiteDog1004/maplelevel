@@ -59,7 +59,7 @@ export const DetailContentGetInfo = ({ data, job }: DetailContentGetInfoProps) =
         {percent && (
           <Box className='flex flex-col items-start'>
             <Typography variant='body2' color='textSecondary'>
-              이 맵은 추천 글에서 평균 레벨 기준으로
+              이 맵은 직업과 평균 레벨 기준으로
             </Typography>
             <Box className='flex items-center gap-1'>
               <Typography variant='h6' color={percent > 50 ? 'error' : 'warning'}>
