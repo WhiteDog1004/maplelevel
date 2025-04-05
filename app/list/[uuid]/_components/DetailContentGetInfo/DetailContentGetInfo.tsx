@@ -1,8 +1,10 @@
 import { getPercentMap } from '@/actions/detailActions';
 import { partyTypes } from '@/types/common';
 import { MapDataType } from '@/types_db';
+import { getLabelByJobs } from '@/utils/jobs';
+import { getTextByCode } from '@/utils/mapCode';
 import { EXCHANGE_PARTY_TYPE } from '@/utils/recommendType';
-import { Box, Paper, Typography } from '@mui/material';
+import { Box, Paper, Stack, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { getBadgeType } from './DetailContentGetInfo.const';
 
@@ -58,11 +60,26 @@ export const DetailContentGetInfo = ({ data, job }: DetailContentGetInfoProps) =
         </Box>
         {percent && (
           <Box className='flex flex-col items-start'>
-            <Typography variant='body2' color='textSecondary'>
-              이 맵은 직업과 평균 레벨 기준으로
-            </Typography>
+            <Stack direction='row' spacing={0.5}>
+              <Stack direction='row'>
+                <Typography variant='body2' color='primary'>
+                  {getTextByCode(Number(data.map))?.kor.split(':')[1]}
+                </Typography>
+                <Typography variant='body2' color='textSecondary'>
+                  맵은
+                </Typography>
+              </Stack>
+              <Stack direction='row'>
+                <Typography variant='body2' color='primary'>
+                  {getLabelByJobs(job)?.label}
+                </Typography>
+                <Typography variant='body2' color='textSecondary'>
+                  의 평균 레벨 기준으로
+                </Typography>
+              </Stack>
+            </Stack>
             <Box className='flex items-center gap-1'>
-              <Typography variant='h6' color={percent > 50 ? 'error' : 'warning'}>
+              <Typography variant='h6' color={percent >= 50 ? 'error' : 'warning'}>
                 {percent}%
               </Typography>
               <Typography variant='body2' color='textSecondary'>
