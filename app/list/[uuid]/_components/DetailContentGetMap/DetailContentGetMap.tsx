@@ -106,7 +106,6 @@ export const DetailContentGetMap = ({ data: list, job }: DetailContentGetMapProp
                                 target='_blank'
                               >
                                 <Image
-                                  onClick={() => console.log(mob.data?.split('mob/')[1])}
                                   className='h-16 object-contain'
                                   width={64}
                                   height={64}

@@ -196,7 +196,9 @@ export const ListItemCard = ({ data }: ListItemCardProps) => {
                     }}
                     color='default'
                     size='small'
-                    avatar={<Avatar alt='avatar' src='/images/mushroom.png' />}
+                    avatar={
+                      <Avatar alt='avatar' src={data.user.avatar_url || '/images/mushroom.png'} />
+                    }
                     label={
                       <Typography noWrap variant='caption'>
                         {data.user.nickname || '익명의 모험가'}

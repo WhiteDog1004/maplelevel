@@ -66,15 +66,15 @@ export const DetailContentGetInfo = ({ data, job }: DetailContentGetInfoProps) =
                   {getTextByCode(Number(data.map))?.kor.split(':')[1]}
                 </Typography>
                 <Typography variant='body2' color='textSecondary'>
-                  맵은
+                  맵이
                 </Typography>
               </Stack>
-              <Stack direction='row'>
+              <Stack direction='row' spacing={0.5}>
                 <Typography variant='body2' color='primary'>
                   {getLabelByJobs(job)?.label}
                 </Typography>
                 <Typography variant='body2' color='textSecondary'>
-                  의 평균 레벨 기준으로
+                  평균 레벨 기준으로
                 </Typography>
               </Stack>
             </Stack>

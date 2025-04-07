@@ -2,12 +2,14 @@
 
 import { createLists } from '@/actions/listActions';
 import { useDarkModeStore } from '@/store/useDarkModeStore';
+import { useDiscordStore } from '@/store/useDiscordStore';
 import { useWriteStore } from '@/store/useWriteValueStore';
 import { Close } from '@mui/icons-material';
 import { Box, Button, Card, CardActionArea, Typography } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { AddDeleteModal } from '../../_ui/AddDeleteModal/AddDeleteModal';
+import { AddNoUserModal } from '../../_ui/AddNoUserModal';
 import { AddSuccessModal } from '../../_ui/AddSuccessModal';
 import { FailedSnackBar } from '../../_ui/FailedSnackBar';
 import { EmptyCard } from '../EmptyCard';
@@ -17,10 +19,11 @@ import { TitleInformation } from '../TitleInformation';
 export const AddClientPage = () => {
   const { darkMode } = useDarkModeStore();
   const { writeValues } = useWriteStore();
+  const { user } = useDiscordStore();
   const [isSnackBar, setIsSnackBar] = useState(false);
   const [completedCard, setCompletedCard] = useState<number[]>([]);
   const [open, setOpen] = useState<{
-    open: 'success' | 'delete' | undefined;
+    open: 'success' | 'delete' | 'noUser' | undefined;
     index: number | undefined;
   }>({
     open: undefined,
@@ -30,8 +33,9 @@ export const AddClientPage = () => {
   const createAddMutation = useMutation({
     mutationFn: () =>
       createLists(writeValues, {
-        uuid: 'test',
-        nickname: 'test',
+        uuid: user?.user_metadata.provider_id,
+        nickname: user?.user_metadata.full_name,
+        avatar_url: user?.user_metadata.avatar_url,
       }),
 
     onSuccess: () => {
@@ -43,6 +47,7 @@ export const AddClientPage = () => {
   });
 
   const handleAddPosting = () => {
+    if (!user) return setOpen({ open: 'noUser', index: undefined });
     const lastOption = writeValues.options?.slice(-1)[0];
     if (
       !writeValues.huntType ||
@@ -118,6 +123,8 @@ export const AddClientPage = () => {
       />
 
       <AddSuccessModal open={open} setOpen={setOpen} />
+
+      <AddNoUserModal open={open} setOpen={setOpen} />
 
       <FailedSnackBar isSnackBar={isSnackBar} setIsSnackBar={setIsSnackBar} />
     </Box>

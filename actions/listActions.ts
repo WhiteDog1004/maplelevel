@@ -104,6 +104,7 @@ export const createLists = async (list: WriteValueOptions, user: UserType) => {
     user: {
       uuid: user.uuid,
       nickname: user.nickname || undefined,
+      avatar_url: user.avatar_url || undefined,
     },
   });
 

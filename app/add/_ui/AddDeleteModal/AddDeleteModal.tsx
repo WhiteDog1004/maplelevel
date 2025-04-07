@@ -5,7 +5,7 @@ import { Dispatch, SetStateAction } from 'react';
 
 interface AddDeleteModalProps {
   open: {
-    open: 'success' | 'delete' | undefined;
+    open: 'success' | 'delete' | 'noUser' | undefined;
     index: number | undefined;
   };
   setOpen: Dispatch<SetStateAction<AddDeleteModalProps['open']>>;

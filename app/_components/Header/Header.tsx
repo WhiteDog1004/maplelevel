@@ -1,8 +1,10 @@
 'use client';
 
+import { useDiscordStore } from '@/store/useDiscordStore';
 import { useErrorStore } from '@/store/useErrorStore';
+import { createBrowserSupabaseClient } from '@/supabase/client';
 import { SITE_MAP } from '@/utils/sitemap';
-import { ExitToApp, Notifications } from '@mui/icons-material';
+import { ExitToApp, Login, Notifications } from '@mui/icons-material';
 import MenuIcon from '@mui/icons-material/Menu';
 import {
   AppBar,
@@ -17,16 +19,38 @@ import {
 } from '@mui/material';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { ToggleDarkMode } from '../ToggleDarkMode';
 
 export const Header = () => {
+  const supabase = createBrowserSupabaseClient();
   const router = useRouter();
   const pathname = usePathname();
   const { isError } = useErrorStore();
   const [profileOpen, setProfileOpen] = useState<HTMLElement | null>(null);
   const [menuOpen, setMenuOpen] = useState<HTMLElement | null>(null);
+  const { user, setUser } = useDiscordStore();
+
   const menuItemStyles = 'flex gap-2 h-12';
+
+  const handleDiscordLogin = async () => {
+    await supabase.auth.signInWithOAuth({
+      provider: 'discord',
+      options: {
+        redirectTo: process.env.NEXT_PUBLIC_REDIRECT_URL_AUTH_SUCCESS,
+      },
+    });
+  };
+
+  const handleDiscordLogout = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (!error) {
+      useDiscordStore.getState().setUser(null);
+      router.push('/');
+    } else {
+      console.error('로그아웃 실패:', error.message);
+    }
+  };
 
   const handleClick =
     (setState: Dispatch<SetStateAction<HTMLElement | null>>) =>
@@ -38,8 +62,21 @@ export const Header = () => {
   };
   const handleMenuRouting = (page: string) => {
     if (pathname === page) return;
-    router.push(page);
+
+    router.push(page === SITE_MAP.ADD && !user ? SITE_MAP.AUTH_LOGIN : page);
   };
+
+  useEffect(() => {
+    const checkSession = async () => {
+      const { data } = await supabase.auth.getSession();
+
+      if (data.session) {
+        setUser(data.session.user);
+      }
+    };
+
+    checkSession();
+  }, []);
 
   return (
     <AppBar
@@ -113,7 +150,7 @@ export const Header = () => {
           </Box>
           <ToggleDarkMode />
           <IconButton onClick={handleClick(setProfileOpen)}>
-            <Avatar src='/images/mushroom.png' />
+            <Avatar src={user?.user_metadata?.avatar_url || '/images/mushroom.png'} />
           </IconButton>
           <Menu
             transformOrigin={{ horizontal: 'right', vertical: 'top' }}
@@ -123,24 +160,42 @@ export const Header = () => {
             onClose={() => handleMenuListClose(setProfileOpen)}
             onClick={() => handleMenuListClose(setProfileOpen)}
           >
-            <MenuItem className={menuItemStyles}>
-              <Avatar
-                sx={{
-                  width: 24,
-                  height: 24,
-                }}
-                src='/images/mushroom.png'
-              />
-              <Typography variant='body2'>마이 페이지</Typography>
-            </MenuItem>
+            {user && (
+              <MenuItem className={menuItemStyles}>
+                <Avatar
+                  sx={{
+                    width: 24,
+                    height: 24,
+                  }}
+                  src={user?.user_metadata?.avatar_url || '/images/mushroom.png'}
+                />
+                <Typography variant='body2'>마이 페이지</Typography>
+              </MenuItem>
+            )}
             <MenuItem className={menuItemStyles}>
               <Notifications />
               <Typography variant='body2'>공지사항</Typography>
             </MenuItem>
             <Divider />
-            <MenuItem className={menuItemStyles}>
-              <ExitToApp />
-              <Typography variant='body2'>로그아웃</Typography>
+            {user ? (
+              <MenuItem className={menuItemStyles} onClick={handleDiscordLogout}>
+                <ExitToApp />
+                <Typography variant='body2'>로그아웃</Typography>
+              </MenuItem>
+            ) : (
+              <MenuItem className={menuItemStyles} onClick={handleDiscordLogin}>
+                <Login />
+                <Typography variant='body2'>로그인</Typography>
+              </MenuItem>
+            )}
+            <Divider />
+            <MenuItem
+              className={`${menuItemStyles} justify-end`}
+              onClick={() => router.push(SITE_MAP.PRIVACY)}
+            >
+              <Typography width='100%' textAlign='center' variant='caption'>
+                개인정보처리방침
+              </Typography>
             </MenuItem>
           </Menu>
         </Box>
