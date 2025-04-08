@@ -113,6 +113,16 @@ export const createLists = async (list: WriteValueOptions, user: UserType) => {
   return data;
 };
 
+export const deleteList = async (uuid: string) => {
+  const supabase = await createServerSupabaseClient();
+
+  const { data, error } = await supabase.from('recommend-list').delete().eq('uuid', uuid);
+
+  handleError(error);
+
+  return data;
+};
+
 export const getDetailList = async (uuid: string) => {
   const supabase = await createServerSupabaseClient();
 
