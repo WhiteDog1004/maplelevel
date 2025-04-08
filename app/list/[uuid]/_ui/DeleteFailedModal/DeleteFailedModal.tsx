@@ -1,6 +1,7 @@
 import { Box, Button, Card, Modal, Typography } from '@mui/material';
 import Image from 'next/image';
 import { Dispatch, SetStateAction } from 'react';
+import { ModalCardStyles } from '../../_constants/constants';
 import { DeletedModalTypes } from '../../_types/types';
 
 interface DeleteFailedModalProps {
@@ -15,10 +16,7 @@ export const DeleteFailedModal = ({ open, setOpen }: DeleteFailedModalProps) => 
 
   return (
     <Modal open={open === 'failed'} onClose={handleCloseModal}>
-      <Card
-        variant='outlined'
-        className='flex flex-col items-center gap-4 px-8 py-6 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'
-      >
+      <Card variant='outlined' className={ModalCardStyles}>
         <Typography variant='h5' color='error'>
           삭제 실패
         </Typography>
