@@ -97,6 +97,7 @@ export const createLists = async (list: WriteValueOptions, user: UserType) => {
         },
         map: option.mapCode,
         partyType: option.partyType,
+        place: option.place,
         caption: option.caption,
         mobs: option.mobs,
         uuid: option.uuid,

@@ -3,8 +3,10 @@ import { v4 as uuidv4 } from 'uuid';
 import { create } from 'zustand';
 
 interface WriteStore {
+  isEdit: boolean;
   writeValues: WriteValueOptions;
   setWriteValues: (newWriteValues: Partial<WriteValueOptions>) => void;
+  setIsEdit: (edit: boolean) => void;
   resetWriteValues: () => void;
 }
 
@@ -18,6 +20,7 @@ const initialValues: WriteValueOptions = {
       minLevel: undefined,
       maxLevel: undefined,
       partyType: undefined,
+      place: undefined,
       caption: undefined,
       mapCode: undefined,
       mobs: undefined,
@@ -26,8 +29,10 @@ const initialValues: WriteValueOptions = {
 };
 
 export const useWriteStore = create<WriteStore>((set) => ({
+  isEdit: false,
   writeValues: initialValues,
   setWriteValues: (newWriteValues) =>
     set((state) => ({ writeValues: { ...state.writeValues, ...newWriteValues } })),
   resetWriteValues: () => set({ writeValues: initialValues }),
+  setIsEdit: (edit) => set(() => ({ isEdit: edit })),
 }));

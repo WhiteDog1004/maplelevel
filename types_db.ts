@@ -6,6 +6,7 @@ export type MapDataType = {
     max?: number;
   };
   map?: number;
+  place?: number;
   caption?: string;
   mobs?: number[];
   partyType?: 'all' | 'solo' | 'party';

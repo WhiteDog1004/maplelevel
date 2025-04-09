@@ -12,6 +12,7 @@ export interface WriteValueOptions {
     mapCode?: number;
     minLevel?: number;
     maxLevel?: number;
+    place?: number;
     partyType?: partyTypes;
     caption?: string;
     mobs?: number[];

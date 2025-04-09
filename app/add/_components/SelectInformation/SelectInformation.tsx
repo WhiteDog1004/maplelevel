@@ -7,6 +7,7 @@ import {
   Avatar,
   Box,
   Button,
+  Paper,
   Skeleton,
   TextField,
   ToggleButton,
@@ -31,7 +32,7 @@ export const SelectInformation = ({
   completedCard,
   setCompletedCard,
 }: SelectInformationProps) => {
-  const { writeValues, setWriteValues } = useWriteStore();
+  const { writeValues, setWriteValues, setIsEdit } = useWriteStore();
   const {
     control,
     register,
@@ -54,6 +55,7 @@ export const SelectInformation = ({
       return setError('minLevel', { message: '최소 레벨이 너무 큽니다' });
     }
 
+    setIsEdit(false);
     setCompletedCard([...completedCard, id]);
     return setWriteValues({
       job: writeValues.job,
@@ -65,6 +67,7 @@ export const SelectInformation = ({
             ...option,
             minLevel: data.minLevel,
             maxLevel: data.maxLevel,
+            place: Number(data.place),
             partyType: data.type as partyTypes,
             caption: data.caption,
             mapCode: recommendMap.code,
@@ -80,14 +83,14 @@ export const SelectInformation = ({
   return (
     <Box className='flex flex-col gap-4 h-full justify-between'>
       <Box className='flex flex-col gap-4 justify-center'>
-        <Box className='flex flex-col gap-6 justify-center'>
+        <Box className='flex flex-col gap-4 justify-center'>
           <Box className='flex flex-row items-center gap-2'>
             {mapIcon ? (
               <Avatar variant='rounded' src={mapIcon.url} />
             ) : isLoading ? (
               <Skeleton variant='rounded' animation='wave' width={40} height={40} />
             ) : (
-              <Box width={40} height={40} />
+              <Paper sx={{ width: 40, height: 40 }} />
             )}
             <Box className='flex flex-col'>
               <Typography variant='caption' color='textDisabled'>
@@ -136,6 +139,8 @@ export const SelectInformation = ({
                 className='bg-white dark:bg-transparent'
                 fullWidth
                 exclusive
+                size='small'
+                color='primary'
                 aria-label='type'
                 value={field.value}
                 onChange={(_, value) => {
@@ -146,6 +151,42 @@ export const SelectInformation = ({
                 <ToggleButton value='all'>상관없음</ToggleButton>
                 <ToggleButton value='solo'>솔로</ToggleButton>
                 <ToggleButton value='party'>파티</ToggleButton>
+              </ToggleButtonGroup>
+            )}
+          />
+          {errors.type && (
+            <Typography variant='caption' color='error'>
+              최소 하나는 선택해야 합니다.
+            </Typography>
+          )}
+        </Box>
+
+        <Box className='flex flex-col w-full gap-2'>
+          <Typography variant='body2' color='primary'>
+            자리 혼잡도
+          </Typography>
+          <Controller
+            name='place'
+            control={control}
+            rules={{ required: '타입을 선택해주세요.' }}
+            render={({ field }) => (
+              <ToggleButtonGroup
+                className='bg-white dark:bg-transparent'
+                fullWidth
+                exclusive
+                size='small'
+                color='primary'
+                aria-label='type'
+                value={field.value}
+                onChange={(_, value) => {
+                  if (!value) return;
+                  field.onChange(value);
+                }}
+              >
+                <ToggleButton value={1}>원활</ToggleButton>
+                <ToggleButton value={2}>보통</ToggleButton>
+                <ToggleButton value={3}>혼잡</ToggleButton>
+                <ToggleButton value={4}>매우혼잡</ToggleButton>
               </ToggleButtonGroup>
             )}
           />

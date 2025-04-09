@@ -4,7 +4,7 @@ import { MapDataType } from '@/types_db';
 import { getLabelByJobs } from '@/utils/jobs';
 import { getTextByCode } from '@/utils/mapCode';
 import { EXCHANGE_PARTY_TYPE } from '@/utils/recommendType';
-import { Box, Paper, Stack, Typography } from '@mui/material';
+import { Box, Paper, Stack, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { getBadgeType } from './DetailContentGetInfo.const';
 
@@ -59,21 +59,21 @@ export const DetailContentGetInfo = ({ data, job }: DetailContentGetInfoProps) =
           </Typography>
         </Box>
         {percent && (
-          <Box className='flex flex-col items-start'>
+          <Box className='flex flex-col items-start mt-2'>
             <Stack direction='row' spacing={0.5}>
               <Stack direction='row'>
-                <Typography variant='body2' color='primary'>
+                <Typography noWrap variant='body2' color='primary'>
                   {getTextByCode(Number(data.map))?.kor.split(':')[1]}
                 </Typography>
-                <Typography variant='body2' color='textSecondary'>
+                <Typography noWrap variant='body2' color='textSecondary'>
                   맵이
                 </Typography>
               </Stack>
               <Stack direction='row' spacing={0.5}>
-                <Typography variant='body2' color='primary'>
+                <Typography noWrap variant='body2' color='primary'>
                   {getLabelByJobs(job)?.label}
                 </Typography>
-                <Typography variant='body2' color='textSecondary'>
+                <Typography noWrap variant='body2' color='textSecondary'>
                   평균 레벨 기준으로
                 </Typography>
               </Stack>
@@ -90,18 +90,37 @@ export const DetailContentGetInfo = ({ data, job }: DetailContentGetInfoProps) =
         )}
       </Box>
 
-      <Box className='flex flex-col gap-1'>
-        <Typography variant='body2' color='textSecondary'>
-          설명
-        </Typography>
-        <Paper
-          className='p-2 h-28 overflow-y-auto'
-          variant='outlined'
-          sx={{ whiteSpace: 'pre-wrap' }}
-        >
-          {data.caption}
-        </Paper>
-      </Box>
+      <Stack width='100%' direction='column' gap={2}>
+        <Stack width='100%' direction='column' gap={0.5}>
+          <Typography color='textSecondary' variant='body2'>
+            자리 혼잡도
+          </Typography>
+          <ToggleButtonGroup fullWidth size='small' disabled value={data.place}>
+            <ToggleButton color='success' value={1}>
+              원활
+            </ToggleButton>
+            <ToggleButton value={2}>보통</ToggleButton>
+            <ToggleButton color='warning' value={3}>
+              혼잡
+            </ToggleButton>
+            <ToggleButton color='error' value={4}>
+              매우혼잡
+            </ToggleButton>
+          </ToggleButtonGroup>
+        </Stack>
+        <Box className='flex flex-col gap-1'>
+          <Typography variant='body2' color='textSecondary'>
+            설명
+          </Typography>
+          <Paper
+            className='p-2 h-28 overflow-y-auto'
+            variant='outlined'
+            sx={{ whiteSpace: 'pre-wrap' }}
+          >
+            {data.caption}
+          </Paper>
+        </Box>
+      </Stack>
     </Box>
   );
 };

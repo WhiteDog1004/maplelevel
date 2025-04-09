@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 export const EmptyCard = () => {
-  const { writeValues, setWriteValues } = useWriteStore();
+  const { writeValues, setWriteValues, isEdit } = useWriteStore();
   const [isAddCard, setIsAddCard] = useState(false);
 
   useEffect(() => {
@@ -27,7 +27,7 @@ export const EmptyCard = () => {
       variant='outlined'
       className='w-full h-max'
       onClick={() => {
-        if (isAddCard) return;
+        if (isAddCard || isEdit) return;
         setWriteValues({
           job: writeValues.job,
           huntType: writeValues.huntType,
@@ -48,9 +48,13 @@ export const EmptyCard = () => {
     >
       <CardActionArea>
         <CardContent className='flex flex-col w-full px-20 py-6 gap-2 justify-center items-center'>
-          {isAddCard ? <Lock /> : <AddCircle className='text-zinc-600 hover:text-zinc-800' />}
+          {isAddCard || isEdit ? (
+            <Lock />
+          ) : (
+            <AddCircle className='text-zinc-600 hover:text-zinc-800' />
+          )}
           <Typography variant='caption' color='textDisabled'>
-            {isAddCard
+            {isAddCard || isEdit
               ? '추가하시려면 먼저 생성한 사냥터를 완성해 주세요'
               : '이곳을 눌러 사냥터를 추가해 보세요'}
           </Typography>

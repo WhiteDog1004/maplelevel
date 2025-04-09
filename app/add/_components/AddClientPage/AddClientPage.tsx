@@ -18,7 +18,7 @@ import { TitleInformation } from '../TitleInformation';
 
 export const AddClientPage = () => {
   const { darkMode } = useDarkModeStore();
-  const { writeValues } = useWriteStore();
+  const { writeValues, isEdit } = useWriteStore();
   const { user } = useDiscordStore();
   const [isSnackBar, setIsSnackBar] = useState(false);
   const [completedCard, setCompletedCard] = useState<number[]>([]);
@@ -49,7 +49,9 @@ export const AddClientPage = () => {
   const handleAddPosting = () => {
     if (!user) return setOpen({ open: 'noUser', index: undefined });
     const lastOption = writeValues.options?.slice(-1)[0];
+
     if (
+      isEdit ||
       !writeValues.huntType ||
       !writeValues.job ||
       !writeValues.title ||
@@ -57,7 +59,8 @@ export const AddClientPage = () => {
         (!lastOption?.mapCode ||
           !lastOption?.minLevel ||
           !lastOption?.maxLevel ||
-          !lastOption?.partyType))
+          !lastOption?.partyType ||
+          !lastOption?.place))
     ) {
       return setIsSnackBar(true);
     }
@@ -86,6 +89,7 @@ export const AddClientPage = () => {
             className='absolute top-0 left-full -ml-px'
           >
             <CardActionArea
+              disabled={isEdit}
               color='inherit'
               onClick={() => {
                 setOpen({ open: 'delete', index });
@@ -110,9 +114,10 @@ export const AddClientPage = () => {
         variant='contained'
         color='success'
         size='large'
+        disabled={isEdit}
         onClick={handleAddPosting}
       >
-        작성완료
+        {isEdit ? '수정모드' : '작성완료'}
       </Button>
 
       <AddDeleteModal

@@ -1,4 +1,5 @@
 import { useDarkModeStore } from '@/store/useDarkModeStore';
+import { useWriteStore } from '@/store/useWriteValueStore';
 import { EditNote, FactCheck } from '@mui/icons-material';
 import { Box, Button, Card, Typography } from '@mui/material';
 import { Dispatch, SetStateAction, useState } from 'react';
@@ -15,6 +16,8 @@ interface SelectCardProps {
 
 export const SelectCard = ({ id, completedCard, setCompletedCard }: SelectCardProps) => {
   const { darkMode } = useDarkModeStore();
+  const { isEdit, setIsEdit } = useWriteStore();
+  const [editNum, setEditNum] = useState<number | undefined>(undefined);
   const [recommendMap, setRecommendMap] = useState<RecommendMapProps['recommendMap']>({
     minimap: '',
     code: 0,
@@ -22,6 +25,8 @@ export const SelectCard = ({ id, completedCard, setCompletedCard }: SelectCardPr
   });
 
   const handleClickEditCard = (num: number) => {
+    setIsEdit(true);
+    setEditNum(num);
     setCompletedCard(completedCard.filter((item) => item !== num));
   };
 
@@ -45,6 +50,7 @@ export const SelectCard = ({ id, completedCard, setCompletedCard }: SelectCardPr
                   sx={{ gap: 1 }}
                   variant={darkMode ? 'outlined' : 'contained'}
                   color='warning'
+                  disabled={isEdit}
                   onClick={() => handleClickEditCard(num)}
                 >
                   <EditNote />
@@ -53,6 +59,9 @@ export const SelectCard = ({ id, completedCard, setCompletedCard }: SelectCardPr
               </Box>
             </Box>
           )
+      )}
+      {isEdit && id !== editNum && (
+        <Box className='absolute top-0 left-0 flex justify-center items-center w-full h-full bg-black/50 z-10 rounded-md' />
       )}
       <Box className='flex-1 h-max flex flex-col gap-2'>
         <SelectMap recommendMap={recommendMap} setRecommendMap={setRecommendMap} />

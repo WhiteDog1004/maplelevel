@@ -87,9 +87,21 @@ export const TitleInformation = () => {
                       setWriteValues({ ...writeValues, huntType: value });
                     }}
                   >
-                    <ToggleButton value='all'>둘다</ToggleButton>
-                    <ToggleButton value='exp'>경험치</ToggleButton>
-                    <ToggleButton value='meso'>메소벌이</ToggleButton>
+                    <ToggleButton value='all'>
+                      <Typography variant='body2' noWrap>
+                        경험치+메소
+                      </Typography>
+                    </ToggleButton>
+                    <ToggleButton value='exp'>
+                      <Typography variant='body2' noWrap>
+                        경험치
+                      </Typography>
+                    </ToggleButton>
+                    <ToggleButton value='meso'>
+                      <Typography variant='body2' noWrap>
+                        메소벌이
+                      </Typography>
+                    </ToggleButton>
                   </ToggleButtonGroup>
                 )}
               />
