@@ -34,7 +34,7 @@ export const AddClientPage = () => {
     mutationFn: () =>
       createLists(writeValues, {
         uuid: user?.user_metadata.provider_id,
-        nickname: user?.user_metadata.full_name,
+        nickname: user?.user_metadata.custom_claims.global_name,
         avatar_url: user?.user_metadata.avatar_url,
       }),
 

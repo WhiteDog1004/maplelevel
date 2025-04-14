@@ -21,6 +21,7 @@ export const ListItemCard = ({ data }: ListItemCardProps) => {
   const { darkMode } = useDarkModeStore();
   const searchParams = useSearchParams();
   const searchLevel = searchParams.get('level');
+
   const result = data.map_data.filter(
     (map) =>
       (map.level.min || 0) <= Number(searchLevel) && (map.level.max || 0) >= Number(searchLevel)

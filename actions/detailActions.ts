@@ -1,6 +1,7 @@
 'use server';
 
 import { createServerSupabaseClient } from '@/supabase/server';
+import { MapDataType } from '@/types_db';
 import { PostgrestError } from '@supabase/postgrest-js';
 
 type getPercentMapType = {
@@ -30,7 +31,7 @@ export const getPercentMap = async (params: getPercentMapType) => {
   }
 
   const filteredData = data?.filter((item) => {
-    return item.map_data.some((map) => {
+    return item.map_data.some((map: MapDataType) => {
       const minLevel = map.level.min;
       const maxLevel = map.level.max;
       const averageLevel = (params.level.min + params.level.max) / 2;
@@ -44,7 +45,7 @@ export const getPercentMap = async (params: getPercentMapType) => {
   });
 
   const total = data?.filter((item) => {
-    return item.map_data.some((map) => {
+    return item.map_data.some((map: MapDataType) => {
       const minLevel = map.level.min;
       const maxLevel = map.level.max;
       const averageLevel = (params.level.min + params.level.max) / 2;

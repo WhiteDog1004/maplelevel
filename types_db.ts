@@ -21,6 +21,26 @@ export type UserType = {
 export type Database = {
   public: {
     Tables: {
+      likes: {
+        Row: {
+          id: string;
+          post_uuid: string;
+          user_uuid: string;
+          createdAt: string;
+        };
+        Insert: {
+          id: string;
+          post_uuid: string;
+          user_uuid: string;
+          createdAt: string;
+        };
+        Update: {
+          id: string;
+          post_uuid: string;
+          user_uuid: string;
+          createdAt: string;
+        };
+      };
       'recommend-list': {
         Row: {
           title: string;

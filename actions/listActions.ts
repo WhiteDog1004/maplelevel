@@ -2,7 +2,7 @@
 
 import { createServerSupabaseClient } from '@/supabase/server';
 import { SearchInfoTypes, WriteValueOptions } from '@/types/common';
-import { Database, UserType } from '@/types_db';
+import { Database, MapDataType, UserType } from '@/types_db';
 import { PAGE_SIZE } from '@/utils/pageSize';
 import { PostgrestError } from '@supabase/postgrest-js';
 
@@ -58,7 +58,7 @@ export const getLists = async (
       handleError(error);
 
       const filteredData = data?.filter((item) => {
-        return item.map_data.some((map) => {
+        return item.map_data.some((map: MapDataType) => {
           const minLevel = map.level.min;
           const maxLevel = map.level.max;
 

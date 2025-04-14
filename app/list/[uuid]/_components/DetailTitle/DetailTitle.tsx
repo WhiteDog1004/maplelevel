@@ -1,4 +1,6 @@
+import { postLike } from '@/actions/likeActions';
 import { deleteList } from '@/actions/listActions';
+import { useGetLike } from '@/hooks/api/useGetLike/useGetLike';
 import { useDiscordStore } from '@/store/useDiscordStore';
 import { ListDetailOptions } from '@/types/common';
 import { getClassImages, getLabelByJobs } from '@/utils/jobs';
@@ -14,18 +16,31 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
+import { useMutation } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import Image from 'next/image';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { DeletedModalTypes } from '../../_types/types';
 import { DeletedModal } from '../../_ui/DeletedModal';
 import { DeleteFailedModal } from '../../_ui/DeleteFailedModal';
+import { LikedSnackBar } from '../../_ui/FailedSnackBar';
 import { MoreConfirmModal } from '../../_ui/MoreConfirmModal';
 
 export const DetailTitle = ({ list }: ListDetailOptions) => {
   const { user } = useDiscordStore();
   const [moreOpen, setMoreOpen] = useState<HTMLElement | null>(null);
   const [isDeletedModal, setIsDeletedModal] = useState<DeletedModalTypes>(undefined);
+  const [isLiked, setIsLiked] = useState(false);
+
+  const {
+    data: getLike,
+    error,
+    isPending,
+    refetch,
+  } = useGetLike({
+    postUuid: list.uuid,
+    enabled: !!list.uuid,
+  });
 
   const handleClick =
     (setState: Dispatch<SetStateAction<HTMLElement | null>>) =>
@@ -37,14 +52,32 @@ export const DetailTitle = ({ list }: ListDetailOptions) => {
     setState(null);
   };
 
+  const createLikePost = useMutation({
+    mutationFn: () => postLike({ postUuid: list.uuid, userUuid: user?.user_metadata.provider_id }),
+    onSuccess: (data) => {
+      if (data === 'duplicate' || !!data) return setIsLiked(true);
+
+      return refetch();
+    },
+  });
+  const deletePost = useMutation({
+    mutationFn: (uuid: string) => deleteList(uuid),
+    onSuccess: () => {
+      setIsDeletedModal('success');
+    },
+    onError: () => {
+      setIsDeletedModal('failed');
+    },
+  });
+
+  const handleLike = () => {
+    if (!user || isLiked) return;
+
+    createLikePost.mutate();
+  };
+
   const handleDelete = (uuid: string) => {
-    deleteList(uuid)
-      .then(() => {
-        setIsDeletedModal('success');
-      })
-      .catch(() => {
-        setIsDeletedModal('failed');
-      });
+    deletePost.mutate(uuid);
   };
 
   return (
@@ -108,10 +141,13 @@ export const DetailTitle = ({ list }: ListDetailOptions) => {
         direction='column'
         alignItems='end'
         justifyContent={
-          user?.user_metadata.provider_id === list.user.uuid ? 'space-between' : 'end'
+          user?.user_metadata.provider_id === list.user.uuid || user?.user_metadata.role === 'admin'
+            ? 'space-between'
+            : 'end'
         }
       >
-        {user?.user_metadata.provider_id === list.user.uuid && (
+        {(user?.user_metadata.provider_id === list.user.uuid ||
+          user?.user_metadata.role === 'admin') && (
           <Box>
             <IconButton onClick={handleClick(setMoreOpen)}>
               <MoreVert />
@@ -136,8 +172,8 @@ export const DetailTitle = ({ list }: ListDetailOptions) => {
           </Box>
         )}
         <Box className='flex items-center gap-1'>
-          <Typography>{list.like || 0}</Typography>
-          <IconButton>
+          {!isPending && <Typography>{(!error && getLike?.toLocaleString()) || 0}</Typography>}
+          <IconButton onClick={handleLike}>
             <Favorite />
           </IconButton>
         </Box>
@@ -150,6 +186,7 @@ export const DetailTitle = ({ list }: ListDetailOptions) => {
         setOpen={setIsDeletedModal}
         handleDelete={() => handleDelete(list.uuid)}
       />
+      <LikedSnackBar isSnackBar={isLiked} setIsSnackBar={setIsLiked} />
     </Box>
   );
 };
