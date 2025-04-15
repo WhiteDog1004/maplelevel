@@ -20,7 +20,9 @@ export interface WriteValueOptions {
 }
 
 export type SearchInfoTypes = {
+  titleFilter?: string;
   title?: string;
+  writer?: string;
   job: string;
   level: number;
   type: string;

@@ -19,13 +19,14 @@ import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { SearchSortSwitch } from './SearchInformation.const';
+import { SearchSortSwitch, titleFilterList } from './SearchInformation.const';
 
 export const SearchInformation = () => {
   const router = useRouter();
   const params = useSearchParams();
   const [isOpenFilter, setIsOpenFilter] = useState(false);
   const [selectValue, setSelectValue] = useState('');
+  const [selectTitleFilterValue, setSelectTitleFilterValue] = useState('title');
   const {
     control,
     register,
@@ -44,7 +45,8 @@ export const SearchInformation = () => {
       value?.sort
     ) {
       const query = new URLSearchParams({
-        ...(value.title && { title: value.title }),
+        ...(value.title &&
+          (selectTitleFilterValue === 'title' ? { title: value.title } : { writer: value.title })),
         ...(value.job && { job: value.job }),
         ...(value.level && { level: value.level.toString() }),
         ...(value.type && { type: value.type }),
@@ -63,12 +65,14 @@ export const SearchInformation = () => {
   const handleReset = () => {
     setIsOpenFilter(false);
     setSelectValue('');
+    setSelectTitleFilterValue('title');
     reset();
     return router.push('/list?page=1');
   };
 
   useEffect(() => {
     reset({
+      titleFilter: params.get('titleFilter') || undefined,
       title: params.get('title') || undefined,
       job: params.get('job') || undefined,
       level: Number(params.get('level')) || undefined,
@@ -115,7 +119,25 @@ export const SearchInformation = () => {
           </Box>
           <form className='w-full' onSubmit={handleSubmit(onSubmit)}>
             <FormControl className='flex flex-col w-full gap-4'>
-              <TextField fullWidth label='제목' {...register('title')} />
+              <Stack direction='row' gap={2}>
+                <Select
+                  sx={{ width: 120 }}
+                  value={selectTitleFilterValue}
+                  {...register('titleFilter')}
+                  onChange={(e) => setSelectTitleFilterValue(e.target.value)}
+                >
+                  {titleFilterList.map((filter) => (
+                    <MenuItem key={filter.value} value={filter.value}>
+                      <Box className='flex items-center gap-2'>{filter.label}</Box>
+                    </MenuItem>
+                  ))}
+                </Select>
+                <TextField
+                  fullWidth
+                  label={selectTitleFilterValue === 'title' ? '제목' : '작성자'}
+                  {...register('title')}
+                />
+              </Stack>
               <Box className='flex flex-col sm:flex-row gap-4 w-full'>
                 <FormControl className='w-full' error={!!errors.job?.message}>
                   <InputLabel>직업</InputLabel>
@@ -125,6 +147,18 @@ export const SearchInformation = () => {
                     {...register('job')}
                     onChange={(e) => setSelectValue(e.target.value)}
                   >
+                    <MenuItem value=''>
+                      <Box className='flex items-center gap-2'>
+                        <Image
+                          width={20}
+                          height={20}
+                          unoptimized
+                          src={`/images/class/all.png`}
+                          alt={'class'}
+                        />
+                        전체
+                      </Box>
+                    </MenuItem>
                     {JOBS.map((job) => (
                       <MenuItem key={job.id} value={job.name}>
                         <Box className='flex items-center gap-2'>

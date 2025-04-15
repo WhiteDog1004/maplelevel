@@ -1,5 +1,16 @@
 import { styled, Switch } from '@mui/material';
 
+export const titleFilterList = [
+  {
+    label: '제목',
+    value: 'title',
+  },
+  {
+    label: '작성자',
+    value: 'writer',
+  },
+];
+
 export const SearchSortSwitch = styled(Switch)(({ theme }) => ({
   width: 62,
   height: 34,

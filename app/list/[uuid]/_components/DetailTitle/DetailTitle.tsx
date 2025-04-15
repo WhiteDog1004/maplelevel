@@ -4,6 +4,7 @@ import { useGetLike } from '@/hooks/api/useGetLike/useGetLike';
 import { useDiscordStore } from '@/store/useDiscordStore';
 import { useLoginModalStore } from '@/store/useLoginModalStore';
 import { ListDetailOptions } from '@/types/common';
+import { getTimeAgo } from '@/utils/getTimeAgo';
 import { getClassImages, getLabelByJobs } from '@/utils/jobs';
 import { Delete, Edit, Favorite, MoreVert } from '@mui/icons-material';
 import {
@@ -15,6 +16,7 @@ import {
   Menu,
   MenuItem,
   Stack,
+  Tooltip,
   Typography,
 } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
@@ -119,7 +121,7 @@ export const DetailTitle = ({ list }: ListDetailOptions) => {
           </Box>
         </Box>
 
-        <Box className='flex items-end gap-2'>
+        <Box className='flex items-center gap-2'>
           <Chip
             sx={{
               gap: 0.5,
@@ -136,7 +138,11 @@ export const DetailTitle = ({ list }: ListDetailOptions) => {
             }
             variant='outlined'
           />
-          <Typography color='textDisabled'>{dayjs(list.created_at).format('YY.MM.DD')}</Typography>
+          <Tooltip arrow placement='top' title={dayjs(list.created_at).format('YY-MM-DD HH:mm')}>
+            <Typography color='textDisabled' variant='body2'>
+              {getTimeAgo(list.created_at)}
+            </Typography>
+          </Tooltip>
         </Box>
       </Box>
       <Stack

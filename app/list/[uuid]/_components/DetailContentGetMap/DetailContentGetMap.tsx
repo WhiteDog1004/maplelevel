@@ -122,7 +122,7 @@ export const DetailContentGetMap = ({ data: list, job }: DetailContentGetMapProp
                           몬스터를 클릭하면 정보를 확인할 수 있어요!
                         </Typography>
                         <Typography variant='caption' color='textDisabled'>
-                          by. 메랜디비
+                          src. 메랜디비
                         </Typography>
                       </Box>
                     </Box>

@@ -24,6 +24,9 @@ export const getLists = async (
   if (searchParams.title) {
     queryBuilder = queryBuilder.ilike('title', `%${searchParams?.title}%`);
   }
+  if (searchParams.writer) {
+    queryBuilder = queryBuilder.filter('user->>nickname', 'ilike', `%${searchParams.writer}%`);
+  }
 
   if (searchParams.job) {
     queryBuilder = queryBuilder.eq('job', searchParams?.job);
