@@ -2,6 +2,7 @@ import { postLike } from '@/actions/likeActions';
 import { deleteList } from '@/actions/listActions';
 import { useGetLike } from '@/hooks/api/useGetLike/useGetLike';
 import { useDiscordStore } from '@/store/useDiscordStore';
+import { useLoginModalStore } from '@/store/useLoginModalStore';
 import { ListDetailOptions } from '@/types/common';
 import { getClassImages, getLabelByJobs } from '@/utils/jobs';
 import { Delete, Edit, Favorite, MoreVert } from '@mui/icons-material';
@@ -28,6 +29,7 @@ import { MoreConfirmModal } from '../../_ui/MoreConfirmModal';
 
 export const DetailTitle = ({ list }: ListDetailOptions) => {
   const { user } = useDiscordStore();
+  const { setIsLoginModal } = useLoginModalStore();
   const [moreOpen, setMoreOpen] = useState<HTMLElement | null>(null);
   const [isDeletedModal, setIsDeletedModal] = useState<DeletedModalTypes>(undefined);
   const [isLiked, setIsLiked] = useState(false);
@@ -71,7 +73,8 @@ export const DetailTitle = ({ list }: ListDetailOptions) => {
   });
 
   const handleLike = () => {
-    if (!user || isLiked) return;
+    if (!user) return setIsLoginModal(true);
+    if (isLiked) return;
 
     createLikePost.mutate();
   };

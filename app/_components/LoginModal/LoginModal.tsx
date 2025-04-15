@@ -33,7 +33,7 @@ export const LoginModal = () => {
         <Typography variant='h5' color='warning'>
           로그인이 필요해요!
         </Typography>
-        <Image width={44} height={37} src={'/images/husky/cry_0.png'} alt='husky' />
+        <Image width={44} height={37} src={'/images/husky/stand1_1.png'} alt='husky' />
         <Typography variant='body2' textAlign='center'>
           로그인이 필요한 컨텐츠입니다.
           <br />

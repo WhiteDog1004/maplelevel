@@ -17,6 +17,7 @@ import {
   Menu,
   MenuItem,
   Typography,
+  useMediaQuery,
 } from '@mui/material';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
@@ -30,10 +31,11 @@ export const Header = () => {
   const { isError } = useErrorStore();
   const { user, setUser } = useDiscordStore();
   const { setIsLoginModal } = useLoginModalStore();
+  const isMobile = useMediaQuery('(max-width:768px)');
   const [profileOpen, setProfileOpen] = useState<HTMLElement | null>(null);
   const [menuOpen, setMenuOpen] = useState<HTMLElement | null>(null);
 
-  const menuItemStyles = 'flex gap-2 h-12';
+  const menuItemStyles = 'flex justify-between gap-2 h-12';
 
   const handleDiscordLogin = async () => {
     await supabase.auth.signInWithOAuth({
@@ -85,7 +87,7 @@ export const Header = () => {
     <AppBar
       color='default'
       className='items-center'
-      position={pathname === '/' || isError ? 'fixed' : 'sticky'}
+      position={!isMobile && (pathname === '/' || isError) ? 'fixed' : 'sticky'}
     >
       <Box className='max-w-5xl w-full flex justify-between items-center p-2'>
         <Box className='flex items-center gap-2'>
