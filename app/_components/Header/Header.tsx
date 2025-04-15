@@ -2,9 +2,10 @@
 
 import { useDiscordStore } from '@/store/useDiscordStore';
 import { useErrorStore } from '@/store/useErrorStore';
+import { useLoginModalStore } from '@/store/useLoginModalStore';
 import { createBrowserSupabaseClient } from '@/supabase/client';
 import { SITE_MAP } from '@/utils/sitemap';
-import { ExitToApp, Login, Notifications } from '@mui/icons-material';
+import { ExitToApp, Notifications } from '@mui/icons-material';
 import MenuIcon from '@mui/icons-material/Menu';
 import {
   AppBar,
@@ -27,9 +28,10 @@ export const Header = () => {
   const router = useRouter();
   const pathname = usePathname();
   const { isError } = useErrorStore();
+  const { user, setUser } = useDiscordStore();
+  const { setIsLoginModal } = useLoginModalStore();
   const [profileOpen, setProfileOpen] = useState<HTMLElement | null>(null);
   const [menuOpen, setMenuOpen] = useState<HTMLElement | null>(null);
-  const { user, setUser } = useDiscordStore();
 
   const menuItemStyles = 'flex gap-2 h-12';
 
@@ -62,8 +64,9 @@ export const Header = () => {
   };
   const handleMenuRouting = (page: string) => {
     if (pathname === page) return;
+    if (page === SITE_MAP.ADD && !user) return setIsLoginModal(true);
 
-    router.push(page === SITE_MAP.ADD && !user ? SITE_MAP.AUTH_LOGIN : page);
+    router.push(page);
   };
 
   useEffect(() => {
@@ -184,7 +187,18 @@ export const Header = () => {
               </MenuItem>
             ) : (
               <MenuItem className={menuItemStyles} onClick={handleDiscordLogin}>
-                <Login />
+                <Avatar
+                  src={'/images/discord-icon.svg'}
+                  slotProps={{
+                    img: {
+                      sx: {
+                        objectFit: 'contain',
+                      },
+                    },
+                  }}
+                  sx={{ width: 24, height: 24 }}
+                  alt={'discord'}
+                />
                 <Typography variant='body2'>로그인</Typography>
               </MenuItem>
             )}

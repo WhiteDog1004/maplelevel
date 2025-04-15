@@ -1,12 +1,14 @@
 import { useDiscordStore } from '@/store/useDiscordStore';
-import { SITE_MAP } from '@/utils/sitemap';
+import { useLoginModalStore } from '@/store/useLoginModalStore';
 import { SITE_SUB_TITLE, SITE_TITLE } from '@/utils/string';
-import { Typography } from '@mui/material';
-import Link from 'next/link';
+import { Button, Typography } from '@mui/material';
+import { useRouter } from 'next/navigation';
 import { lists } from './MainSNB.const';
 
 export const MainSNB = () => {
+  const router = useRouter();
   const { user } = useDiscordStore();
+  const { setIsLoginModal } = useLoginModalStore();
 
   return (
     <div className='relative md:absolute md:right-full'>
@@ -21,9 +23,11 @@ export const MainSNB = () => {
         </div>
         <div className='flex flex-col gap-4 w-full md:items-end'>
           {lists.map((list) => (
-            <Link
+            <Button
               key={list.href}
-              href={list.isLogin && !user ? SITE_MAP.AUTH_LOGIN : list.href}
+              onClick={() => {
+                list.isLogin && !user ? setIsLoginModal(true) : router.push(list.href);
+              }}
               className='hover:text-blue-400 transition'
             >
               <div className='flex flex-row'>
@@ -31,7 +35,7 @@ export const MainSNB = () => {
                   {list.label}
                 </Typography>
               </div>
-            </Link>
+            </Button>
           ))}
         </div>
       </div>

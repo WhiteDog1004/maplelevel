@@ -5,6 +5,7 @@ import { SITE_TITLE } from '@/utils/string';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import { Header } from './_components/Header';
+import { LoginModal } from './_components/LoginModal';
 import './globals.css';
 
 const pretendard = localFont({
@@ -41,6 +42,7 @@ export default function RootLayout({
               <div className='dark:bg-zinc-700 bg-white dark:text-white'>
                 <Header />
                 {children}
+                <LoginModal />
               </div>
             </ReactQueryClientProvider>
           </MuiThemeProvider>
