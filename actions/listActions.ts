@@ -92,6 +92,7 @@ export const createLists = async (list: WriteValueOptions, user: UserType) => {
     title: list.title || '',
     hunt_type: list.huntType,
     job: list.job || '',
+    writer_uuid: user.id,
     map_data:
       list.options?.map((option) => ({
         level: {

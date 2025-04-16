@@ -1,12 +1,12 @@
 import { useMinimap } from '@/hooks/api';
 import { useDarkModeStore } from '@/store/useDarkModeStore';
 import { Database } from '@/types_db';
+import { getTimeAgo } from '@/utils/getTimeAgo';
 import { getClassImages, getLabelByJobs } from '@/utils/jobs';
 import { getTextByCode } from '@/utils/mapCode';
 import { EXCHANGE_TYPE, ExchangeTypes } from '@/utils/recommendType';
 import { Favorite, ManageSearch } from '@mui/icons-material';
 import { Avatar, Badge, Box, Card, CardActionArea, Chip, Paper, Typography } from '@mui/material';
-import dayjs from 'dayjs';
 import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
@@ -188,7 +188,7 @@ export const ListItemCard = ({ data }: ListItemCardProps) => {
                 </Paper>
               </Box>
               <Box className='flex justify-between items-center' color='GrayText'>
-                <Box className='flex items-end gap-2'>
+                <Box className='flex items-end gap-1'>
                   <Chip
                     sx={{
                       gap: 0.5,
@@ -208,7 +208,7 @@ export const ListItemCard = ({ data }: ListItemCardProps) => {
                     variant='outlined'
                   />
                   <Typography variant='caption' color='textDisabled'>
-                    {dayjs(resultData.created_at).format('YY.MM.DD')}
+                    {getTimeAgo(resultData.created_at)}
                   </Typography>
                 </Box>
 

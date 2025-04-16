@@ -13,6 +13,7 @@ export type MapDataType = {
 };
 
 export type UserType = {
+  id?: string;
   avatar_url?: string;
   nickname?: string;
   uuid: string;
