@@ -1,24 +1,31 @@
 'use client';
 
-import { createLists } from '@/actions/listActions';
+import { updateLists } from '@/actions/listActions';
+import { EmptyCard } from '@/app/add/_components/EmptyCard';
+import { SelectCard } from '@/app/add/_components/SelectCard';
+import { TitleInformation } from '@/app/add/_components/TitleInformation';
+import { AddDeleteModal } from '@/app/add/_ui/AddDeleteModal';
+import { AddNoUserModal } from '@/app/add/_ui/AddNoUserModal';
+import { AddSuccessModal } from '@/app/add/_ui/AddSuccessModal';
+import { FailedSnackBar } from '@/app/add/_ui/FailedSnackBar';
 import { useDarkModeStore } from '@/store/useDarkModeStore';
 import { useDiscordStore } from '@/store/useDiscordStore';
 import { useWriteStore } from '@/store/useWriteValueStore';
+import { huntTypes, ListDetailOptions } from '@/types/common';
 import { Close } from '@mui/icons-material';
 import { Box, Button, Card, CardActionArea, Typography } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
-import { useState } from 'react';
-import { AddDeleteModal } from '../../_ui/AddDeleteModal/AddDeleteModal';
-import { AddNoUserModal } from '../../_ui/AddNoUserModal';
-import { AddSuccessModal } from '../../_ui/AddSuccessModal';
-import { FailedSnackBar } from '../../_ui/FailedSnackBar';
-import { EmptyCard } from '../EmptyCard';
-import { SelectCard } from '../SelectCard';
-import { TitleInformation } from '../TitleInformation';
+import { useEffect, useState } from 'react';
 
-export const AddClientPage = () => {
+interface EditClientPageProps {
+  uuid: string;
+  data: ListDetailOptions['list'];
+}
+
+export const EditClientPage = ({ uuid, data }: EditClientPageProps) => {
   const { darkMode } = useDarkModeStore();
-  const { writeValues, isEdit } = useWriteStore();
+  const { writeValues, setWriteValues, setIsEditPage, isEdit, resetWriteValues, setIsEdit } =
+    useWriteStore();
   const { user } = useDiscordStore();
   const [isSnackBar, setIsSnackBar] = useState(false);
   const [completedCard, setCompletedCard] = useState<number[]>([]);
@@ -30,14 +37,18 @@ export const AddClientPage = () => {
     index: undefined,
   });
 
-  const createAddMutation = useMutation({
+  const updatePost = useMutation({
     mutationFn: () =>
-      createLists(writeValues, {
-        id: user?.id,
-        uuid: user?.user_metadata.provider_id,
-        nickname: user?.user_metadata.custom_claims.global_name,
-        avatar_url: user?.user_metadata.avatar_url,
-      }),
+      updateLists(
+        writeValues,
+        {
+          id: user?.id,
+          uuid: user?.user_metadata.provider_id,
+          nickname: user?.user_metadata.custom_claims.global_name,
+          avatar_url: user?.user_metadata.avatar_url,
+        },
+        uuid
+      ),
 
     onSuccess: () => {
       setOpen({
@@ -47,7 +58,7 @@ export const AddClientPage = () => {
     },
   });
 
-  const handleAddPosting = () => {
+  const handleEditPosting = () => {
     if (!user) return setOpen({ open: 'noUser', index: undefined });
     const lastOption = writeValues.options?.slice(-1)[0];
 
@@ -65,8 +76,37 @@ export const AddClientPage = () => {
     ) {
       return setIsSnackBar(true);
     }
-    createAddMutation.mutate();
+    updatePost.mutate();
   };
+
+  useEffect(() => {
+    if (!data) return;
+    setWriteValues({
+      huntType: data.hunt_type as huntTypes,
+      job: data.job,
+      title: data.title,
+      options: data.map_data.map((map) => ({
+        minLevel: map.level.min,
+        maxLevel: map.level.max,
+        partyType: map.partyType,
+        place: map.place,
+        caption: map.caption,
+        mapCode: map.map,
+        mobs: map.mobs,
+      })),
+    });
+    setCompletedCard(Array.from({ length: data.map_data.length }, (_, i) => i));
+    setIsEditPage(true);
+  }, [data]);
+
+  useEffect(() => {
+    return () => {
+      resetWriteValues();
+      setIsEdit(false);
+      setIsEditPage(false);
+      setCompletedCard([]);
+    };
+  }, []);
 
   return (
     <Box className='w-full flex flex-col gap-6 items-center p-10 max-w-3xl'>
@@ -74,7 +114,7 @@ export const AddClientPage = () => {
         <Typography variant='body2' color='textSecondary'>
           당신이 걸어오셨던 여정을 공유해 보세요
         </Typography>
-        <Typography variant='h3'>사냥터 추천</Typography>
+        <Typography variant='h3'>사냥터 수정</Typography>
       </Box>
       <TitleInformation />
       {writeValues.options?.map((list, index) => (
@@ -111,12 +151,12 @@ export const AddClientPage = () => {
 
       <Button
         fullWidth
-        loading={createAddMutation.isPending}
+        loading={updatePost.isPending}
         variant='contained'
         color='success'
         size='large'
         disabled={isEdit}
-        onClick={handleAddPosting}
+        onClick={handleEditPosting}
       >
         {isEdit ? '수정모드' : '작성완료'}
       </Button>
@@ -128,7 +168,7 @@ export const AddClientPage = () => {
         completedCard={completedCard}
       />
 
-      <AddSuccessModal open={open} setOpen={setOpen} />
+      <AddSuccessModal uuid={uuid} open={open} setOpen={setOpen} />
 
       <AddNoUserModal open={open} setOpen={setOpen} />
 

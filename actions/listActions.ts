@@ -5,6 +5,7 @@ import { SearchInfoTypes, WriteValueOptions } from '@/types/common';
 import { Database, MapDataType, UserType } from '@/types_db';
 import { PAGE_SIZE } from '@/utils/pageSize';
 import { PostgrestError } from '@supabase/postgrest-js';
+import { AuthError } from '@supabase/supabase-js'; // Import AuthError
 
 const handleError = (error: PostgrestError | null) => {
   if (error) {
@@ -118,6 +119,43 @@ export const createLists = async (list: WriteValueOptions, user: UserType) => {
   return data;
 };
 
+export const updateLists = async (list: WriteValueOptions, user: UserType, uuid: string) => {
+  const supabase = await createServerSupabaseClient();
+
+  const { data, error } = await supabase
+    .from('recommend-list')
+    .update({
+      title: list.title || '',
+      hunt_type: list.huntType,
+      job: list.job || '',
+      writer_uuid: user.id,
+      updated_at: new Date().toISOString(),
+      map_data:
+        list.options?.map((option) => ({
+          level: {
+            min: option.minLevel,
+            max: option.maxLevel,
+          },
+          map: option.mapCode,
+          partyType: option.partyType,
+          place: option.place,
+          caption: option.caption,
+          mobs: option.mobs,
+          uuid: option.uuid,
+        })) ?? [],
+      user: {
+        uuid: user.uuid,
+        nickname: user.nickname || undefined,
+        avatar_url: user.avatar_url || undefined,
+      },
+    })
+    .eq('uuid', uuid);
+
+  handleError(error);
+
+  return data;
+};
+
 export const deleteList = async (uuid: string) => {
   const supabase = await createServerSupabaseClient();
 
@@ -138,6 +176,41 @@ export const getDetailList = async (uuid: string) => {
     .single();
 
   handleError(error);
+
+  return data;
+};
+
+const handleSessionError = (error: AuthError | null) => {
+  if (error) {
+    throw error;
+  }
+};
+
+export const getEditData = async (uuid: string) => {
+  const supabase = await createServerSupabaseClient();
+
+  const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
+  handleSessionError(sessionError);
+
+  const userId = sessionData.session?.user.id;
+  if (!userId) {
+    throw new Error('Unauthorized: No active session');
+  }
+
+  // 로그인한 유저의 UUID와 uuid 둘 다 일치하는 항목 조회
+  const { data, error } = await supabase
+    .from('recommend-list')
+    .select('*')
+    .eq('uuid', uuid)
+    .eq('writer_uuid', userId) // 여기서 writer_uuid 조건을 줌
+    .maybeSingle();
+
+  handleError(error);
+
+  // 해당 조건으로 데이터가 없으면 = 작성자가 아님
+  if (!data) {
+    throw new Error('Unauthorized: You are not the writer of this post');
+  }
 
   return data;
 };

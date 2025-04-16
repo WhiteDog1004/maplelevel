@@ -4,9 +4,11 @@ import { create } from 'zustand';
 
 interface WriteStore {
   isEdit: boolean;
+  isEditPage: boolean;
   writeValues: WriteValueOptions;
   setWriteValues: (newWriteValues: Partial<WriteValueOptions>) => void;
   setIsEdit: (edit: boolean) => void;
+  setIsEditPage: (edit: boolean) => void;
   resetWriteValues: () => void;
 }
 
@@ -30,9 +32,11 @@ const initialValues: WriteValueOptions = {
 
 export const useWriteStore = create<WriteStore>((set) => ({
   isEdit: false,
+  isEditPage: false,
   writeValues: initialValues,
   setWriteValues: (newWriteValues) =>
     set((state) => ({ writeValues: { ...state.writeValues, ...newWriteValues } })),
   resetWriteValues: () => set({ writeValues: initialValues }),
   setIsEdit: (edit) => set(() => ({ isEdit: edit })),
+  setIsEditPage: (edit) => set(() => ({ isEditPage: edit })),
 }));

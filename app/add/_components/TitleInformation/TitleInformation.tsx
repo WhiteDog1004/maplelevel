@@ -38,8 +38,9 @@ export const TitleInformation = () => {
             <TextField
               label='제목'
               className='flex-1'
+              value={writeValues.title || ''}
               {...register('title', {
-                onBlur: (e) => setWriteValues({ ...writeValues, title: e.currentTarget.value }),
+                onChange: (e) => setWriteValues({ ...writeValues, title: e.currentTarget.value }),
               })}
             />
           </Box>

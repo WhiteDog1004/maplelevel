@@ -6,6 +6,7 @@ import { useLoginModalStore } from '@/store/useLoginModalStore';
 import { ListDetailOptions } from '@/types/common';
 import { getTimeAgo } from '@/utils/getTimeAgo';
 import { getClassImages, getLabelByJobs } from '@/utils/jobs';
+import { SITE_MAP } from '@/utils/sitemap';
 import { Delete, Edit, Favorite, MoreVert } from '@mui/icons-material';
 import {
   Avatar,
@@ -22,6 +23,7 @@ import {
 import { useMutation } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { DeletedModalTypes } from '../../_types/types';
 import { DeletedModal } from '../../_ui/DeletedModal';
@@ -30,6 +32,7 @@ import { LikedSnackBar } from '../../_ui/FailedSnackBar';
 import { MoreConfirmModal } from '../../_ui/MoreConfirmModal';
 
 export const DetailTitle = ({ list }: ListDetailOptions) => {
+  const router = useRouter();
   const { user } = useDiscordStore();
   const { setIsLoginModal } = useLoginModalStore();
   const [moreOpen, setMoreOpen] = useState<HTMLElement | null>(null);
@@ -79,6 +82,12 @@ export const DetailTitle = ({ list }: ListDetailOptions) => {
     if (isLiked) return;
 
     createLikePost.mutate();
+  };
+
+  const handleEdit = () => {
+    if (list.writer_uuid === user?.id) {
+      router.push(`${SITE_MAP.EDIT}/${list.uuid}`);
+    }
   };
 
   const handleDelete = (uuid: string) => {
@@ -169,7 +178,7 @@ export const DetailTitle = ({ list }: ListDetailOptions) => {
               onClose={() => handleMenuListClose(setMoreOpen)}
               onClick={() => handleMenuListClose(setMoreOpen)}
             >
-              <MenuItem className='gap-2'>
+              <MenuItem className='gap-2' onClick={handleEdit}>
                 <Edit />
                 <Typography>수정하기</Typography>
               </MenuItem>

@@ -54,6 +54,7 @@ export type Database = {
           updated_at: string;
           user: UserType;
           uuid: string;
+          writer_uuid: string;
         };
         Insert: {
           title: string;
@@ -66,6 +67,7 @@ export type Database = {
           updated_at?: string;
           user: UserType;
           uuid?: string;
+          writer_uuid: string;
         };
         Update: {
           title?: string;
@@ -78,6 +80,7 @@ export type Database = {
           updated_at?: string;
           user?: UserType;
           uuid?: string;
+          writer_uuid: string;
         };
         Relationships: [];
       };

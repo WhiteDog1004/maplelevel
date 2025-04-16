@@ -32,7 +32,7 @@ export const SelectInformation = ({
   completedCard,
   setCompletedCard,
 }: SelectInformationProps) => {
-  const { writeValues, setWriteValues, setIsEdit } = useWriteStore();
+  const { writeValues, setWriteValues, setIsEdit, isEditPage } = useWriteStore();
   const {
     control,
     register,
@@ -42,6 +42,10 @@ export const SelectInformation = ({
   } = useForm({
     resolver: yupResolver(selectInfoSchema),
     mode: 'onChange',
+    defaultValues: {
+      type: (isEditPage && writeValues.options?.[id]?.partyType) || '',
+      place: (isEditPage && writeValues.options?.[id]?.place) || undefined,
+    },
   });
 
   const { data: mapIcon, isLoading } = useMapIcon({
@@ -107,6 +111,7 @@ export const SelectInformation = ({
                 fullWidth
                 label='최소레벨'
                 {...register('minLevel')}
+                defaultValue={(isEditPage && writeValues.options?.[id]?.minLevel) || undefined}
                 error={!!errors.minLevel?.message}
                 placeholder='최소레벨 입력'
                 helperText={errors.minLevel?.message}
@@ -118,6 +123,7 @@ export const SelectInformation = ({
                 fullWidth
                 label='최대레벨'
                 {...register('maxLevel')}
+                defaultValue={(isEditPage && writeValues.options?.[id]?.maxLevel) || undefined}
                 error={!!errors.maxLevel?.message}
                 placeholder='최대레벨 입력'
                 helperText={errors.maxLevel?.message}
@@ -207,6 +213,7 @@ export const SelectInformation = ({
             size='small'
             multiline
             maxRows={4}
+            defaultValue={(isEditPage && writeValues.options?.[id]?.partyType) || ''}
             {...register('caption')}
             error={!!errors.caption?.message}
           />

@@ -1,10 +1,12 @@
 import { useWriteStore } from '@/store/useWriteValueStore';
+import { SITE_MAP } from '@/utils/sitemap';
 import { Box, Button, Card, Modal, Typography } from '@mui/material';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Dispatch, SetStateAction } from 'react';
 
 interface AddSuccessModalProps {
+  uuid?: string;
   open: {
     open: 'success' | 'delete' | 'noUser' | undefined;
     index: number | undefined;
@@ -12,13 +14,13 @@ interface AddSuccessModalProps {
   setOpen: Dispatch<SetStateAction<AddSuccessModalProps['open']>>;
 }
 
-export const AddSuccessModal = ({ open, setOpen }: AddSuccessModalProps) => {
+export const AddSuccessModal = ({ uuid, open, setOpen }: AddSuccessModalProps) => {
   const router = useRouter();
-  const { resetWriteValues } = useWriteStore();
+  const { isEditPage, resetWriteValues } = useWriteStore();
 
   // 모달 핸들러
   const handleCloseModal = () => {
-    router.push('/list');
+    router.push(isEditPage ? `${SITE_MAP.LIST}/${uuid}` : SITE_MAP.LIST);
     resetWriteValues();
     setOpen({ open: undefined, index: undefined });
   };

@@ -1,8 +1,10 @@
+import { useMinimap } from '@/hooks/api';
 import { useDarkModeStore } from '@/store/useDarkModeStore';
 import { useWriteStore } from '@/store/useWriteValueStore';
+import { MAP_CODE } from '@/utils/mapCode';
 import { EditNote, FactCheck } from '@mui/icons-material';
 import { Box, Button, Card, Typography } from '@mui/material';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { RecommendMapProps } from '../../_types/add';
 import { SelectInformation } from '../SelectInformation';
 import { SelectMap } from '../SelectMap';
@@ -16,12 +18,17 @@ interface SelectCardProps {
 
 export const SelectCard = ({ id, completedCard, setCompletedCard }: SelectCardProps) => {
   const { darkMode } = useDarkModeStore();
-  const { isEdit, setIsEdit } = useWriteStore();
+  const { writeValues, isEditPage, isEdit, setIsEdit } = useWriteStore();
   const [editNum, setEditNum] = useState<number | undefined>(undefined);
   const [recommendMap, setRecommendMap] = useState<RecommendMapProps['recommendMap']>({
     minimap: '',
-    code: 0,
-    label: '',
+    code: (isEditPage && writeValues?.options?.[id]?.mapCode) || 0,
+    label:
+      (isEditPage &&
+        MAP_CODE.find((map) => map.code === writeValues?.options?.[id]?.mapCode)
+          ?.kor.split(':')[1]
+          ?.trimStart()) ||
+      '',
   });
 
   const handleClickEditCard = (num: number) => {
@@ -29,6 +36,26 @@ export const SelectCard = ({ id, completedCard, setCompletedCard }: SelectCardPr
     setEditNum(num);
     setCompletedCard(completedCard.filter((item) => item !== num));
   };
+
+  const { data: minimap, refetch } = useMinimap({
+    code: isEditPage ? MAP_CODE.filter((map) => map.kor.includes(recommendMap.label))[0].code : 0,
+    uuid: recommendMap.label,
+    enabled: false,
+  });
+
+  useEffect(() => {
+    if (!isEditPage || !minimap) return;
+    setRecommendMap({
+      ...recommendMap,
+      minimap: minimap.url,
+    });
+  }, [minimap]);
+
+  useEffect(() => {
+    if (id !== completedCard.length) {
+      refetch();
+    }
+  }, []);
 
   return (
     <Card
@@ -65,7 +92,7 @@ export const SelectCard = ({ id, completedCard, setCompletedCard }: SelectCardPr
       )}
       <Box className='flex-1 h-max flex flex-col gap-2'>
         <SelectMap recommendMap={recommendMap} setRecommendMap={setRecommendMap} />
-        <SelectMob id={id} recommendMap={recommendMap} />
+        {minimap && <SelectMob id={id} recommendMap={recommendMap} />}
       </Box>
       <Box className='flex-1'>
         <SelectInformation
