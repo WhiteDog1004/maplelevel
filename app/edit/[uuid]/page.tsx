@@ -6,7 +6,7 @@ import { EditClientPage } from './_components/EditClientPage';
 
 export const metadata: Metadata = {
   title: `${SITE_TITLE} - 사냥터 수정`,
-  description: 'maple-level',
+  description: 'maple-level post-edit',
 };
 
 const LevelEdit = async ({ params }: { params: { uuid: string } }) => {

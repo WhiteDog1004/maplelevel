@@ -5,7 +5,7 @@ import { AddClientPage } from './_components/AddClientPage';
 
 export const metadata: Metadata = {
   title: `${SITE_TITLE} - 사냥터 추천`,
-  description: 'maple-level',
+  description: 'maple-level post',
 };
 
 const LevelAdd = async () => {

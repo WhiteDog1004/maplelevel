@@ -9,8 +9,8 @@ interface ListDetailProps {
 }
 
 export const metadata: Metadata = {
-  title: `${SITE_TITLE} - `,
-  description: 'maple-level',
+  title: `${SITE_TITLE} - 사냥터 상세`,
+  description: 'maple-level post-detail',
 };
 
 const ListDetail = async ({ params }: ListDetailProps) => {

@@ -7,7 +7,7 @@ import { ListClientPage } from './_components/ListClientPage';
 
 export const metadata: Metadata = {
   title: `${SITE_TITLE} - 사냥터 목록`,
-  description: 'maple-level',
+  description: 'maple-level list',
 };
 
 const List = async ({ searchParams }: { searchParams: SearchInfoTypes }) => {
