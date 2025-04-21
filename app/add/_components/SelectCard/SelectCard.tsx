@@ -44,7 +44,7 @@ export const SelectCard = ({ id, completedCard, setCompletedCard }: SelectCardPr
   });
 
   useEffect(() => {
-    if (!isEditPage || !minimap) return;
+    if (!isEditPage || !minimap || recommendMap.code === 0) return;
     setRecommendMap({
       ...recommendMap,
       minimap: minimap.url,
