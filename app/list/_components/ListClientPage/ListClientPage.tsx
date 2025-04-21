@@ -29,7 +29,7 @@ export const ListClientPage = ({ lists, count }: ListClientPageProps) => {
 
   return (
     <Box className='flex flex-col gap-8 w-full py-16 px-8'>
-      <Box className='fixed z-50 w-full right-0 bottom-4 pointer-events-none'>
+      <Box className='fixed z-50 w-full right-2 bottom-4 pointer-events-none'>
         <SearchInformation />
       </Box>
       {lists.length ? (

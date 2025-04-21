@@ -11,3 +11,14 @@ export const getTimeAgo = (dateString: string | Date): string => {
   const years = Math.floor(diffDays / 365);
   return `${years}년 전`;
 };
+
+export const isSameDay = (date1: string | Date, date2: string | Date): boolean => {
+  const d1 = new Date(date1);
+  const d2 = new Date(date2);
+
+  return (
+    d1.getFullYear() === d2.getFullYear() &&
+    d1.getMonth() === d2.getMonth() &&
+    d1.getDate() === d2.getDate()
+  );
+};

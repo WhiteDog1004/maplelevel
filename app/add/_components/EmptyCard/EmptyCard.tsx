@@ -15,6 +15,7 @@ export const EmptyCard = () => {
       (!lastOption?.mapCode ||
         !lastOption?.minLevel ||
         !lastOption?.maxLevel ||
+        !lastOption?.place ||
         !lastOption?.partyType)
     ) {
       return setIsAddCard(true);

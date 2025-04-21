@@ -4,7 +4,7 @@ import { useGetLike } from '@/hooks/api/useGetLike/useGetLike';
 import { useDiscordStore } from '@/store/useDiscordStore';
 import { useLoginModalStore } from '@/store/useLoginModalStore';
 import { ListDetailOptions } from '@/types/common';
-import { getTimeAgo } from '@/utils/getTimeAgo';
+import { getTimeAgo, isSameDay } from '@/utils/getTimeAgo';
 import { getClassImages, getLabelByJobs } from '@/utils/jobs';
 import { SITE_MAP } from '@/utils/sitemap';
 import { Delete, Edit, Favorite, MoreVert } from '@mui/icons-material';
@@ -38,6 +38,7 @@ export const DetailTitle = ({ list }: ListDetailOptions) => {
   const [moreOpen, setMoreOpen] = useState<HTMLElement | null>(null);
   const [isDeletedModal, setIsDeletedModal] = useState<DeletedModalTypes>(undefined);
   const [isLiked, setIsLiked] = useState(false);
+  const isUpdated = !!list.updated_at;
 
   const {
     data: getLike,
@@ -147,11 +148,28 @@ export const DetailTitle = ({ list }: ListDetailOptions) => {
             }
             variant='outlined'
           />
-          <Tooltip arrow placement='top' title={dayjs(list.created_at).format('YY-MM-DD HH:mm')}>
-            <Typography color='textDisabled' variant='body2'>
-              {getTimeAgo(list.created_at)}
-            </Typography>
-          </Tooltip>
+          <Stack direction='row' alignItems='flex-end' gap={0.5}>
+            <Tooltip
+              arrow
+              placement='top'
+              title={dayjs(list.updated_at ?? list.created_at).format('YY-MM-DD HH:mm')}
+            >
+              <Typography color='textSecondary' variant='body2' sx={{ lineHeight: 1 }}>
+                {getTimeAgo(list.created_at)}
+              </Typography>
+            </Tooltip>
+            {isUpdated && (
+              <>
+                <Typography color='textDisabled' variant='caption' sx={{ lineHeight: 1 }}>
+                  ·
+                </Typography>
+                <Typography color='textDisabled' variant='caption' sx={{ lineHeight: 1 }}>
+                  {isSameDay(list.created_at, list.updated_at) ? '' : getTimeAgo(list.updated_at)}{' '}
+                  업데이트 됨
+                </Typography>
+              </>
+            )}
+          </Stack>
         </Box>
       </Box>
       <Stack

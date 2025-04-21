@@ -95,9 +95,10 @@ export const SearchInformation = () => {
         sx={{ zIndex: 999 }}
         size='medium'
         variant='contained'
+        color='secondary'
+        startIcon={<ManageSearch />}
         onClick={() => setIsOpenFilter(true)}
       >
-        <ManageSearch />
         <Typography variant='body2'>필터</Typography>
       </Button>
       <Dialog
