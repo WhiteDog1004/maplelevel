@@ -1136,11 +1136,6 @@ export const MAP_CODE = [
     eng: 'Orbis: Orbis Tower <10th Floor>',
   },
   {
-    code: 200081201,
-    kor: '히든스트리트: 오르비스탑<비밀의 방>',
-    eng: 'Orbis: Orbis Tower <Hidden Room>',
-  },
-  {
     code: 200081300,
     kor: '오르비스탑: 오르비스탑<9층>',
     eng: 'Orbis: Orbis Tower <9th Floor>',
@@ -1257,12 +1252,12 @@ export const MAP_CODE = [
   },
   {
     code: 211040500,
-    kor: '폐광: 날카로운절벽3',
+    kor: '폐광: 늑대의영역1',
     eng: 'El Nath: Wolf Territory I',
   },
   {
     code: 211040600,
-    kor: '폐광: 날카로운절벽4',
+    kor: '폐광: 늑대의영역2',
     eng: 'El Nath: Wolf Territory II',
   },
   {
@@ -1272,17 +1267,17 @@ export const MAP_CODE = [
   },
   {
     code: 211040800,
-    kor: '폐광: 늑대의영역1',
+    kor: '폐광: 늑대의영역3',
     eng: 'El Nath: Wolf Territory III',
   },
   {
     code: 211040900,
-    kor: '폐광: 늑대의영역2',
+    kor: '폐광: 늑대의영역4',
     eng: 'El Nath: Wolf Territory IV',
   },
   {
     code: 211041000,
-    kor: '폐광: 늑대의영역3',
+    kor: '폐광: 늑대의영역5',
     eng: 'El Nath: Wolf Territory V',
   },
   {
