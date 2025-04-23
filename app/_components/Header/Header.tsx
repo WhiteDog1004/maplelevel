@@ -108,7 +108,7 @@ export const Header = () => {
                 color={pathname === SITE_MAP.LIST ? 'warning' : 'textDisabled'}
                 variant='body2'
               >
-                레벨업 리스트
+                사냥터 리스트
               </Typography>
             </Button>
             <Button color='inherit' onClick={() => handleMenuRouting(SITE_MAP.ADD)}>

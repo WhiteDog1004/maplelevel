@@ -6,7 +6,7 @@ import { NoticeTable } from '../NoticeTable';
 
 export const NoticeClientPage = () => {
   return (
-    <Box className='w-full h-screen p-16 dark:bg-zinc-700 flex justify-center items-start'>
+    <Box className='w-full h-screen py-16 px-8 dark:bg-zinc-700 flex justify-center items-start'>
       <Stack className='w-full justify-center items-center'>
         <Image
           className='w-[44] h-[37]'
