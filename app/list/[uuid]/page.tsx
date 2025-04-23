@@ -4,16 +4,14 @@ import { Box } from '@mui/material';
 import { Metadata } from 'next';
 import { ListDetailClientPage } from './_components/ListDetailClientPage';
 
-interface ListDetailProps {
-  params: { uuid: string };
-}
-
 export const metadata: Metadata = {
   title: `${SITE_TITLE} - 사냥터 상세`,
   description: 'maple-level post-detail',
 };
 
-const ListDetail = async ({ params }: ListDetailProps) => {
+type Params = Promise<{ uuid: string }>;
+
+const ListDetail = async ({ params }: { params: Params }) => {
   const { uuid } = await params;
   const list = await getDetailList(uuid);
 

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   description: 'maple-level list',
 };
 
-const List = async ({ searchParams }: { searchParams: SearchInfoTypes }) => {
+const List = async ({ searchParams }: { searchParams: Promise<SearchInfoTypes> }) => {
   const params = await searchParams;
   const { data, count } = await getLists(params);
 

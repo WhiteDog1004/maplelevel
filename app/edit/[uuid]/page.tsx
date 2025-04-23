@@ -9,7 +9,9 @@ export const metadata: Metadata = {
   description: 'maple-level post-edit',
 };
 
-const LevelEdit = async ({ params }: { params: { uuid: string } }) => {
+type Params = Promise<{ uuid: string }>;
+
+const LevelEdit = async ({ params }: { params: Params }) => {
   const { uuid } = await params;
   const data = await getEditData(uuid);
 

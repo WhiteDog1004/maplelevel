@@ -25,9 +25,9 @@ export const MainSNB = () => {
           {lists.map((list) => (
             <Button
               key={list.href}
-              onClick={() => {
-                list.isLogin && !user ? setIsLoginModal(true) : router.push(list.href);
-              }}
+              onClick={() =>
+                list.isLogin && !user ? setIsLoginModal(true) : router.push(list.href)
+              }
               className='hover:text-blue-400 transition'
             >
               <Box className='flex flex-row'>
