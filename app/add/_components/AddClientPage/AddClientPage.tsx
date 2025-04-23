@@ -7,7 +7,7 @@ import { useWriteStore } from '@/store/useWriteValueStore';
 import { Close } from '@mui/icons-material';
 import { Box, Button, Card, CardActionArea, Typography } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AddDeleteModal } from '../../_ui/AddDeleteModal/AddDeleteModal';
 import { AddNoUserModal } from '../../_ui/AddNoUserModal';
 import { AddSuccessModal } from '../../_ui/AddSuccessModal';
@@ -18,7 +18,7 @@ import { TitleInformation } from '../TitleInformation';
 
 export const AddClientPage = () => {
   const { darkMode } = useDarkModeStore();
-  const { writeValues, isEdit } = useWriteStore();
+  const { writeValues, resetWriteValues, isEdit } = useWriteStore();
   const { user } = useDiscordStore();
   const [isSnackBar, setIsSnackBar] = useState(false);
   const [completedCard, setCompletedCard] = useState<number[]>([]);
@@ -67,6 +67,10 @@ export const AddClientPage = () => {
     }
     createAddMutation.mutate();
   };
+
+  useEffect(() => {
+    resetWriteValues();
+  }, []);
 
   return (
     <Box className='w-full flex flex-col gap-6 items-center p-10 max-w-3xl'>

@@ -9,6 +9,7 @@ export interface WriteValueOptions {
   huntType?: huntTypes;
   options?: {
     uuid?: string;
+    minimap?: string;
     mapCode?: number;
     minLevel?: number;
     maxLevel?: number;

@@ -14,7 +14,7 @@ import {
   ToggleButtonGroup,
   Typography,
 } from '@mui/material';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { RecommendMapProps } from '../../_types/add';
 import { selectInfoSchema } from './SelectInformation.const';
@@ -36,6 +36,7 @@ export const SelectInformation = ({
   const {
     control,
     register,
+    setValue,
     setError,
     handleSubmit,
     formState: { errors },
@@ -83,6 +84,16 @@ export const SelectInformation = ({
       }),
     });
   });
+
+  useEffect(() => {
+    if (completedCard[id] !== undefined) {
+      setValue('caption', writeValues.options?.[id].caption);
+      setValue('maxLevel', writeValues.options?.[id].maxLevel || 0);
+      setValue('minLevel', writeValues.options?.[id].minLevel || 0);
+      setValue('place', writeValues.options?.[id].place || 0);
+      setValue('type', writeValues.options?.[id].partyType || '');
+    }
+  }, [completedCard]);
 
   return (
     <Box className='flex flex-col gap-4 h-full justify-between'>

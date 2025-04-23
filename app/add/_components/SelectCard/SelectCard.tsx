@@ -21,8 +21,11 @@ export const SelectCard = ({ id, completedCard, setCompletedCard }: SelectCardPr
   const { writeValues, isEditPage, isEdit, setIsEdit } = useWriteStore();
   const [editNum, setEditNum] = useState<number | undefined>(undefined);
   const [recommendMap, setRecommendMap] = useState<RecommendMapProps['recommendMap']>({
-    minimap: '',
-    code: (isEditPage && writeValues?.options?.[id]?.mapCode) || 0,
+    minimap: writeValues.options?.[id].minimap || '',
+    code:
+      (isEditPage && writeValues?.options?.[id]?.mapCode) ||
+      writeValues?.options?.[id]?.mapCode ||
+      0,
     label:
       (isEditPage &&
         MAP_CODE.find((map) => map.code === writeValues?.options?.[id]?.mapCode)
@@ -91,7 +94,7 @@ export const SelectCard = ({ id, completedCard, setCompletedCard }: SelectCardPr
         <Box className='absolute top-0 left-0 flex justify-center items-center w-full h-full bg-black/50 z-10 rounded-md' />
       )}
       <Box className='flex-1 h-max flex flex-col gap-2'>
-        <SelectMap recommendMap={recommendMap} setRecommendMap={setRecommendMap} />
+        <SelectMap id={id} recommendMap={recommendMap} setRecommendMap={setRecommendMap} />
         {minimap && <SelectMob id={id} recommendMap={recommendMap} />}
       </Box>
       <Box className='flex-1'>

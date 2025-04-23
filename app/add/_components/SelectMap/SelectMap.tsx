@@ -1,5 +1,6 @@
 import { Loading } from '@/app/_components/Loading';
 import { useMinimap } from '@/hooks/api';
+import { useWriteStore } from '@/store/useWriteValueStore';
 import { MAP_CODE } from '@/utils/mapCode';
 import { AddCircle, Edit } from '@mui/icons-material';
 import {
@@ -18,11 +19,13 @@ import { SyntheticEvent, useEffect, useState } from 'react';
 import { RecommendMapProps } from '../../_types/add';
 
 interface SelectMapProps {
+  id: number;
   recommendMap: RecommendMapProps['recommendMap'];
   setRecommendMap: RecommendMapProps['setRecommendMap'];
 }
 
-export const SelectMap = ({ recommendMap, setRecommendMap }: SelectMapProps) => {
+export const SelectMap = ({ id, recommendMap, setRecommendMap }: SelectMapProps) => {
+  const { writeValues, setWriteValues } = useWriteStore();
   const [isOpen, setIsOpen] = useState(false);
   const [selectMap, setSelectMap] = useState('');
   const [search, setSearch] = useState('');
@@ -36,7 +39,7 @@ export const SelectMap = ({ recommendMap, setRecommendMap }: SelectMapProps) => 
   const { data: minimap, isLoading } = useMinimap({
     code: MAP_CODE.filter((map) => map.kor.includes(selectMap))[0]?.code,
     uuid: selectMap,
-    enabled: !!selectMap,
+    enabled: !!selectMap && !!search,
   });
 
   const handleInputChange = (e: SyntheticEvent<Element, Event>, value: string) => {
@@ -128,7 +131,7 @@ export const SelectMap = ({ recommendMap, setRecommendMap }: SelectMapProps) => 
           </Stack>
           <Box>
             <Box className='w-full h-40 relative flex flex-col gap-4 justify-center items-center mb-4'>
-              {minimap ? (
+              {minimap && selectMap ? (
                 <Image fill objectFit='contain' unoptimized alt={'select_map'} src={minimap.url} />
               ) : (
                 <Box>
@@ -149,6 +152,13 @@ export const SelectMap = ({ recommendMap, setRecommendMap }: SelectMapProps) => 
               disabled={!minimap}
               onClick={() => {
                 if (!minimap) return;
+                setSearch('');
+                setWriteValues({
+                  ...writeValues,
+                  options: writeValues.options?.map((option, index) =>
+                    id === index ? { ...option, minimap: minimap.url } : option
+                  ),
+                });
                 setRecommendMap({
                   isJms: !!MAP_CODE.filter((map) => map.kor.includes(selectMap))[0].region,
                   minimap: minimap.url,
