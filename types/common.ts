@@ -34,3 +34,19 @@ export type SearchInfoTypes = {
 export interface ListDetailOptions {
   list: Database['public']['Tables']['recommend-list']['Row'];
 }
+
+export interface NoticeOptions {
+  id: number;
+  uuid: string;
+  writer: {
+    uuid: string;
+    avatar_url: string;
+    nickname: string;
+  };
+  created_at: string;
+  type: string;
+  isTop: boolean;
+  title: string;
+  content: string;
+  updated_at?: string;
+}

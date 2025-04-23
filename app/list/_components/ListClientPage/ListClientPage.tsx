@@ -34,7 +34,7 @@ export const ListClientPage = ({ lists, count }: ListClientPageProps) => {
       </Box>
       {lists.length ? (
         <>
-          <Box className='grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] justify-items-center w-full h-max gap-8'>
+          <Box className='grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] justify-items-center w-full h-max gap-8'>
             {lists.map((list) => (
               <ListItemCard key={list.uuid} data={list || []} />
             ))}

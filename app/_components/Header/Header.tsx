@@ -177,7 +177,7 @@ export const Header = () => {
                 <Typography variant='body2'>마이 페이지</Typography>
               </MenuItem>
             )}
-            <MenuItem className={menuItemStyles}>
+            <MenuItem className={menuItemStyles} onClick={() => router.push(SITE_MAP.NOTICE)}>
               <Notifications />
               <Typography variant='body2'>공지사항</Typography>
             </MenuItem>

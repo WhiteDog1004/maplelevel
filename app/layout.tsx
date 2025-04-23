@@ -39,7 +39,7 @@ export default function RootLayout({
         <DarkMode>
           <MuiThemeProvider>
             <ReactQueryClientProvider>
-              <div className='dark:bg-zinc-700 bg-white dark:text-white'>
+              <div className='dark:bg-zinc-700 bg-white dark:text-white min-w-96'>
                 <Header />
                 {children}
                 <LoginModal />

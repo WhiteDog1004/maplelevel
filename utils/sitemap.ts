@@ -6,4 +6,5 @@ export const SITE_MAP = {
   AUTH_LOGIN: '/auth/login',
   AUTH_SUCCESS: '/auth/success',
   PRIVACY: '/privacy',
+  NOTICE: '/notice',
 };

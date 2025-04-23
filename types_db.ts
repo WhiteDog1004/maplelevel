@@ -22,6 +22,53 @@ export type UserType = {
 export type Database = {
   public: {
     Tables: {
+      notice: {
+        Row: {
+          id: number;
+          uuid: string;
+          writer: {
+            uuid: string;
+            avatar_url: string;
+            nickname: string;
+          };
+          createdAt: string;
+          type: string;
+          isTop: boolean;
+          title: string;
+          content: string;
+          updatedAt?: string;
+        };
+        Insert: {
+          id: number;
+          uuid: string;
+          writer: {
+            uuid: string;
+            avatar_url: string;
+            nickname: string;
+          };
+          createdAt: string;
+          type: string;
+          isTop: boolean;
+          title: string;
+          content: string;
+          updatedAt?: string;
+        };
+        Update: {
+          id: number;
+          uuid: string;
+          writer: {
+            uuid: string;
+            avatar_url: string;
+            nickname: string;
+          };
+          createdAt: string;
+          type: string;
+          isTop: boolean;
+          title: string;
+          content: string;
+          updatedAt?: string;
+        };
+      };
       likes: {
         Row: {
           id: string;
