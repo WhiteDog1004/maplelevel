@@ -73,7 +73,7 @@ export default function RootLayout({
         </DarkMode>
 
         <Script async src='https://www.googletagmanager.com/gtag/js?id=G-6MX8X1VL4E'></Script>
-        <Script>
+        <Script id='google-analytics'>
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
