@@ -28,7 +28,7 @@ export const MainClientPage = () => {
         <MainListBox />
         <MainAddBox />
       </Stack>
-      <Stack>
+      <Stack width={isMobile ? '100%' : 'max-content'} px={2} pb={2}>
         <Typography variant='caption' color='textDisabled'>
           Data sourced from
         </Typography>
