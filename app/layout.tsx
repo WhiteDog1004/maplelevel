@@ -1,9 +1,11 @@
+import AnalyticsProvider from '@/config/AnalyticsProvider';
 import { DarkMode } from '@/config/DarkMode';
 import { MuiThemeProvider } from '@/config/MuiThemeProvider';
 import ReactQueryClientProvider from '@/config/ReactQueryClientProvider';
 import { SITE_TITLE } from '@/utils/string';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
+import Script from 'next/script';
 import { Header } from './_components/Header';
 import { LoginModal } from './_components/LoginModal';
 import './globals.css';
@@ -57,6 +59,7 @@ export default function RootLayout({
         />
       </head>
       <body className={pretendard.className}>
+        <AnalyticsProvider />
         <DarkMode>
           <MuiThemeProvider>
             <ReactQueryClientProvider>
@@ -68,6 +71,17 @@ export default function RootLayout({
             </ReactQueryClientProvider>
           </MuiThemeProvider>
         </DarkMode>
+
+        <Script async src='https://www.googletagmanager.com/gtag/js?id=G-6MX8X1VL4E'></Script>
+        <Script>
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-6MX8X1VL4E');
+          `}
+        </Script>
       </body>
     </html>
   );
