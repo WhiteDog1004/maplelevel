@@ -21,22 +21,14 @@ export const metadata: Metadata = {
   description: '메이플랜드에서 사냥터가 고민될 땐? 레벨지지',
   keywords: ['메렙지지', '레벨지지', '메이플레벨지지', 'levelgg'],
   creator: 'WolfDog',
-  // openGraph: {
-  //   title: SITE_TITLE,
-  //   description: '메이플랜드에서 사냥터가 고민될 땐? 레벨지지',
-  //   url: 'https://maplelevel.gg',
-  //   siteName: '레벨지지',
-  //   images: [
-  //     {
-  //       url: 'https://your-site.com/og-image.jpg',
-  //       width: 1200,
-  //       height: 630,
-  //       alt: '이미지 설명',
-  //     },
-  //   ],
-  //   locale: 'ko_KR',
-  //   type: 'website',
-  // },
+  openGraph: {
+    title: SITE_TITLE,
+    description: '메이플랜드에서 사냥터가 고민될 땐? 레벨지지',
+    url: 'https://maplelevel.gg',
+    siteName: '레벨지지',
+    locale: 'ko_KR',
+    type: 'website',
+  },
   other: {
     'google-adsense-account': 'ca-pub-3851224465271826',
     'naver-site-verification': '0f6e3554f8d87a1e28b285181233e892020cb2a1',
