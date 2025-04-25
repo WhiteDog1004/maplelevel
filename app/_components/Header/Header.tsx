@@ -138,7 +138,7 @@ export const Header = () => {
                   color={pathname === SITE_MAP.LIST ? 'warning' : 'textDisabled'}
                   variant='body2'
                 >
-                  레벨업 리스트
+                  사냥터 리스트
                 </Typography>
               </MenuItem>
               <MenuItem className={menuItemStyles} onClick={() => handleMenuRouting(SITE_MAP.ADD)}>
