@@ -11,9 +11,9 @@ import {
   AppBar,
   Avatar,
   Box,
-  Button,
   Divider,
   IconButton,
+  Link,
   Menu,
   MenuItem,
   Typography,
@@ -89,34 +89,44 @@ export const Header = () => {
     >
       <Box className='max-w-5xl w-full flex justify-between items-center p-2'>
         <Box className='flex items-center gap-2'>
-          <Button
-            onClick={() => router.push(SITE_MAP.HOME)}
-            variant='text'
-            className='flex items-center gap-4 w-max'
-            color='inherit'
+          <Link
+            color='textPrimary'
+            href={SITE_MAP.HOME}
+            underline='none'
+            className='flex items-center gap-2 p-3'
           >
             <Image src='/images/husky/eat_0.png' alt='logo' width={44} height={37} />
             <Typography variant='h5' whiteSpace='nowrap'>
               레벨지지
             </Typography>
-          </Button>
-          <Box className='hidden md:flex gap-2'>
-            <Button color='inherit' onClick={() => handleMenuRouting(SITE_MAP.LIST)}>
+          </Link>
+          <Box className='hidden md:flex'>
+            <Link
+              color='textSecondary'
+              href={SITE_MAP.LIST}
+              underline='hover'
+              className='flex items-center p-3'
+            >
               <Typography
                 color={pathname === SITE_MAP.LIST ? 'warning' : 'textDisabled'}
                 variant='body2'
               >
                 사냥터 리스트
               </Typography>
-            </Button>
-            <Button color='inherit' onClick={() => handleMenuRouting(SITE_MAP.ADD)}>
+            </Link>
+            <Link
+              href={SITE_MAP.ADD}
+              color='textSecondary'
+              underline='hover'
+              className='flex items-center p-3'
+            >
               <Typography
                 color={pathname === SITE_MAP.ADD ? 'warning' : 'textDisabled'}
                 variant='body2'
               >
                 사냥터 추천하기
               </Typography>
-            </Button>
+            </Link>
           </Box>
         </Box>
 

@@ -51,6 +51,7 @@ export const ListItemCard = ({ data }: ListItemCardProps) => {
     refetch();
   }, [lowestMap]);
 
+  if (!data) return;
   return (
     <Badge
       anchorOrigin={{
