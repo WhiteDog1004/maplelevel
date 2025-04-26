@@ -21,6 +21,10 @@ export const metadata: Metadata = {
   description: '메이플랜드에서 사냥터가 고민될 땐? 레벨지지',
   keywords: ['메렙지지', '레벨지지', '메이플레벨지지', 'levelgg'],
   creator: 'WolfDog',
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+  },
   openGraph: {
     title: `메이플랜드 - ${SITE_TITLE}`,
     description: '메이플랜드에서 사냥터가 고민될 땐? 레벨지지',
