@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: 'https://maplelevel.gg/images/monsters1200.png',
+        url: 'https://maplelevel.gg/images/maplelevelgg.png',
         width: 1200,
         height: 630,
         alt: '레벨지지 메인 이미지',
