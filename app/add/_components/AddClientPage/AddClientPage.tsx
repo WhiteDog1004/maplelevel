@@ -119,10 +119,14 @@ export const AddClientPage = () => {
         variant='contained'
         color='success'
         size='large'
-        disabled={isEdit}
+        disabled={isEdit || completedCard.length !== writeValues.options?.length}
         onClick={handleAddPosting}
       >
-        {isEdit ? '수정모드' : '작성완료'}
+        {isEdit
+          ? '수정모드'
+          : completedCard.length !== writeValues.options?.length
+          ? '확정을 먼저 눌러주세요'
+          : '작성완료'}
       </Button>
 
       <AddDeleteModal
