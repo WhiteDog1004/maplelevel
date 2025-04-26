@@ -23,7 +23,6 @@ export const metadata: Metadata = {
   creator: 'WolfDog',
   icons: {
     icon: '/favicon.ico',
-    shortcut: '/favicon.ico',
   },
   openGraph: {
     title: `메이플랜드 - ${SITE_TITLE}`,
@@ -34,7 +33,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: 'https://maplelevel.gg/monsters1200.png',
+        url: 'https://maplelevel.gg/images/monsters1200.png',
         width: 1200,
         height: 630,
         alt: '레벨지지 메인 이미지',
