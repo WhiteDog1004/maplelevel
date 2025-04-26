@@ -17,21 +17,30 @@ const pretendard = localFont({
 });
 
 export const metadata: Metadata = {
-  title: SITE_TITLE,
+  title: `메이플랜드 - ${SITE_TITLE}`,
   description: '메이플랜드에서 사냥터가 고민될 땐? 레벨지지',
   keywords: ['메렙지지', '레벨지지', '메이플레벨지지', 'levelgg'],
   creator: 'WolfDog',
   openGraph: {
-    title: SITE_TITLE,
+    title: `메이플랜드 - ${SITE_TITLE}`,
     description: '메이플랜드에서 사냥터가 고민될 땐? 레벨지지',
     url: 'https://maplelevel.gg',
     siteName: '레벨지지',
     locale: 'ko_KR',
     type: 'website',
+    images: [
+      {
+        url: 'https://maplelevel.gg/monsters1200.png',
+        width: 1200,
+        height: 630,
+        alt: '레벨지지 메인 이미지',
+      },
+    ],
   },
   other: {
     'google-adsense-account': 'ca-pub-3851224465271826',
     'naver-site-verification': '0f6e3554f8d87a1e28b285181233e892020cb2a1',
+    'google-site-verification': '03X0baq7nvptAptB-A_EYMNwF_9tEfa_FxSutHHSyMA',
   },
 };
 

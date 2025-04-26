@@ -6,7 +6,7 @@ import { ListDetailClientPage } from './_components/ListDetailClientPage';
 
 export const metadata: Metadata = {
   title: `${SITE_TITLE} - 사냥터 상세`,
-  description: 'maple-level post-detail',
+  description: '메이플랜드 사냥터 상세',
 };
 
 type Params = Promise<{ uuid: string }>;

@@ -7,7 +7,7 @@ import { ListClientPage } from './_components/ListClientPage';
 
 export const metadata: Metadata = {
   title: `${SITE_TITLE} - 사냥터 목록`,
-  description: 'maple-level list',
+  description: '메이플랜드 사냥터 리스트',
 };
 
 const List = async ({ searchParams }: { searchParams: Promise<SearchInfoTypes> }) => {
