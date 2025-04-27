@@ -1,7 +1,7 @@
 import * as yup from 'yup';
 
 export const selectInfoSchema = yup.object().shape({
-  caption: yup.string().max(120, '최대 120자까지 입력 가능합니다.'),
+  caption: yup.string().max(800, '최대 800자까지 입력 가능합니다.'),
   place: yup.number().required('최소 하나는 선택해야 합니다'),
   type: yup.string().required('최소 하나는 선택해야 합니다'),
   minLevel: yup
