@@ -1,10 +1,12 @@
 import { SearchInfoTypes } from '@/types/common';
 import { getClassImages, JOBS } from '@/utils/jobs';
-import { ManageSearch } from '@mui/icons-material';
+import { ExpandMoreOutlined } from '@mui/icons-material';
 import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   Box,
   Button,
-  Dialog,
   FormControl,
   InputLabel,
   MenuItem,
@@ -14,28 +16,33 @@ import {
   ToggleButton,
   ToggleButtonGroup,
   Typography,
+  useMediaQuery,
 } from '@mui/material';
 import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { SearchSortSwitch, titleFilterList } from './SearchInformation.const';
+import { titleFilterList } from './SearchInformation.const';
 
 export const SearchInformation = () => {
   const router = useRouter();
   const params = useSearchParams();
-  const [isOpenFilter, setIsOpenFilter] = useState(false);
+  const isMobile = useMediaQuery('(max-width:768px)');
   const [selectValue, setSelectValue] = useState('');
+  const [isResetting, setIsResetting] = useState(false);
+  const [accordionExpanded, setAccordionExpanded] = useState(false);
   const [selectTitleFilterValue, setSelectTitleFilterValue] = useState('title');
   const {
     control,
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm<SearchInfoTypes>();
 
   const onSubmit = (value?: SearchInfoTypes) => {
+    setAccordionExpanded(false);
     if (
       value?.job ||
       value?.level ||
@@ -55,22 +62,26 @@ export const SearchInformation = () => {
         ...{ page: '1' },
       }).toString();
 
-      setIsOpenFilter(false);
       return router.push(`/list?${query}`);
     }
-    setIsOpenFilter(false);
     return router.push(`/list?page=1`);
   };
 
   const handleReset = () => {
-    setIsOpenFilter(false);
+    setIsResetting(true);
     setSelectValue('');
     setSelectTitleFilterValue('title');
     reset();
+    setAccordionExpanded(false);
     return router.push('/list?page=1');
   };
 
   useEffect(() => {
+    if (isResetting) {
+      setIsResetting(false);
+      setValue('level', undefined as unknown as number);
+      return;
+    }
     reset({
       titleFilter: params.get('titleFilter') || undefined,
       title: params.get('title') || undefined,
@@ -80,7 +91,7 @@ export const SearchInformation = () => {
       partyType: params.get('partyType') || undefined,
       sort: params.get('sort') || undefined,
     });
-  }, [isOpenFilter, params, reset]);
+  }, [params, reset]);
 
   useEffect(() => {
     if (params.get('job')) {
@@ -89,149 +100,189 @@ export const SearchInformation = () => {
   }, []);
 
   return (
-    <Box className='flex justify-end w-full max-w-5xl m-auto'>
-      <Button
-        className='pointer-events-auto'
-        sx={{ zIndex: 999 }}
-        size='medium'
-        variant='contained'
-        color='secondary'
-        startIcon={<ManageSearch />}
-        onClick={() => setIsOpenFilter(true)}
+    <Accordion
+      onChange={(_, expanded) => setAccordionExpanded(expanded)}
+      expanded={accordionExpanded}
+      elevation={3}
+      sx={{ maxWidth: 560, width: '100%' }}
+    >
+      <AccordionSummary expandIcon={<ExpandMoreOutlined />}>
+        <Box className='flex items-center gap-2'>
+          <Image src='/images/husky/chat_4.png' alt='notFound' width={44} height={37} />
+          <Typography variant='h6'>검색 필터</Typography>
+        </Box>
+      </AccordionSummary>
+      <AccordionDetails
+        sx={{
+          px: 4,
+          pb: 4,
+          pt: 1,
+        }}
+        className='flex justify-center w-full max-w-5xl m-auto'
       >
-        <Typography variant='body2'>필터</Typography>
-      </Button>
-      <Dialog
-        fullWidth
-        maxWidth='xs'
-        transitionDuration={{ enter: 200, exit: 200 }}
-        open={isOpenFilter}
-        onClose={() => setIsOpenFilter(false)}
-      >
-        <Box className='flex flex-col gap-4 py-6 px-8'>
-          <Box className='flex flex-col items-center'>
-            <Image src='/images/husky/chat_4.png' alt='notFound' width={44} height={37} />
-            <Typography variant='h6' textAlign='center'>
-              필터 검색
-            </Typography>
-            <Typography variant='caption' color='textDisabled' textAlign='center'>
+        <Box className='flex flex-col gap-4'>
+          <Box className='flex flex-col items-start'>
+            <Typography variant='caption' color='textDisabled'>
               원하는 항목만 입력하여 검색할 수 있습니다.
             </Typography>
           </Box>
           <form className='w-full' onSubmit={handleSubmit(onSubmit)}>
-            <FormControl className='flex flex-col w-full gap-4'>
-              <Stack direction='row' gap={2}>
-                <Select
-                  sx={{ width: 120 }}
-                  value={selectTitleFilterValue}
-                  {...register('titleFilter')}
-                  onChange={(e) => setSelectTitleFilterValue(e.target.value)}
-                >
-                  {titleFilterList.map((filter) => (
-                    <MenuItem key={filter.value} value={filter.value}>
-                      <Box className='flex items-center gap-2'>{filter.label}</Box>
-                    </MenuItem>
-                  ))}
-                </Select>
-                <TextField
-                  fullWidth
-                  label={selectTitleFilterValue === 'title' ? '제목' : '작성자'}
-                  {...register('title')}
-                />
-              </Stack>
-              <Box className='flex flex-col sm:flex-row gap-4 w-full'>
-                <FormControl className='w-full' error={!!errors.job?.message}>
-                  <InputLabel>직업</InputLabel>
-                  <Select
-                    label='직업'
-                    value={selectValue}
-                    {...register('job')}
-                    onChange={(e) => setSelectValue(e.target.value)}
-                  >
-                    <MenuItem value=''>
-                      <Box className='flex items-center gap-2'>
-                        <Image
-                          width={20}
-                          height={20}
-                          unoptimized
-                          src={`/images/class/all.png`}
-                          alt={'class'}
-                        />
-                        전체
-                      </Box>
-                    </MenuItem>
-                    {JOBS.map((job) => (
-                      <MenuItem key={job.id} value={job.name}>
-                        <Box className='flex items-center gap-2'>
-                          <Image
-                            width={20}
-                            height={20}
-                            unoptimized
-                            src={`/images/class/${getClassImages(job.id)}.webp`}
-                            alt={'class'}
-                          />
-                          {job.label}
-                        </Box>
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-                <TextField
-                  className='w-full'
-                  label='레벨'
-                  {...register('level')}
-                  error={!!errors.level?.message}
-                  placeholder='레벨을 입력해 주세요'
-                />
-              </Box>
-              <Box className='flex flex-col whitespace-nowrap gap-4'>
-                <Typography textAlign='center' variant='body2' color='textSecondary'>
+            <FormControl className='flex w-full'>
+              <Stack gap={2} direction={isMobile ? 'column' : 'row'}>
+                <Stack gap={2} justifyContent='space-between'>
+                  <Stack direction='row' gap={2}>
+                    <Select
+                      size='small'
+                      className='min-w-[100] sm:min-w-[180]'
+                      value={selectTitleFilterValue}
+                      {...register('titleFilter')}
+                      onChange={(e) => setSelectTitleFilterValue(e.target.value)}
+                    >
+                      {titleFilterList.map((filter) => (
+                        <MenuItem key={filter.value} value={filter.value}>
+                          <Box className='flex items-center gap-2'>{filter.label}</Box>
+                        </MenuItem>
+                      ))}
+                    </Select>
+                    <TextField
+                      size='small'
+                      fullWidth
+                      label={selectTitleFilterValue === 'title' ? '제목' : '작성자'}
+                      {...register('title')}
+                    />
+                  </Stack>
+                  <Box className='flex flex-col sm:flex-row gap-4 w-full'>
+                    <FormControl sx={{ minWidth: 180 }} error={!!errors.job?.message}>
+                      <InputLabel size='small'>직업</InputLabel>
+                      <Select
+                        className='w-full sm:w-[180]'
+                        size='small'
+                        label='직업'
+                        value={selectValue}
+                        {...register('job')}
+                        onChange={(e) => setSelectValue(e.target.value)}
+                      >
+                        <MenuItem value=''>
+                          <Box className='flex items-center gap-2'>
+                            <Image
+                              width={20}
+                              height={20}
+                              unoptimized
+                              src={`/images/class/all.png`}
+                              alt={'class'}
+                            />
+                            전체
+                          </Box>
+                        </MenuItem>
+                        {JOBS.map((job) => (
+                          <MenuItem key={job.id} value={job.name}>
+                            <Box className='flex items-center gap-2'>
+                              <Image
+                                width={20}
+                                height={20}
+                                unoptimized
+                                src={`/images/class/${getClassImages(job.id)}.webp`}
+                                alt={'class'}
+                              />
+                              {job.label}
+                            </Box>
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                    <TextField
+                      size='small'
+                      className='w-full'
+                      label='레벨'
+                      {...register('level', {
+                        validate: (value) => {
+                          if (value === undefined) return true;
+                          return !isNaN(Number(value)) || '숫자만 입력해 주세요';
+                        },
+                      })}
+                      error={!!errors.level?.message}
+                      placeholder='레벨을 입력해 주세요'
+                    />
+                  </Box>
+                </Stack>
+                <Box className='flex flex-col justify-between whitespace-nowrap gap-4'>
+                  {/* <Typography textAlign='center' variant='body2' color='textSecondary'>
                   사냥 스타일
-                </Typography>
-                <Controller
-                  name='type'
-                  control={control}
-                  render={({ field }) => (
-                    <ToggleButtonGroup
-                      className='bg-white dark:bg-transparent'
-                      fullWidth
-                      exclusive
-                      aria-label='type'
-                      value={field.value || ''}
-                      onChange={(_, value) => {
-                        if (!value) return;
-                        field.onChange(value);
-                      }}
-                    >
-                      <ToggleButton value='all'>모두</ToggleButton>
-                      <ToggleButton value='exp'>경험치</ToggleButton>
-                      <ToggleButton value='meso'>메소벌이</ToggleButton>
-                    </ToggleButtonGroup>
-                  )}
-                />
-                <Controller
-                  name='partyType'
-                  control={control}
-                  render={({ field }) => (
-                    <ToggleButtonGroup
-                      className='bg-white dark:bg-transparent'
-                      fullWidth
-                      exclusive
-                      aria-label='partyType'
-                      value={field.value || ''}
-                      onChange={(_, value) => {
-                        if (!value) return;
-                        field.onChange(value);
-                      }}
-                    >
-                      <ToggleButton value='all'>상관없음</ToggleButton>
-                      <ToggleButton value='solo'>솔로</ToggleButton>
-                      <ToggleButton value='party'>파티</ToggleButton>
-                    </ToggleButtonGroup>
-                  )}
-                />
-              </Box>
-              <Box className='flex justify-center'>
+                </Typography> */}
+                  <Controller
+                    name='type'
+                    control={control}
+                    render={({ field }) => (
+                      <ToggleButtonGroup
+                        className='bg-white dark:bg-transparent'
+                        fullWidth
+                        exclusive
+                        size='small'
+                        aria-label='type'
+                        value={field.value || ''}
+                        onChange={(_, value) => {
+                          if (!value) return;
+                          field.onChange(value);
+                        }}
+                        sx={{ minWidth: 140, height: 40 }}
+                      >
+                        <ToggleButton
+                          onClick={() => {
+                            if (field.value === 'exp') return field.onChange('');
+                          }}
+                          value='exp'
+                        >
+                          <Typography variant='body2'>경험치</Typography>
+                        </ToggleButton>
+                        <ToggleButton
+                          onClick={() => {
+                            if (field.value === 'meso') return field.onChange('');
+                          }}
+                          value='meso'
+                        >
+                          <Typography variant='body2'>메소벌이</Typography>
+                        </ToggleButton>
+                      </ToggleButtonGroup>
+                    )}
+                  />
+                  <Controller
+                    name='partyType'
+                    control={control}
+                    render={({ field }) => (
+                      <ToggleButtonGroup
+                        size='small'
+                        className='bg-white dark:bg-transparent'
+                        fullWidth
+                        exclusive
+                        aria-label='partyType'
+                        value={field.value || ''}
+                        onChange={(_, value) => {
+                          if (!value) return;
+                          field.onChange(value);
+                        }}
+                        sx={{ minWidth: 140, height: 40 }}
+                      >
+                        <ToggleButton
+                          onClick={() => {
+                            if (field.value === 'solo') return field.onChange('');
+                          }}
+                          value='solo'
+                        >
+                          <Typography variant='body2'>솔로</Typography>
+                        </ToggleButton>
+                        <ToggleButton
+                          onClick={() => {
+                            if (field.value === 'party') return field.onChange('');
+                          }}
+                          value='party'
+                        >
+                          <Typography variant='body2'>파티</Typography>
+                        </ToggleButton>
+                      </ToggleButtonGroup>
+                    )}
+                  />
+                </Box>
+                {/* <Box className='flex justify-center'>
                 <Controller
                   name='sort'
                   control={control}
@@ -261,19 +312,26 @@ export const SearchInformation = () => {
                     </Stack>
                   )}
                 />
-              </Box>
+              </Box> */}
+              </Stack>
               <Box className='flex justify-between gap-4 pt-4'>
-                <Button color='warning' variant='outlined' fullWidth onClick={handleReset}>
+                <Button
+                  sx={{ maxWidth: isMobile ? '100%' : 180 }}
+                  color='warning'
+                  variant='outlined'
+                  fullWidth
+                  onClick={handleReset}
+                >
                   리셋
                 </Button>
-                <Button color='success' variant='outlined' type='submit' fullWidth>
+                <Button color='primary' variant='outlined' type='submit' fullWidth>
                   검색
                 </Button>
               </Box>
             </FormControl>
           </form>
         </Box>
-      </Dialog>
-    </Box>
+      </AccordionDetails>
+    </Accordion>
   );
 };

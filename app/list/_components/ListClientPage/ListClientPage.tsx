@@ -28,10 +28,12 @@ export const ListClientPage = ({ lists, count }: ListClientPageProps) => {
   }, [lists]);
 
   return (
-    <Box className='flex flex-col gap-8 w-full py-16 px-8'>
-      <Box className='fixed z-50 w-full right-2 bottom-4 pointer-events-none'>
-        <SearchInformation />
-      </Box>
+    <Box className='flex flex-col gap-16 w-full py-16 px-8'>
+      {lists.length ? (
+        <Box className='flex justify-center items-center w-full'>
+          <SearchInformation />
+        </Box>
+      ) : undefined}
       {lists.length ? (
         <>
           <Box className='grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] justify-items-center w-full h-max gap-8'>
