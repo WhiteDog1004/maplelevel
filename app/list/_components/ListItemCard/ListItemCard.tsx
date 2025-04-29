@@ -5,7 +5,6 @@ import { formatToKoreanUnits } from '@/utils/formatNumber';
 import { getTimeAgo } from '@/utils/getTimeAgo';
 import { getClassImages, getLabelByJobs } from '@/utils/jobs';
 import { getTextByCode } from '@/utils/mapCode';
-import { EXCHANGE_TYPE, ExchangeTypes } from '@/utils/recommendType';
 import { Favorite, ManageSearch } from '@mui/icons-material';
 import {
   Avatar,
@@ -159,8 +158,8 @@ export const ListItemCard = ({ data }: ListItemCardProps) => {
                         </Typography>
                       </>
                     ) : (
-                      <Typography color='textSecondary' variant='caption'>
-                        {EXCHANGE_TYPE[resultData.hunt_type as ExchangeTypes]}
+                      <Typography color='textDisabled' variant='caption'>
+                        경험치 작성 안됨
                       </Typography>
                     )}
                   </Stack>
