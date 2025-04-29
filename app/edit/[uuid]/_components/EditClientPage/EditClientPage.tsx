@@ -89,6 +89,8 @@ export const EditClientPage = ({ uuid, data }: EditClientPageProps) => {
         minLevel: map.level.min,
         maxLevel: map.level.max,
         partyType: map.partyType,
+        timeExpType: map.timeExpType,
+        timeExp: map.timeExp,
         place: map.place,
         caption: map.caption,
         mapCode: map.map,

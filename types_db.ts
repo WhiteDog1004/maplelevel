@@ -11,8 +11,7 @@ export type MapDataType = {
   mobs?: number[];
   partyType?: 'all' | 'solo' | 'party';
   timeExpType?: 'minute' | 'hour';
-  fiveMinuteExp?: string;
-  oneTimeExp?: string;
+  timeExp?: string;
 };
 
 export type UserType = {
