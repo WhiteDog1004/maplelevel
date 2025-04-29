@@ -110,7 +110,7 @@ export const DetailContentGetInfo = ({ data, job }: DetailContentGetInfoProps) =
           </ToggleButtonGroup>
         </Stack>
 
-        {data.timeExp && (
+        {data.timeExp && data.timeExpType && (
           <Stack gap={0.5}>
             <Typography color='textSecondary' variant='body2'>
               분당 경험치
