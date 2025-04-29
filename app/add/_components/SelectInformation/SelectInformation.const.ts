@@ -4,6 +4,8 @@ export const selectInfoSchema = yup.object().shape({
   caption: yup.string().max(800, '최대 800자까지 입력 가능합니다.'),
   place: yup.number().required('최소 하나는 선택해야 합니다'),
   type: yup.string().required('최소 하나는 선택해야 합니다'),
+  timeExpType: yup.string(),
+  timeExp: yup.string(),
   minLevel: yup
     .number()
     .min(1, '레벨이 너무 낮아요!')

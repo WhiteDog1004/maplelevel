@@ -65,6 +65,7 @@ export const AddClientPage = () => {
     ) {
       return setIsSnackBar(true);
     }
+
     createAddMutation.mutate();
   };
 

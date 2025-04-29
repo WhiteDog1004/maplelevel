@@ -10,6 +10,9 @@ export type MapDataType = {
   caption?: string;
   mobs?: number[];
   partyType?: 'all' | 'solo' | 'party';
+  timeExpType?: 'minute' | 'hour';
+  fiveMinuteExp?: string;
+  oneTimeExp?: string;
 };
 
 export type UserType = {

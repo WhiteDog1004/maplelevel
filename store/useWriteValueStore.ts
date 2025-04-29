@@ -23,6 +23,8 @@ const initialValues: WriteValueOptions = {
       maxLevel: undefined,
       partyType: undefined,
       place: undefined,
+      timeExpType: undefined,
+      timeExp: undefined,
       caption: undefined,
       mapCode: undefined,
       mobs: undefined,

@@ -1,6 +1,7 @@
 import { useMapIcon } from '@/hooks/api';
 import { useWriteStore } from '@/store/useWriteValueStore';
 import type { partyTypes } from '@/types/common';
+import { formatNumber } from '@/utils/formatNumber';
 import { MAP_CODE } from '@/utils/mapCode';
 import { yupResolver } from '@hookform/resolvers/yup';
 import {
@@ -9,6 +10,7 @@ import {
   Button,
   Paper,
   Skeleton,
+  Stack,
   TextField,
   ToggleButton,
   ToggleButtonGroup,
@@ -74,6 +76,8 @@ export const SelectInformation = ({
             maxLevel: data.maxLevel,
             place: Number(data.place),
             partyType: data.type as partyTypes,
+            timeExpType: data.timeExpType,
+            timeExp: data.timeExp,
             caption: data.caption,
             mapCode: recommendMap.code,
             mobs: option.mobs,
@@ -85,6 +89,13 @@ export const SelectInformation = ({
     });
   });
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const rawValue = e.target.value.replace(/,/g, '');
+    if (!/^\d*$/.test(rawValue)) return; // 숫자만 허용
+
+    setValue('timeExp', formatNumber(rawValue));
+  };
+
   useEffect(() => {
     if (completedCard[id] !== undefined) {
       setValue('caption', writeValues.options?.[id].caption);
@@ -92,6 +103,8 @@ export const SelectInformation = ({
       setValue('minLevel', writeValues.options?.[id].minLevel || 0);
       setValue('place', writeValues.options?.[id].place || 0);
       setValue('type', writeValues.options?.[id].partyType || '');
+      setValue('timeExpType', writeValues.options?.[id].timeExpType || '');
+      setValue('timeExp', writeValues.options?.[id].timeExp || '');
     }
   }, [completedCard]);
 
@@ -214,10 +227,62 @@ export const SelectInformation = ({
           )}
         </Box>
 
+        <Stack gap={1}>
+          <Stack direction='row' gap={1} alignItems='flex-end'>
+            <Typography variant='body2' color='primary'>
+              분당 경험치
+            </Typography>
+            <Typography variant='caption' color='textDisabled'>
+              기억이 나지 않는다면 넘어가셔도 돼요!
+            </Typography>
+          </Stack>
+
+          <Stack direction='row' alignItems='center' gap={1}>
+            <Controller
+              name='timeExpType'
+              control={control}
+              rules={{ required: '타입을 선택해주세요.' }}
+              render={({ field }) => (
+                <ToggleButtonGroup
+                  className='bg-white dark:bg-transparent'
+                  sx={{ maxWidth: 120 }}
+                  fullWidth
+                  exclusive
+                  size='small'
+                  color='primary'
+                  aria-label='timeExpType'
+                  value={field.value}
+                  onChange={(_, value) => {
+                    if (!value) return;
+                    field.onChange(value);
+                  }}
+                >
+                  <ToggleButton value='minute'>5분</ToggleButton>
+                  <ToggleButton value='hour'>한타임</ToggleButton>
+                </ToggleButtonGroup>
+              )}
+            />
+
+            <TextField
+              fullWidth
+              placeholder='숫자만 입력해 주세요.'
+              size='small'
+              defaultValue={(isEditPage && writeValues.options?.[id]?.timeExp) || ''}
+              {...register('timeExp', { onChange: handleChange })}
+              error={!!errors.timeExp?.message}
+            />
+          </Stack>
+        </Stack>
+
         <Box className='flex flex-col w-full gap-2'>
-          <Typography variant='body2' color='primary'>
-            간단한 설명
-          </Typography>
+          <Stack direction='row' gap={1}>
+            <Typography variant='body2' color='primary'>
+              간단한 설명
+            </Typography>
+            <Typography variant='caption' color='textDisabled'>
+              설명은 선택사항이에요!
+            </Typography>
+          </Stack>
           <TextField
             fullWidth
             placeholder='ex) 5분당 5만 경험치 먹어요!'
