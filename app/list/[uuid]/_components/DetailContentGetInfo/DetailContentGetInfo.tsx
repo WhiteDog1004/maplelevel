@@ -1,6 +1,7 @@
 import { getPercentMap } from '@/actions/detailActions';
 import type { partyTypes } from '@/types/common';
 import type { MapDataType } from '@/types_db';
+import { formatToKoreanUnits } from '@/utils/formatNumber';
 import { getLabelByJobs } from '@/utils/jobs';
 import { getTextByCode } from '@/utils/mapCode';
 import { EXCHANGE_PARTY_TYPE } from '@/utils/recommendType';
@@ -108,6 +109,27 @@ export const DetailContentGetInfo = ({ data, job }: DetailContentGetInfoProps) =
             </ToggleButton>
           </ToggleButtonGroup>
         </Stack>
+
+        {data.timeExp && (
+          <Stack gap={0.5}>
+            <Typography color='textSecondary' variant='body2'>
+              분당 경험치
+            </Typography>
+
+            <Paper sx={{ p: 2 }}>
+              <Stack direction='row' alignItems='center' gap={0.5}>
+                <Typography variant='body2' color='textSecondary'>
+                  {data.timeExpType === 'minute' ? '5분당' : '한타임당'}
+                </Typography>
+                <Typography color='success'>약 {formatToKoreanUnits(data.timeExp)}</Typography>
+                <Typography variant='body2' color='textSecondary'>
+                  경험치를 획득해요!
+                </Typography>
+              </Stack>
+            </Paper>
+          </Stack>
+        )}
+
         <Box className='flex flex-col gap-1'>
           <Typography variant='body2' color='textSecondary'>
             설명

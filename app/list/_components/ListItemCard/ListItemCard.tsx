@@ -1,12 +1,23 @@
 import { useMinimap } from '@/hooks/api';
 import { useDarkModeStore } from '@/store/useDarkModeStore';
 import type { Database } from '@/types_db';
+import { formatToKoreanUnits } from '@/utils/formatNumber';
 import { getTimeAgo } from '@/utils/getTimeAgo';
 import { getClassImages, getLabelByJobs } from '@/utils/jobs';
 import { getTextByCode } from '@/utils/mapCode';
-import { EXCHANGE_TYPE, type ExchangeTypes } from '@/utils/recommendType';
+import { EXCHANGE_TYPE, ExchangeTypes } from '@/utils/recommendType';
 import { Favorite, ManageSearch } from '@mui/icons-material';
-import { Avatar, Badge, Box, Card, CardActionArea, Chip, Paper, Typography } from '@mui/material';
+import {
+  Avatar,
+  Badge,
+  Box,
+  Card,
+  CardActionArea,
+  Chip,
+  Paper,
+  Stack,
+  Typography,
+} from '@mui/material';
 import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
@@ -96,7 +107,7 @@ export const ListItemCard = ({ data }: ListItemCardProps) => {
                   />
                 )}
               </Box>
-              <Box className='flex flex-col text-end gap-4 min-w-24'>
+              <Box className='flex flex-col text-end gap-2 min-w-24'>
                 <Box className='flex flex-col gap-1'>
                   <Box className='flex gap-1 items-center justify-end'>
                     <Image
@@ -130,12 +141,32 @@ export const ListItemCard = ({ data }: ListItemCardProps) => {
                     </Typography>
                   </Box>
                 </Box>
+
+                {resultData.map_data[0].timeExp && resultData.map_data[0].timeExpType && (
+                  <Paper elevation={5} sx={{ p: 0.5, width: '100%' }}>
+                    <Stack
+                      direction='row'
+                      justifyContent='center'
+                      alignItems='center'
+                      gap={0.5}
+                      whiteSpace='nowrap'
+                    >
+                      <Typography variant='caption' color='textSecondary'>
+                        {resultData.map_data[0].timeExpType === 'minute' ? '5분당' : '한타임당'}
+                      </Typography>
+                      <Typography color='success' variant='caption'>
+                        약 {formatToKoreanUnits(resultData.map_data[0].timeExp)}
+                      </Typography>
+                    </Stack>
+                  </Paper>
+                )}
+
                 <span
                   className={`${
                     getBadgeType[resultData.hunt_type as ExchangeTypes]
                   } justify-center`}
                 >
-                  <Typography variant='body2'>
+                  <Typography variant='caption'>
                     {EXCHANGE_TYPE[resultData.hunt_type as ExchangeTypes]}
                   </Typography>
                 </span>
@@ -166,6 +197,7 @@ export const ListItemCard = ({ data }: ListItemCardProps) => {
                     </Typography>
                   </Box>
                 )}
+
                 <Paper
                   className='flex justify-center items-center py-1 px-2'
                   sx={{ width: '100%' }}
