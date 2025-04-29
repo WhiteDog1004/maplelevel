@@ -89,11 +89,11 @@ export const ListItemCard = ({ data }: ListItemCardProps) => {
           }}
           className='flex flex-col gap-4 relative h-full'
         >
-          <Typography maxWidth={200} noWrap color='textPrimary'>
+          <Typography mb={1} maxWidth={200} noWrap color='textPrimary'>
             {data.title}
           </Typography>
           <Box className='flex flex-col gap-2'>
-            <Box className='flex gap-4 items-center justify-between'>
+            <Box className='flex gap-4 items-start justify-between'>
               <Box className='w-28 h-28 relative overflow-hidden'>
                 {minimap && (
                   <Image
@@ -107,7 +107,7 @@ export const ListItemCard = ({ data }: ListItemCardProps) => {
                   />
                 )}
               </Box>
-              <Box className='flex flex-col text-end gap-2 min-w-24'>
+              <Box className='flex flex-col items-end text-end gap-4 min-w-24'>
                 <Box className='flex flex-col gap-1'>
                   <Box className='flex gap-1 items-center justify-end'>
                     <Image
@@ -142,8 +142,8 @@ export const ListItemCard = ({ data }: ListItemCardProps) => {
                   </Box>
                 </Box>
 
-                {resultData.map_data[0].timeExp && resultData.map_data[0].timeExpType && (
-                  <Paper elevation={5} sx={{ p: 0.5, width: '100%' }}>
+                {resultData.map_data[0].timeExp && resultData.map_data[0].timeExpType ? (
+                  <Paper elevation={5} sx={{ p: 1, width: '100%' }}>
                     <Stack
                       direction='row'
                       justifyContent='center'
@@ -159,17 +159,17 @@ export const ListItemCard = ({ data }: ListItemCardProps) => {
                       </Typography>
                     </Stack>
                   </Paper>
+                ) : (
+                  <span
+                    className={`${
+                      getBadgeType[resultData.hunt_type as ExchangeTypes]
+                    } w-full justify-center h-6`}
+                  >
+                    <Typography variant='caption'>
+                      {EXCHANGE_TYPE[resultData.hunt_type as ExchangeTypes]}
+                    </Typography>
+                  </span>
                 )}
-
-                <span
-                  className={`${
-                    getBadgeType[resultData.hunt_type as ExchangeTypes]
-                  } justify-center`}
-                >
-                  <Typography variant='caption'>
-                    {EXCHANGE_TYPE[resultData.hunt_type as ExchangeTypes]}
-                  </Typography>
-                </span>
               </Box>
             </Box>
 
