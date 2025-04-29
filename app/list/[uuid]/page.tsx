@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
       post.map_data[0].level.min
     }레벨 사냥터 - 레벨지지`,
     openGraph: {
-      title: post.title,
+      title: `${post.title} - 레벨지지`,
       description: `${getLabelByJobs(post.job)?.label} ${
         post.map_data[0].level.min
       }레벨 사냥터 - 레벨지지`,
