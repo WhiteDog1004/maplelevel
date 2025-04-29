@@ -21,7 +21,6 @@ import {
 import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
-import { getBadgeType } from './ListItemCard.const';
 
 interface ListItemCardProps {
   data: Database['public']['Tables']['recommend-list']['Row'];
@@ -142,34 +141,30 @@ export const ListItemCard = ({ data }: ListItemCardProps) => {
                   </Box>
                 </Box>
 
-                {resultData.map_data[0].timeExp && resultData.map_data[0].timeExpType ? (
-                  <Paper elevation={5} sx={{ p: 1, width: '100%' }}>
-                    <Stack
-                      direction='row'
-                      justifyContent='center'
-                      alignItems='center'
-                      gap={0.5}
-                      whiteSpace='nowrap'
-                    >
-                      <Typography variant='caption' color='textSecondary'>
-                        {resultData.map_data[0].timeExpType === 'minute' ? '5분당' : '한타임당'}
-                      </Typography>
-                      <Typography color='success' variant='caption'>
-                        약 {formatToKoreanUnits(resultData.map_data[0].timeExp)}
-                      </Typography>
-                    </Stack>
-                  </Paper>
-                ) : (
-                  <span
-                    className={`${
-                      getBadgeType[resultData.hunt_type as ExchangeTypes]
-                    } w-full justify-center h-6`}
+                <Paper elevation={4} sx={{ p: 1, width: '100%' }}>
+                  <Stack
+                    direction='row'
+                    justifyContent='center'
+                    alignItems='center'
+                    gap={0.5}
+                    whiteSpace='nowrap'
                   >
-                    <Typography variant='caption'>
-                      {EXCHANGE_TYPE[resultData.hunt_type as ExchangeTypes]}
-                    </Typography>
-                  </span>
-                )}
+                    {resultData.map_data[0].timeExp && resultData.map_data[0].timeExpType ? (
+                      <>
+                        <Typography variant='caption' color='textSecondary'>
+                          {resultData.map_data[0].timeExpType === 'minute' ? '5분당' : '한타임당'}
+                        </Typography>
+                        <Typography color='success' variant='caption'>
+                          약 {formatToKoreanUnits(resultData.map_data[0].timeExp)}
+                        </Typography>
+                      </>
+                    ) : (
+                      <Typography color='textSecondary' variant='caption'>
+                        {EXCHANGE_TYPE[resultData.hunt_type as ExchangeTypes]}
+                      </Typography>
+                    )}
+                  </Stack>
+                </Paper>
               </Box>
             </Box>
 
