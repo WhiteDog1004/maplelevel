@@ -116,6 +116,12 @@ export const Header = () => {
             </Link>
             <Link
               href={SITE_MAP.ADD}
+              onClick={(e) => {
+                if (!user) {
+                  e.preventDefault();
+                  setIsLoginModal(true);
+                }
+              }}
               color='textSecondary'
               underline='hover'
               className='flex items-center p-3'
