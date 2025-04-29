@@ -1,12 +1,12 @@
 "use server";
 
-import { Database } from "@/types_db";
+import type { Database } from "@/types_db";
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
 export const createServerSupabaseClient = async (
 	cookieStore: ReturnType<typeof cookies> = cookies(),
-	admin: boolean = false
+	admin = false
 ) => {
 	return createServerClient<Database>(
 		process.env.NEXT_PUBLIC_SUPABASE_URL!,

@@ -1,4 +1,4 @@
-import { NoticeOptions } from '@/types/common';
+import type { NoticeOptions } from '@/types/common';
 import { Avatar, Divider, Stack, Typography } from '@mui/material';
 import dayjs from 'dayjs';
 

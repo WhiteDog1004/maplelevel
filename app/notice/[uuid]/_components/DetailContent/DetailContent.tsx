@@ -1,4 +1,4 @@
-import { NoticeOptions } from '@/types/common';
+import type { NoticeOptions } from '@/types/common';
 import { Paper } from '@mui/material';
 
 export const DetailContent = ({ post }: { post: NoticeOptions }) => {

@@ -1,9 +1,9 @@
 import { Box, Button, Card, Modal, Typography } from '@mui/material';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { Dispatch, SetStateAction } from 'react';
+import type { Dispatch, SetStateAction } from 'react';
 import { ModalCardStyles } from '../../_constants/constants';
-import { DeletedModalTypes } from '../../_types/types';
+import type { DeletedModalTypes } from '../../_types/types';
 
 interface DeletedModalProps {
   open: DeletedModalTypes;

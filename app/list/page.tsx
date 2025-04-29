@@ -1,8 +1,8 @@
 import { getLists } from '@/actions/listActions';
-import { SearchInfoTypes } from '@/types/common';
+import type { SearchInfoTypes } from '@/types/common';
 import { SITE_TITLE } from '@/utils/string';
 import { Box } from '@mui/material';
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
 import { ListClientPage } from './_components/ListClientPage';
 
 export const metadata: Metadata = {

@@ -20,7 +20,7 @@ import {
 } from '@mui/material';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { type Dispatch, type SetStateAction, useEffect, useState } from 'react';
 import { ToggleDarkMode } from '../ToggleDarkMode';
 
 export const Header = () => {

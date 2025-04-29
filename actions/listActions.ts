@@ -1,11 +1,11 @@
 'use server';
 
 import { createServerSupabaseClient } from '@/supabase/server';
-import { SearchInfoTypes, WriteValueOptions } from '@/types/common';
-import { Database, MapDataType, UserType } from '@/types_db';
+import type { SearchInfoTypes, WriteValueOptions } from '@/types/common';
+import type { Database, MapDataType, UserType } from '@/types_db';
 import { PAGE_SIZE } from '@/utils/pageSize';
-import { PostgrestError } from '@supabase/postgrest-js';
-import { AuthError } from '@supabase/supabase-js'; // Import AuthError
+import type { PostgrestError } from '@supabase/postgrest-js';
+import type { AuthError } from '@supabase/supabase-js'; // Import AuthError
 
 const handleError = (error: PostgrestError | null) => {
   if (error) {

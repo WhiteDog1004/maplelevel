@@ -4,7 +4,7 @@ import { useWriteStore } from '@/store/useWriteValueStore';
 import { Box, Card, Typography } from '@mui/material';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { RecommendMapProps } from '../../_types/add';
+import type { RecommendMapProps } from '../../_types/add';
 
 interface SelectMobProps {
   recommendMap: RecommendMapProps['recommendMap'];

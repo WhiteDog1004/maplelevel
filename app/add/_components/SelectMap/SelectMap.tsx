@@ -15,8 +15,8 @@ import {
   Typography,
 } from '@mui/material';
 import Image from 'next/image';
-import { SyntheticEvent, useEffect, useState } from 'react';
-import { RecommendMapProps } from '../../_types/add';
+import { type SyntheticEvent, useEffect, useState } from 'react';
+import type { RecommendMapProps } from '../../_types/add';
 
 interface SelectMapProps {
   id: number;

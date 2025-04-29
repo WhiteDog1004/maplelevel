@@ -1,6 +1,6 @@
 'use client';
 
-import { NoticeOptions } from '@/types/common';
+import type { NoticeOptions } from '@/types/common';
 import { SITE_MAP } from '@/utils/sitemap';
 import { Box, Button } from '@mui/material';
 import { useRouter } from 'next/navigation';

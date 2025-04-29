@@ -1,7 +1,7 @@
 'use server';
 
 import { createServerSupabaseClient } from '@/supabase/server';
-import { PostgrestError } from '@supabase/postgrest-js';
+import type { PostgrestError } from '@supabase/postgrest-js';
 
 const handleError = (error: PostgrestError | null) => {
   if (error) {

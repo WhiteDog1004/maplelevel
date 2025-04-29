@@ -1,8 +1,8 @@
 'use server';
 
 import { createServerSupabaseClient } from '@/supabase/server';
-import { MapDataType } from '@/types_db';
-import { PostgrestError } from '@supabase/postgrest-js';
+import type { MapDataType } from '@/types_db';
+import type { PostgrestError } from '@supabase/postgrest-js';
 
 type getPercentMapType = {
   level: { min: number; max: number };

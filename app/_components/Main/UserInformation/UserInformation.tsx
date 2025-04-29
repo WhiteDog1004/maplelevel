@@ -1,4 +1,4 @@
-import { SearchInfoTypes } from '@/types/common';
+import type { SearchInfoTypes } from '@/types/common';
 import { getClassImages, JOBS } from '@/utils/jobs';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Add } from '@mui/icons-material';

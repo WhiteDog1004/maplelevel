@@ -1,10 +1,10 @@
 import { useMinimap } from '@/hooks/api';
 import { useDarkModeStore } from '@/store/useDarkModeStore';
-import { Database } from '@/types_db';
+import type { Database } from '@/types_db';
 import { getTimeAgo } from '@/utils/getTimeAgo';
 import { getClassImages, getLabelByJobs } from '@/utils/jobs';
 import { getTextByCode } from '@/utils/mapCode';
-import { EXCHANGE_TYPE, ExchangeTypes } from '@/utils/recommendType';
+import { EXCHANGE_TYPE, type ExchangeTypes } from '@/utils/recommendType';
 import { Favorite, ManageSearch } from '@mui/icons-material';
 import { Avatar, Badge, Box, Card, CardActionArea, Chip, Paper, Typography } from '@mui/material';
 import Image from 'next/image';

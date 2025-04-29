@@ -1,7 +1,7 @@
 'use client';
 
 import { useErrorStore } from '@/store/useErrorStore';
-import { Database } from '@/types_db';
+import type { Database } from '@/types_db';
 import { ArrowBackIosNew } from '@mui/icons-material';
 import { Box, Button, Typography } from '@mui/material';
 import Image from 'next/image';

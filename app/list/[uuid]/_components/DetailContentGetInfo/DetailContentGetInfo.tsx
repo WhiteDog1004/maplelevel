@@ -1,6 +1,6 @@
 import { getPercentMap } from '@/actions/detailActions';
-import { partyTypes } from '@/types/common';
-import { MapDataType } from '@/types_db';
+import type { partyTypes } from '@/types/common';
+import type { MapDataType } from '@/types_db';
 import { getLabelByJobs } from '@/utils/jobs';
 import { getTextByCode } from '@/utils/mapCode';
 import { EXCHANGE_PARTY_TYPE } from '@/utils/recommendType';

@@ -1,7 +1,7 @@
 import { getDetailList } from '@/actions/listActions';
 import { getLabelByJobs } from '@/utils/jobs';
 import { Box } from '@mui/material';
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
 import { ListDetailClientPage } from './_components/ListDetailClientPage';
 
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {

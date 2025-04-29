@@ -11,7 +11,7 @@ import { FailedSnackBar } from '@/app/add/_ui/FailedSnackBar';
 import { useDarkModeStore } from '@/store/useDarkModeStore';
 import { useDiscordStore } from '@/store/useDiscordStore';
 import { useWriteStore } from '@/store/useWriteValueStore';
-import { huntTypes, ListDetailOptions } from '@/types/common';
+import type { huntTypes, ListDetailOptions } from '@/types/common';
 import { Close } from '@mui/icons-material';
 import { Box, Button, Card, CardActionArea, Typography } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';

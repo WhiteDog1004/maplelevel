@@ -1,7 +1,7 @@
 import { getEditData } from '@/actions/listActions';
 import { SITE_TITLE } from '@/utils/string';
 import { Box } from '@mui/material';
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
 import { EditClientPage } from './_components/EditClientPage';
 
 export const metadata: Metadata = {

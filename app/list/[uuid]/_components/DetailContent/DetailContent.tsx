@@ -1,4 +1,4 @@
-import { ListDetailOptions } from '@/types/common';
+import type { ListDetailOptions } from '@/types/common';
 import { ArrowDropDown } from '@mui/icons-material';
 import { Box } from '@mui/material';
 import { DetailContentGetMap } from '../DetailContentGetMap';

@@ -1,6 +1,6 @@
 import { SITE_TITLE } from '@/utils/string';
 import { Box } from '@mui/material';
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
 import { AddClientPage } from './_components/AddClientPage';
 
 export const metadata: Metadata = {

@@ -1,4 +1,4 @@
-import { SearchInfoTypes } from '@/types/common';
+import type { SearchInfoTypes } from '@/types/common';
 import { getClassImages, JOBS } from '@/utils/jobs';
 import { ExpandMoreOutlined } from '@mui/icons-material';
 import {

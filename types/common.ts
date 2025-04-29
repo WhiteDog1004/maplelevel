@@ -1,4 +1,4 @@
-import { Database } from '@/types_db';
+import type { Database } from '@/types_db';
 
 export type huntTypes = 'all' | 'meso' | 'exp';
 export type partyTypes = 'all' | 'party' | 'solo';

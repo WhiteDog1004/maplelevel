@@ -1,5 +1,5 @@
-import { Alert, Snackbar, SnackbarCloseReason } from '@mui/material';
-import { Dispatch, SetStateAction } from 'react';
+import { Alert, Snackbar, type SnackbarCloseReason } from '@mui/material';
+import type { Dispatch, SetStateAction } from 'react';
 
 interface FailedSnackBarProps {
   isSnackBar: boolean;

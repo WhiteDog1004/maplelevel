@@ -3,7 +3,7 @@ import { SITE_MAP } from '@/utils/sitemap';
 import { Box, Button, Card, Modal, Typography } from '@mui/material';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { Dispatch, SetStateAction } from 'react';
+import type { Dispatch, SetStateAction } from 'react';
 
 interface AddSuccessModalProps {
   uuid?: string;

@@ -1,6 +1,6 @@
 import { useMapIcon } from '@/hooks/api';
 import { useWriteStore } from '@/store/useWriteValueStore';
-import { partyTypes } from '@/types/common';
+import type { partyTypes } from '@/types/common';
 import { MAP_CODE } from '@/utils/mapCode';
 import { yupResolver } from '@hookform/resolvers/yup';
 import {
@@ -14,9 +14,9 @@ import {
   ToggleButtonGroup,
   Typography,
 } from '@mui/material';
-import { Dispatch, SetStateAction, useEffect } from 'react';
+import { type Dispatch, type SetStateAction, useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { RecommendMapProps } from '../../_types/add';
+import type { RecommendMapProps } from '../../_types/add';
 import { selectInfoSchema } from './SelectInformation.const';
 
 interface SelectInformationProps {

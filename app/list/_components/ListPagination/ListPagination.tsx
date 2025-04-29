@@ -2,7 +2,7 @@ import { useListPaginationStore } from '@/store/useListPaginationStore';
 import { PAGE_SIZE } from '@/utils/pageSize';
 import { Box, Pagination } from '@mui/material';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { ChangeEvent } from 'react';
+import type { ChangeEvent } from 'react';
 
 interface ListPaginationProps {
   count: number;

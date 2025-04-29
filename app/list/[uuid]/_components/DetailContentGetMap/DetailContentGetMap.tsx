@@ -1,6 +1,6 @@
 import { Loading } from '@/app/_components/Loading';
 import { useMapIcon, useMinimap, useMobs } from '@/hooks/api';
-import { MapDataType } from '@/types_db';
+import type { MapDataType } from '@/types_db';
 import { MAP_CODE } from '@/utils/mapCode';
 import {
   Avatar,

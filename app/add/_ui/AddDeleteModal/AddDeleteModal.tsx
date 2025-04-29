@@ -1,7 +1,7 @@
 import { useWriteStore } from '@/store/useWriteValueStore';
 import { Box, Button, Card, Modal, Typography } from '@mui/material';
 import Image from 'next/image';
-import { Dispatch, SetStateAction } from 'react';
+import type { Dispatch, SetStateAction } from 'react';
 
 interface AddDeleteModalProps {
   open: {

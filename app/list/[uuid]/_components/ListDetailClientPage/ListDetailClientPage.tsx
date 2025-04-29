@@ -1,6 +1,6 @@
 'use client';
 
-import { ListDetailOptions } from '@/types/common';
+import type { ListDetailOptions } from '@/types/common';
 import { Box, Divider } from '@mui/material';
 import { DetailContent } from '../DetailContent';
 import { DetailTitle } from '../DetailTitle';
