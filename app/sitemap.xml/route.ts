@@ -9,6 +9,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   return [
     {
+      url: 'https://www.maplelevel.gg',
+      lastModified: new Date().toISOString(),
+    },
+    {
+      url: 'https://www.maplelevel.gg/notice',
+      lastModified: new Date().toISOString(),
+    },
+    {
       url: 'https://www.maplelevel.gg/list',
       lastModified: new Date().toISOString(),
     },
