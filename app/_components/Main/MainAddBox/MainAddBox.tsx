@@ -13,6 +13,7 @@ export const MainAddBox = () => {
     <Card sx={{ maxWidth: 320, maxHeight: 280 }}>
       <CardActionArea onClick={() => (!user ? setIsLoginModal(true) : router.push(SITE_MAP.ADD))}>
         <CardMedia
+          fetchPriority='high'
           component='img'
           height='140'
           image='/images/orange_mushroom.webp'

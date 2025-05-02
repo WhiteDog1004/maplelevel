@@ -8,7 +8,13 @@ export const MainListBox = () => {
   return (
     <Card sx={{ maxWidth: 320, maxHeight: 280 }}>
       <CardActionArea sx={{ p: 1 }} onClick={() => router.push(SITE_MAP.LIST)}>
-        <CardMedia component='img' height='140' image='/images/monsters.webp' alt='monsters' />
+        <CardMedia
+          component='img'
+          fetchPriority='high'
+          height='140'
+          image='/images/monsters.webp'
+          alt='monsters'
+        />
         <CardContent sx={{ p: 1, py: 2 }}>
           <Typography gutterBottom variant='h5' component='div'>
             사냥터 리스트

@@ -20,7 +20,14 @@ export const MainClientPage = () => {
           justifyContent='center'
           alignItems='center'
         >
-          <Image src='/images/mapleland.webp' alt='mapleland' width={120} height={80} />
+          <Image
+            src='/images/mapleland.webp'
+            fetchPriority='high'
+            unoptimized
+            alt='mapleland'
+            width={120}
+            height={80}
+          />
           <Stack>
             <Typography variant='h4'>레벨지지</Typography>
             <Typography color='textSecondary'>메이플랜드 사냥터</Typography>
