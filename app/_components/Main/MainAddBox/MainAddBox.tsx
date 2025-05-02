@@ -15,7 +15,7 @@ export const MainAddBox = () => {
         <CardMedia
           component='img'
           height='140'
-          image='/images/orange_mushroom.png'
+          image='/images/orange_mushroom.webp'
           alt='orange_mushroom'
         />
         <CardContent sx={{ pb: 3 }}>
