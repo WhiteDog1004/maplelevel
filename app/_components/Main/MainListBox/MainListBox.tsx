@@ -1,5 +1,6 @@
 import { SITE_MAP } from '@/utils/sitemap';
-import { Card, CardActionArea, CardContent, CardMedia, Typography } from '@mui/material';
+import { Box, Card, CardActionArea, CardContent, Typography } from '@mui/material';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 export const MainListBox = () => {
@@ -8,13 +9,9 @@ export const MainListBox = () => {
   return (
     <Card sx={{ maxWidth: 320, maxHeight: 280 }}>
       <CardActionArea sx={{ p: 1 }} onClick={() => router.push(SITE_MAP.LIST)}>
-        <CardMedia
-          component='img'
-          fetchPriority='high'
-          height='140'
-          image='/images/monsters.webp'
-          alt='monsters'
-        />
+        <Box width='304px' height='152px' position='relative'>
+          <Image priority fill src='/images/monsters.webp' alt='monsters' />
+        </Box>
         <CardContent sx={{ p: 1, py: 2 }}>
           <Typography gutterBottom variant='h5' component='div'>
             사냥터 리스트
