@@ -138,7 +138,7 @@ export const Header = () => {
 
         <Box className='flex items-center gap-1'>
           <Box className='flex md:hidden'>
-            <IconButton onClick={handleClick(setMenuOpen)}>
+            <IconButton aria-label='menu' onClick={handleClick(setMenuOpen)}>
               <MenuIcon />
             </IconButton>
             <Menu
@@ -168,8 +168,8 @@ export const Header = () => {
             </Menu>
           </Box>
           <ToggleDarkMode />
-          <IconButton onClick={handleClick(setProfileOpen)}>
-            <Avatar src={user?.user_metadata?.avatar_url || '/images/mushroom.png'} />
+          <IconButton aria-label='profile' onClick={handleClick(setProfileOpen)}>
+            <Avatar src={user?.user_metadata?.avatar_url || '/images/mushroom.png'} alt='profile' />
           </IconButton>
           <Menu
             transformOrigin={{ horizontal: 'right', vertical: 'top' }}
