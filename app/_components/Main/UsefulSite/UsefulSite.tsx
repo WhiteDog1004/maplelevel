@@ -10,7 +10,7 @@ export const UsefulSite = () => {
         <Card sx={{ width: 320, height: 224 }} key={site.code}>
           <Link href={site.url} target='_blank' rel='noopener noreferrer'>
             <CardActionArea sx={{ p: 2 }}>
-              <Box width={320} height={120}>
+              <Box width={288} height={120}>
                 <UsefulGetNpc code={site.code} />
               </Box>
               <CardContent sx={{ pb: 0 }}>
