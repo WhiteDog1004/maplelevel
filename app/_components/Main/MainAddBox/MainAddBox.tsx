@@ -15,6 +15,7 @@ export const MainAddBox = () => {
       <CardActionArea onClick={() => (!user ? setIsLoginModal(true) : router.push(SITE_MAP.ADD))}>
         <Image
           priority
+          fetchPriority='high'
           width={320}
           height={160}
           sizes='320px'
