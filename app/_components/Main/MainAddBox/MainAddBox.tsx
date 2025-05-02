@@ -14,7 +14,13 @@ export const MainAddBox = () => {
     <Card sx={{ maxWidth: 320, maxHeight: 280 }}>
       <CardActionArea onClick={() => (!user ? setIsLoginModal(true) : router.push(SITE_MAP.ADD))}>
         <Box width='320px' height='160px' position='relative'>
-          <Image priority fill src='/images/orange_mushroom.webp' alt='orange_mushroom' />
+          <Image
+            priority
+            fill
+            unoptimized
+            src='/images/orange_mushroom.webp'
+            alt='orange_mushroom'
+          />
         </Box>
         <CardContent sx={{ pb: 3 }}>
           <Typography gutterBottom variant='h5' component='div'>

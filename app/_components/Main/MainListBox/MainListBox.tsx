@@ -10,7 +10,7 @@ export const MainListBox = () => {
     <Card sx={{ maxWidth: 320, maxHeight: 280 }}>
       <CardActionArea sx={{ p: 1 }} onClick={() => router.push(SITE_MAP.LIST)}>
         <Box width='304px' height='152px' position='relative'>
-          <Image priority fill src='/images/monsters.webp' alt='monsters' />
+          <Image priority unoptimized fill src='/images/monsters.webp' alt='monsters' />
         </Box>
         <CardContent sx={{ p: 1, py: 2 }}>
           <Typography gutterBottom variant='h5' component='div'>
