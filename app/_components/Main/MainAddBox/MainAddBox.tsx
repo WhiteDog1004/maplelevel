@@ -17,7 +17,7 @@ export const MainAddBox = () => {
           priority
           width={320}
           height={160}
-          unoptimized
+          sizes='320px'
           src='/images/orange_mushroom.webp'
           alt='orange_mushroom'
         />

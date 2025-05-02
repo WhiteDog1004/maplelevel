@@ -11,7 +11,7 @@ export const MainListBox = () => {
       <CardActionArea sx={{ p: 1 }} onClick={() => router.push(SITE_MAP.LIST)}>
         <Image
           priority
-          unoptimized
+          sizes='304px'
           width={304}
           height={152}
           src='/images/monsters.webp'
