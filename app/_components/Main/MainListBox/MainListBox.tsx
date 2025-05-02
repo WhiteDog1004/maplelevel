@@ -7,7 +7,7 @@ export const MainListBox = () => {
   const router = useRouter();
 
   return (
-    <Card sx={{ maxWidth: 320, maxHeight: 280 }}>
+    <Card sx={{ width: 320, height: 280 }}>
       <CardActionArea sx={{ p: 1 }} onClick={() => router.push(SITE_MAP.LIST)}>
         <Image
           priority

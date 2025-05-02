@@ -1,9 +1,11 @@
 import { useGetNpc } from '@/hooks/api';
-import { CardMedia } from '@mui/material';
+import { Box, CardMedia } from '@mui/material';
 
 export const UsefulGetNpc = ({ code }: { code: number }) => {
-  const { data } = useGetNpc({ code });
-  return (
+  const { data, isPending } = useGetNpc({ code });
+  return isPending ? (
+    <Box width={320} height={120} />
+  ) : (
     <CardMedia
       sx={{ width: 320, maxHeight: 120, objectFit: 'contain', objectPosition: 'center' }}
       component='img'

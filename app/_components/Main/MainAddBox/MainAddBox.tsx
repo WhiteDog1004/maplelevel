@@ -11,7 +11,7 @@ export const MainAddBox = () => {
   const router = useRouter();
 
   return (
-    <Card sx={{ maxWidth: 320, maxHeight: 280 }}>
+    <Card sx={{ width: 320, height: 280 }}>
       <CardActionArea onClick={() => (!user ? setIsLoginModal(true) : router.push(SITE_MAP.ADD))}>
         <Image
           priority
