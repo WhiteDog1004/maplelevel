@@ -55,6 +55,7 @@ export default function RootLayout({
   return (
     <html lang='ko'>
       <head>
+        <link rel='preconnect' href='https://maplestory.io' />
         <link
           rel='stylesheet'
           href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css'
