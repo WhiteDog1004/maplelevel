@@ -1,16 +1,18 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-	images: {
-		remotePatterns: [
-			{
-				protocol: "https",
-				hostname: "maplestory.io",
-				port: "",
-				pathname: "/**",
-			},
-		],
-	},
+  images: {
+    deviceSizes: [320],
+    imageSizes: [320],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'maplestory.io',
+        port: '',
+        pathname: '/**',
+      },
+    ],
+  },
 };
 
 export default nextConfig;
