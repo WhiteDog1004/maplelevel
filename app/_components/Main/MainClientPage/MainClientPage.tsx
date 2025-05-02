@@ -1,6 +1,6 @@
 'use client';
 
-import { Stack, Typography, useMediaQuery } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 import Image from 'next/image';
 import Link from 'next/link';
 import { MainAddBox } from '../MainAddBox';
@@ -8,22 +8,20 @@ import { MainListBox } from '../MainListBox';
 import { UsefulSite } from '../UsefulSite';
 
 export const MainClientPage = () => {
-  const isMobile = useMediaQuery('(max-width:768px)');
-
   return (
-    <Stack alignItems='center' gap={4} mt={isMobile ? 4 : 16}>
+    <Stack alignItems='center' gap={4} className='mt-8 md:mt-32'>
       <Stack>
         <Stack
           direction='row'
-          ml={isMobile ? 0 : -17}
+          className='ml-0 md:-ml-4'
           gap={2}
           justifyContent='center'
           alignItems='center'
         >
           <Image
             src='/images/mapleland.webp'
-            fetchPriority='high'
-            unoptimized
+            sizes='120px'
+            priority
             alt='mapleland'
             width={120}
             height={80}
@@ -33,7 +31,7 @@ export const MainClientPage = () => {
             <Typography color='textSecondary'>메이플랜드 사냥터</Typography>
           </Stack>
         </Stack>
-        <Stack direction={isMobile ? 'column' : 'row'} gap={2} p={2}>
+        <Stack className='flex-col md:!flex-row' gap={2} p={2}>
           <MainListBox />
           <MainAddBox />
         </Stack>
@@ -44,7 +42,7 @@ export const MainClientPage = () => {
         <UsefulSite />
       </Stack>
 
-      <Stack width={isMobile ? '100%' : 'max-content'} px={2} pb={2}>
+      <Stack className='w-full md:w-max' px={2} pb={2}>
         <Typography variant='caption' color='textDisabled'>
           Data sourced from
         </Typography>
