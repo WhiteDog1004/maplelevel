@@ -56,7 +56,7 @@ export default function RootLayout({
   return (
     <html lang='ko'>
       <head>
-        <link rel='preconnect' href='https://maplestory.io' />
+        <link rel='preconnect' href='https://maplestory.io' crossOrigin='anonymous' />
       </head>
       <body className={pretendard.className}>
         <AnalyticsProvider />
