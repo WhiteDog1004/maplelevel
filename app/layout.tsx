@@ -11,7 +11,7 @@ import { LoginModal } from './_components/LoginModal';
 import './globals.css';
 
 const pretendard = localFont({
-  src: '../fonts/PretendardVariable.woff2',
+  src: '../fonts/Pretendard-Regular.subset.woff2',
   display: 'swap',
   variable: '--font-pretendard',
 });
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     'google-adsense-account': 'ca-pub-3851224465271826',
     'naver-site-verification': '0f6e3554f8d87a1e28b285181233e892020cb2a1',
     'google-site-verification': '03X0baq7nvptAptB-A_EYMNwF_9tEfa_FxSutHHSyMA',
-    preloadFont: '../fonts/PretendardVariable.woff2',
+    preloadFont: '../fonts/Pretendard-Regular.subset.woff2',
   },
 };
 
@@ -56,6 +56,12 @@ export default function RootLayout({
   return (
     <html lang='ko'>
       <head>
+        <link
+          rel='preconnect'
+          as='image'
+          href='https://www.maplelevel.gg/images/orange_mushroom.webp'
+          crossOrigin='anonymous'
+        />
         <link rel='preconnect' href='https://maplestory.io' crossOrigin='anonymous' />
       </head>
       <body className={pretendard.className}>

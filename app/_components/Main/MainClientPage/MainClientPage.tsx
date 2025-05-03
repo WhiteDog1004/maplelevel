@@ -8,18 +8,18 @@ import { UsefulSite } from '../UsefulSite';
 
 const MainAddBox = dynamic(() => import('../MainAddBox').then((mod) => mod.MainAddBox), {
   ssr: false,
-  loading: () => <Box style={{ minHeight: 280 }} />,
+  loading: () => <Box minWidth='100%' minHeight={280} />,
 });
 
 const MainListBox = dynamic(() => import('../MainListBox').then((mod) => mod.MainListBox), {
   ssr: false,
-  loading: () => <Box style={{ minHeight: 280 }} />,
+  loading: () => <Box minWidth='100%' minHeight={280} />,
 });
 
 export const MainClientPage = () => {
   return (
     <Stack alignItems='center' gap={4} className='mt-8 md:mt-32'>
-      <Stack>
+      <Stack className='min-h-[704] md:min-h-[408]'>
         <Stack
           direction='row'
           className='ml-0 md:-ml-4'
@@ -31,6 +31,8 @@ export const MainClientPage = () => {
             src='/images/mapleland.webp'
             sizes='120px'
             priority
+            fetchPriority='high'
+            loading='eager'
             alt='mapleland'
             width={120}
             height={80}
