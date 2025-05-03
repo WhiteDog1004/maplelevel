@@ -19,8 +19,9 @@ export const MainAddBox = () => {
           width={320}
           height={160}
           sizes='320px'
-          src='/images/orange_mushroom.webp'
+          src='https://www.maplelevel.gg/images/orange_mushroom.webp'
           alt='orange_mushroom'
+          loading='eager'
         />
         <CardContent sx={{ pb: 3 }}>
           <Typography gutterBottom variant='h5' component='div'>

@@ -44,6 +44,7 @@ export const metadata: Metadata = {
     'google-adsense-account': 'ca-pub-3851224465271826',
     'naver-site-verification': '0f6e3554f8d87a1e28b285181233e892020cb2a1',
     'google-site-verification': '03X0baq7nvptAptB-A_EYMNwF_9tEfa_FxSutHHSyMA',
+    preloadFont: '../fonts/PretendardVariable.woff2',
   },
 };
 
@@ -56,13 +57,6 @@ export default function RootLayout({
     <html lang='ko'>
       <head>
         <link rel='preconnect' href='https://maplestory.io' />
-        <link
-          rel='stylesheet'
-          href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css'
-          integrity='sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=='
-          crossOrigin='anonymous'
-          referrerPolicy='no-referrer'
-        />
       </head>
       <body className={pretendard.className}>
         <AnalyticsProvider />
@@ -78,7 +72,7 @@ export default function RootLayout({
           </MuiThemeProvider>
         </DarkMode>
 
-        <Script async src='https://www.googletagmanager.com/gtag/js?id=G-6MX8X1VL4E'></Script>
+        <Script async src='https://www.googletagmanager.com/gtag/js?id=G-6MX8X1VL4E' />
         <Script id='google-analytics'>
           {`
             window.dataLayer = window.dataLayer || [];

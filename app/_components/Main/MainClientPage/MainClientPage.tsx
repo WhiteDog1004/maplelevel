@@ -1,11 +1,20 @@
 'use client';
 
-import { Stack, Typography } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
-import { MainAddBox } from '../MainAddBox';
-import { MainListBox } from '../MainListBox';
 import { UsefulSite } from '../UsefulSite';
+
+const MainAddBox = dynamic(() => import('../MainAddBox').then((mod) => mod.MainAddBox), {
+  ssr: false,
+  loading: () => <Box style={{ minHeight: 280 }} />,
+});
+
+const MainListBox = dynamic(() => import('../MainListBox').then((mod) => mod.MainListBox), {
+  ssr: false,
+  loading: () => <Box style={{ minHeight: 280 }} />,
+});
 
 export const MainClientPage = () => {
   return (
