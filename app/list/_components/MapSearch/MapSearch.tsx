@@ -111,7 +111,7 @@ export const MapSearch = ({ setValue, isResetting }: MapSearchProps) => {
           <Box className='flex flex-row items-center gap-2'>
             {mapIcon ? (
               <Avatar variant='rounded' src={mapIcon.url} />
-            ) : isLoading ? (
+            ) : iconLoading ? (
               <Skeleton variant='rounded' animation='wave' width={40} height={40} />
             ) : (
               <Paper sx={{ width: 40, height: 40 }} />
