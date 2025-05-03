@@ -148,7 +148,7 @@ export const ListItemCard = ({ data }: ListItemCardProps) => {
                     gap={0.5}
                     whiteSpace='nowrap'
                   >
-                    {resultData.map_data[0].timeExp && resultData.map_data[0].timeExpType ? (
+                    {resultData.map_data[0]?.timeExp && resultData.map_data[0]?.timeExpType ? (
                       <>
                         <Typography variant='caption' color='textSecondary'>
                           {resultData.map_data[0].timeExpType === 'minute' ? '5분당' : '한타임당'}

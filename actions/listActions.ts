@@ -53,10 +53,38 @@ export const getLists = async (
     queryBuilder = queryBuilder.order('created_at', { ascending: false });
   }
 
-  if (searchParams.level) {
-    const level = Number(searchParams.level);
+  if (!searchParams.level && searchParams.map) {
+    const map = Number(searchParams.map);
 
-    if (!isNaN(level)) {
+    if (map) {
+      const { data, error } = await queryBuilder.filter(
+        'map_data',
+        'cs',
+        JSON.stringify([{ map }])
+      );
+
+      handleError(error);
+
+      let filtered: typeof data | undefined;
+      filtered = data?.map((code) => {
+        const idx = code.map_data.findIndex((result: MapDataType) => result.map === map);
+        const resultData = { ...code, map_data: [code.map_data[idx]] };
+
+        return resultData;
+      });
+
+      return {
+        data:
+          filtered?.filter((_, index) => offset <= index && offset + PAGE_SIZE - 1 >= index) ?? [],
+        count: filtered?.length ?? 0,
+      };
+    }
+  }
+
+  if (searchParams.level || searchParams.map) {
+    const level = Number(searchParams.level);
+    const map = Number(searchParams.map);
+    if (!Number.isNaN(level) && !map) {
       const { data, error } = await queryBuilder;
 
       handleError(error);
@@ -77,6 +105,33 @@ export const getLists = async (
         count: filteredData?.length ?? 0,
       };
     }
+    const { data, error } = await queryBuilder.filter('map_data', 'cs', JSON.stringify([{ map }]));
+
+    handleError(error);
+
+    let filtered: typeof data | undefined;
+    filtered = data?.map((code) => {
+      const idx = code.map_data.findIndex((result: MapDataType) => result.map === map);
+      const resultData = { ...code, map_data: [code.map_data[idx]] };
+
+      return resultData;
+    });
+
+    const filteredData = filtered?.filter((item) => {
+      return item.map_data.some((map: MapDataType) => {
+        const minLevel = map.level.min;
+        const maxLevel = map.level.max;
+
+        return level >= (minLevel || 0) && level <= (maxLevel || 0);
+      });
+    });
+
+    return {
+      data:
+        filteredData?.filter((_, index) => offset <= index && offset + PAGE_SIZE - 1 >= index) ??
+        [],
+      count: filteredData?.length ?? 0,
+    };
   }
 
   const { data, count, error } = await queryBuilder.range(offset, offset + PAGE_SIZE - 1);

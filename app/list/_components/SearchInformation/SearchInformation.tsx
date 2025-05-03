@@ -1,5 +1,5 @@
 import type { SearchInfoTypes } from '@/types/common';
-import { getClassImages, JOBS } from '@/utils/jobs';
+import { JOBS, getClassImages } from '@/utils/jobs';
 import { ExpandMoreOutlined } from '@mui/icons-material';
 import {
   Accordion,
@@ -22,6 +22,7 @@ import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import { MapSearch } from '../MapSearch';
 import { titleFilterList } from './SearchInformation.const';
 
 export const SearchInformation = () => {
@@ -44,6 +45,7 @@ export const SearchInformation = () => {
   const onSubmit = (value?: SearchInfoTypes) => {
     setAccordionExpanded(false);
     if (
+      value?.map ||
       value?.job ||
       value?.level ||
       value?.type ||
@@ -52,6 +54,7 @@ export const SearchInformation = () => {
       value?.sort
     ) {
       const query = new URLSearchParams({
+        ...(value.map && { map: value.map }),
         ...(value.title &&
           (selectTitleFilterValue === 'title' ? { title: value.title } : { writer: value.title })),
         ...(value.job && { job: value.job }),
@@ -64,7 +67,7 @@ export const SearchInformation = () => {
 
       return router.push(`/list?${query}`);
     }
-    return router.push(`/list?page=1`);
+    return router.push('/list?page=1');
   };
 
   const handleReset = () => {
@@ -83,6 +86,7 @@ export const SearchInformation = () => {
       return;
     }
     reset({
+      map: params.get('map') || undefined,
       titleFilter: params.get('titleFilter') || undefined,
       title: params.get('title') || undefined,
       job: params.get('job') || undefined,
@@ -104,7 +108,7 @@ export const SearchInformation = () => {
       onChange={(_, expanded) => setAccordionExpanded(expanded)}
       expanded={accordionExpanded}
       elevation={3}
-      sx={{ maxWidth: 560, width: '100%' }}
+      sx={{ maxWidth: 720, width: '100%' }}
     >
       <AccordionSummary expandIcon={<ExpandMoreOutlined />}>
         <Box className='flex items-center gap-2'>
@@ -120,7 +124,7 @@ export const SearchInformation = () => {
         }}
         className='flex justify-center w-full max-w-5xl m-auto'
       >
-        <Box className='flex flex-col gap-4'>
+        <Stack width='100%' gap={2}>
           <Box className='flex flex-col items-start'>
             <Typography variant='caption' color='textDisabled'>
               원하는 항목만 입력하여 검색할 수 있습니다.
@@ -128,161 +132,166 @@ export const SearchInformation = () => {
           </Box>
           <form className='w-full' onSubmit={handleSubmit(onSubmit)}>
             <FormControl className='flex w-full'>
-              <Stack gap={2} direction={isMobile ? 'column' : 'row'}>
-                <Stack gap={2} justifyContent='space-between'>
-                  <Stack direction='row' gap={2}>
-                    <Select
-                      size='small'
-                      className='min-w-[100] sm:min-w-[180]'
-                      value={selectTitleFilterValue}
-                      {...register('titleFilter')}
-                      onChange={(e) => setSelectTitleFilterValue(e.target.value)}
-                    >
-                      {titleFilterList.map((filter) => (
-                        <MenuItem key={filter.value} value={filter.value}>
-                          <Box className='flex items-center gap-2'>{filter.label}</Box>
-                        </MenuItem>
-                      ))}
-                    </Select>
-                    <TextField
-                      size='small'
-                      fullWidth
-                      label={selectTitleFilterValue === 'title' ? '제목' : '작성자'}
-                      {...register('title')}
-                    />
-                  </Stack>
-                  <Box className='flex flex-col sm:flex-row gap-4 w-full'>
-                    <FormControl sx={{ minWidth: 180 }} error={!!errors.job?.message}>
-                      <InputLabel size='small'>직업</InputLabel>
+              <Stack width='100%' gap={2} direction={isMobile ? 'column' : 'row'}>
+                <Box sx={{ flex: 1 }} width='100%' height='max-content'>
+                  <MapSearch isResetting={isResetting} setValue={setValue} />
+                </Box>
+
+                <Stack flex={1} gap={2} direction={'column'}>
+                  <Stack gap={2} justifyContent='space-between'>
+                    <Stack direction='row' gap={2}>
                       <Select
-                        className='w-full sm:w-[180]'
                         size='small'
-                        label='직업'
-                        value={selectValue}
-                        {...register('job')}
-                        onChange={(e) => setSelectValue(e.target.value)}
+                        className='min-w-[100] sm:min-w-[156]'
+                        value={selectTitleFilterValue}
+                        {...register('titleFilter')}
+                        onChange={(e) => setSelectTitleFilterValue(e.target.value)}
                       >
-                        <MenuItem value=''>
-                          <Box className='flex items-center gap-2'>
-                            <Image
-                              width={20}
-                              height={20}
-                              unoptimized
-                              src={`/images/class/all.png`}
-                              alt={'class'}
-                            />
-                            전체
-                          </Box>
-                        </MenuItem>
-                        {JOBS.map((job) => (
-                          <MenuItem key={job.id} value={job.name}>
+                        {titleFilterList.map((filter) => (
+                          <MenuItem key={filter.value} value={filter.value}>
+                            <Box className='flex items-center gap-2'>{filter.label}</Box>
+                          </MenuItem>
+                        ))}
+                      </Select>
+                      <TextField
+                        size='small'
+                        fullWidth
+                        label={selectTitleFilterValue === 'title' ? '제목' : '작성자'}
+                        {...register('title')}
+                      />
+                    </Stack>
+                    <Box className='flex flex-col sm:flex-row gap-4 w-full'>
+                      <FormControl sx={{ minWidth: 156 }} error={!!errors.job?.message}>
+                        <InputLabel size='small'>직업</InputLabel>
+                        <Select
+                          className='w-full sm:w-[156]'
+                          size='small'
+                          label='직업'
+                          value={selectValue}
+                          {...register('job')}
+                          onChange={(e) => setSelectValue(e.target.value)}
+                        >
+                          <MenuItem value=''>
                             <Box className='flex items-center gap-2'>
                               <Image
                                 width={20}
                                 height={20}
                                 unoptimized
-                                src={`/images/class/${getClassImages(job.id)}.webp`}
+                                src={'/images/class/all.png'}
                                 alt={'class'}
                               />
-                              {job.label}
+                              전체
                             </Box>
                           </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                    <TextField
-                      size='small'
-                      className='w-full'
-                      label='레벨'
-                      {...register('level', {
-                        validate: (value) => {
-                          if (value === undefined) return true;
-                          return !isNaN(Number(value)) || '숫자만 입력해 주세요';
-                        },
-                      })}
-                      error={!!errors.level?.message}
-                      placeholder='레벨을 입력해 주세요'
-                    />
-                  </Box>
-                </Stack>
-                <Box className='flex flex-col justify-between whitespace-nowrap gap-4'>
-                  {/* <Typography textAlign='center' variant='body2' color='textSecondary'>
+                          {JOBS.map((job) => (
+                            <MenuItem key={job.id} value={job.name}>
+                              <Box className='flex items-center gap-2'>
+                                <Image
+                                  width={20}
+                                  height={20}
+                                  unoptimized
+                                  src={`/images/class/${getClassImages(job.id)}.webp`}
+                                  alt={'class'}
+                                />
+                                {job.label}
+                              </Box>
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                      <TextField
+                        size='small'
+                        className='w-full'
+                        label='레벨'
+                        {...register('level', {
+                          validate: (value) => {
+                            if (value === undefined) return true;
+                            return !Number.isNaN(Number(value)) || '숫자만 입력해 주세요';
+                          },
+                        })}
+                        error={!!errors.level?.message}
+                        placeholder='레벨을 입력해 주세요'
+                      />
+                    </Box>
+                  </Stack>
+                  <Box className='flex flex-col justify-between whitespace-nowrap gap-4'>
+                    {/* <Typography textAlign='center' variant='body2' color='textSecondary'>
                   사냥 스타일
                 </Typography> */}
-                  <Controller
-                    name='type'
-                    control={control}
-                    render={({ field }) => (
-                      <ToggleButtonGroup
-                        className='bg-white dark:bg-transparent'
-                        fullWidth
-                        exclusive
-                        size='small'
-                        aria-label='type'
-                        value={field.value || ''}
-                        onChange={(_, value) => {
-                          if (!value) return;
-                          field.onChange(value);
-                        }}
-                        sx={{ minWidth: 140, height: 40 }}
-                      >
-                        <ToggleButton
-                          onClick={() => {
-                            if (field.value === 'exp') return field.onChange('');
+                    <Controller
+                      name='type'
+                      control={control}
+                      render={({ field }) => (
+                        <ToggleButtonGroup
+                          className='bg-white dark:bg-transparent'
+                          fullWidth
+                          exclusive
+                          size='small'
+                          aria-label='type'
+                          value={field.value || ''}
+                          onChange={(_, value) => {
+                            if (!value) return;
+                            field.onChange(value);
                           }}
-                          value='exp'
+                          sx={{ minWidth: 140, height: 40 }}
                         >
-                          <Typography variant='body2'>경험치</Typography>
-                        </ToggleButton>
-                        <ToggleButton
-                          onClick={() => {
-                            if (field.value === 'meso') return field.onChange('');
+                          <ToggleButton
+                            onClick={() => {
+                              if (field.value === 'exp') return field.onChange('');
+                            }}
+                            value='exp'
+                          >
+                            <Typography variant='body2'>경험치</Typography>
+                          </ToggleButton>
+                          <ToggleButton
+                            onClick={() => {
+                              if (field.value === 'meso') return field.onChange('');
+                            }}
+                            value='meso'
+                          >
+                            <Typography variant='body2'>메소벌이</Typography>
+                          </ToggleButton>
+                        </ToggleButtonGroup>
+                      )}
+                    />
+                    <Controller
+                      name='partyType'
+                      control={control}
+                      render={({ field }) => (
+                        <ToggleButtonGroup
+                          size='small'
+                          className='bg-white dark:bg-transparent'
+                          fullWidth
+                          exclusive
+                          aria-label='partyType'
+                          value={field.value || ''}
+                          onChange={(_, value) => {
+                            if (!value) return;
+                            field.onChange(value);
                           }}
-                          value='meso'
+                          sx={{ minWidth: 140, height: 40 }}
                         >
-                          <Typography variant='body2'>메소벌이</Typography>
-                        </ToggleButton>
-                      </ToggleButtonGroup>
-                    )}
-                  />
-                  <Controller
-                    name='partyType'
-                    control={control}
-                    render={({ field }) => (
-                      <ToggleButtonGroup
-                        size='small'
-                        className='bg-white dark:bg-transparent'
-                        fullWidth
-                        exclusive
-                        aria-label='partyType'
-                        value={field.value || ''}
-                        onChange={(_, value) => {
-                          if (!value) return;
-                          field.onChange(value);
-                        }}
-                        sx={{ minWidth: 140, height: 40 }}
-                      >
-                        <ToggleButton
-                          onClick={() => {
-                            if (field.value === 'solo') return field.onChange('');
-                          }}
-                          value='solo'
-                        >
-                          <Typography variant='body2'>솔로</Typography>
-                        </ToggleButton>
-                        <ToggleButton
-                          onClick={() => {
-                            if (field.value === 'party') return field.onChange('');
-                          }}
-                          value='party'
-                        >
-                          <Typography variant='body2'>파티</Typography>
-                        </ToggleButton>
-                      </ToggleButtonGroup>
-                    )}
-                  />
-                </Box>
-                {/* <Box className='flex justify-center'>
+                          <ToggleButton
+                            onClick={() => {
+                              if (field.value === 'solo') return field.onChange('');
+                            }}
+                            value='solo'
+                          >
+                            <Typography variant='body2'>솔로</Typography>
+                          </ToggleButton>
+                          <ToggleButton
+                            onClick={() => {
+                              if (field.value === 'party') return field.onChange('');
+                            }}
+                            value='party'
+                          >
+                            <Typography variant='body2'>파티</Typography>
+                          </ToggleButton>
+                        </ToggleButtonGroup>
+                      )}
+                    />
+                  </Box>
+                  {/* <Box className='flex justify-center'>
                 <Controller
                   name='sort'
                   control={control}
@@ -313,10 +322,11 @@ export const SearchInformation = () => {
                   )}
                 />
               </Box> */}
+                </Stack>
               </Stack>
               <Box className='flex justify-between gap-4 pt-4'>
                 <Button
-                  sx={{ maxWidth: isMobile ? '100%' : 180 }}
+                  sx={{ maxWidth: isMobile ? '100%' : 156 }}
                   color='warning'
                   variant='outlined'
                   fullWidth
@@ -330,7 +340,7 @@ export const SearchInformation = () => {
               </Box>
             </FormControl>
           </form>
-        </Box>
+        </Stack>
       </AccordionDetails>
     </Accordion>
   );
