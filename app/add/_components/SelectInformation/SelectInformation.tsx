@@ -265,13 +265,16 @@ export const SelectInformation = ({
 
             <TextField
               fullWidth
-              placeholder='숫자만 입력해 주세요.'
+              placeholder='숫자만 입력해 주세요!'
               size='small'
               defaultValue={(isEditPage && writeValues.options?.[id]?.timeExp) || ''}
               {...register('timeExp', { onChange: handleChange })}
               error={!!errors.timeExp?.message}
             />
           </Stack>
+          <Typography sx={{ opacity: 0.7 }} variant='caption' color='warning'>
+            노경쿠 기준으로 적어주세요!
+          </Typography>
         </Stack>
 
         <Box className='flex flex-col w-full gap-2'>
