@@ -4,10 +4,10 @@ export const formatNumber = (value: string) => {
   return Number(number).toLocaleString();
 };
 
-export const formatToKoreanUnits = (input: string): string => {
+export const formatToKoreanUnits = (input: string, isFiveMinute?: boolean): string => {
   // 1. 쉼표 제거하고 숫자로 변환
-  const num = Number(input.replace(/,/g, ''));
-  if (isNaN(num)) return '';
+  const num = isFiveMinute ? Number(input.replace(/,/g, '')) * 12 : Number(input.replace(/,/g, ''));
+  if (Number.isNaN(num)) return '';
 
   // 2. 억, 만, 천 계산
   const 억 = Math.floor(num / 100000000);

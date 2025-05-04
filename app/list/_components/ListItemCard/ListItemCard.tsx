@@ -140,7 +140,7 @@ export const ListItemCard = ({ data }: ListItemCardProps) => {
                   </Box>
                 </Box>
 
-                <Paper elevation={4} sx={{ p: 1, width: '100%' }}>
+                <Paper elevation={4} sx={{ px: 1, py: 0.5, width: '100%' }}>
                   <Stack
                     direction='row'
                     justifyContent='center'
@@ -151,10 +151,14 @@ export const ListItemCard = ({ data }: ListItemCardProps) => {
                     {resultData.map_data[0]?.timeExp && resultData.map_data[0]?.timeExpType ? (
                       <>
                         <Typography variant='caption' color='textSecondary'>
-                          {resultData.map_data[0].timeExpType === 'minute' ? '5분당' : '한타임당'}
+                          한타임당
                         </Typography>
                         <Typography color='success' variant='caption'>
-                          약 {formatToKoreanUnits(resultData.map_data[0].timeExp)}
+                          약{' '}
+                          {formatToKoreanUnits(
+                            resultData.map_data[0].timeExp,
+                            resultData.map_data[0].timeExpType === 'minute'
+                          )}
                         </Typography>
                       </>
                     ) : (

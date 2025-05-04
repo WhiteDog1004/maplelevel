@@ -135,7 +135,7 @@ export const DetailContentGetInfo = ({ data, job }: DetailContentGetInfoProps) =
             설명
           </Typography>
           <Paper
-            className='p-2 h-28 overflow-y-auto'
+            className='p-2 min-h-24 max-h-40 overflow-y-auto'
             variant='outlined'
             sx={{ whiteSpace: 'pre-wrap' }}
           >
