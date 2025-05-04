@@ -16,8 +16,9 @@ export const MainListBox = () => {
           sizes='304px'
           width={304}
           height={152}
-          src='/images/monsters.webp'
+          src='https://www.maplelevel.gg/images/monsters.webp'
           alt='monsters'
+          quality={60}
         />
         <CardContent sx={{ p: 1, py: 2 }}>
           <Typography gutterBottom variant='h5' component='div'>

@@ -19,7 +19,8 @@ export const MainAddBox = () => {
           width={320}
           height={160}
           sizes='320px'
-          src='/images/orange_mushroom.webp'
+          src='https://www.maplelevel.gg/images/orange_mushroom.webp'
+          quality={60}
           alt='orange_mushroom'
           loading='eager'
         />

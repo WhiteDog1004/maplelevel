@@ -28,7 +28,8 @@ export const MainClientPage = () => {
           alignItems='center'
         >
           <Image
-            src='/images/mapleland.webp'
+            src='https://www.maplelevel.gg/images/mapleland.webp'
+            quality={60}
             sizes='120px'
             priority
             fetchPriority='high'
