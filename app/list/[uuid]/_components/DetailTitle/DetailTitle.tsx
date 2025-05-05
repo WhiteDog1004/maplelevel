@@ -85,7 +85,7 @@ export const DetailTitle = ({ list }: ListDetailOptions) => {
       await navigator.clipboard.writeText(window.location.href);
       setIsClickedCopy(true);
     } catch (err) {
-      console.error('주소복사 실패');
+      console.error(`${err} : 주소복사 실패`);
     }
   };
 
