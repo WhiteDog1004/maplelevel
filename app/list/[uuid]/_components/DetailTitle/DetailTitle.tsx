@@ -84,7 +84,9 @@ export const DetailTitle = ({ list }: ListDetailOptions) => {
     try {
       await navigator.clipboard.writeText(window.location.href);
       setIsClickedCopy(true);
-    } catch (err) {}
+    } catch (err) {
+      console.error('주소복사 실패');
+    }
   };
 
   const handleLike = () => {

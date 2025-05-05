@@ -6,6 +6,7 @@ import { getLabelByJobs } from '@/utils/jobs';
 import { getTextByCode } from '@/utils/mapCode';
 import { EXCHANGE_PARTY_TYPE } from '@/utils/recommendType';
 import { Box, Paper, Stack, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { getBadgeType } from './DetailContentGetInfo.const';
 
@@ -59,7 +60,7 @@ export const DetailContentGetInfo = ({ data, job }: DetailContentGetInfoProps) =
             {data.level.max}
           </Typography>
         </Box>
-        {percent && (
+        {
           <Box className='flex flex-col items-start mt-2'>
             <Stack direction='row' spacing={0.5}>
               <Stack direction='row'>
@@ -80,15 +81,25 @@ export const DetailContentGetInfo = ({ data, job }: DetailContentGetInfoProps) =
               </Stack>
             </Stack>
             <Box className='flex items-center gap-1'>
-              <Typography variant='h6' color={percent >= 50 ? 'error' : 'warning'}>
-                {percent}%
-              </Typography>
+              {percent ? (
+                <Typography variant='h6' color={percent >= 50 ? 'error' : 'warning'}>
+                  {percent}%
+                </Typography>
+              ) : (
+                <Image
+                  unoptimized
+                  width={40}
+                  height={30}
+                  src='/images/husky/husky_move.gif'
+                  alt='loading'
+                />
+              )}
               <Typography variant='body2' color='textSecondary'>
                 의 선택을 받고 있어요!
               </Typography>
             </Box>
           </Box>
-        )}
+        }
       </Box>
 
       <Stack width='100%' direction='column' gap={2}>

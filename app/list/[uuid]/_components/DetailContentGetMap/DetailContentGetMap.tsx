@@ -43,7 +43,7 @@ export const DetailContentGetMap = ({ data: list, job }: DetailContentGetMapProp
   return (
     <Box className='flex sm:flex-row flex-col justify-center sm:gap-4 gap-2 w-full'>
       <Card elevation={4} className='w-full flex sm:flex-row flex-col p-4 gap-6'>
-        <Box className='w-full flex flex-col justify-between sm:max-w-80'>
+        <Box className='w-full flex flex-col justify-start gap-4 sm:max-w-80'>
           {isPending ? (
             <Box className='flex justify-center items-center h-full'>
               <Loading />
