@@ -11,6 +11,7 @@ import { Delete, Edit, Favorite, MoreVert } from '@mui/icons-material';
 import {
   Avatar,
   Box,
+  Button,
   Chip,
   Divider,
   IconButton,
@@ -24,10 +25,10 @@ import { useMutation } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { type Dispatch, type SetStateAction, useState } from 'react';
+import { type Dispatch, type SetStateAction, useEffect, useState } from 'react';
 import type { DeletedModalTypes } from '../../_types/types';
-import { DeletedModal } from '../../_ui/DeletedModal';
 import { DeleteFailedModal } from '../../_ui/DeleteFailedModal';
+import { DeletedModal } from '../../_ui/DeletedModal';
 import { LikedSnackBar } from '../../_ui/FailedSnackBar';
 import { MoreConfirmModal } from '../../_ui/MoreConfirmModal';
 
@@ -38,6 +39,7 @@ export const DetailTitle = ({ list }: ListDetailOptions) => {
   const [moreOpen, setMoreOpen] = useState<HTMLElement | null>(null);
   const [isDeletedModal, setIsDeletedModal] = useState<DeletedModalTypes>(undefined);
   const [isLiked, setIsLiked] = useState(false);
+  const [isClickedCopy, setIsClickedCopy] = useState(false);
   const isUpdated = !!list.updated_at;
 
   const {
@@ -78,6 +80,13 @@ export const DetailTitle = ({ list }: ListDetailOptions) => {
     },
   });
 
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      setIsClickedCopy(true);
+    } catch (err) {}
+  };
+
   const handleLike = () => {
     if (!user) return setIsLoginModal(true);
     if (isLiked) return;
@@ -94,6 +103,13 @@ export const DetailTitle = ({ list }: ListDetailOptions) => {
   const handleDelete = (uuid: string) => {
     deletePost.mutate(uuid);
   };
+
+  useEffect(() => {
+    if (!isClickedCopy) return;
+    setTimeout(() => {
+      setIsClickedCopy(false);
+    }, 1500);
+  }, [handleCopy]);
 
   return (
     <Box className='flex gap-4 justify-between items-end w-full'>
@@ -207,12 +223,39 @@ export const DetailTitle = ({ list }: ListDetailOptions) => {
             </Menu>
           </Box>
         )}
-        <Box className='flex items-center gap-1'>
-          {!isPending && <Typography>{(!error && getLike?.toLocaleString()) || 0}</Typography>}
-          <IconButton onClick={handleLike}>
-            <Favorite />
-          </IconButton>
-        </Box>
+        <Stack gap={1} direction='row'>
+          <Box className='flex items-center gap-1'>
+            {!isPending && <Typography>{(!error && getLike?.toLocaleString()) || 0}</Typography>}
+            <IconButton onClick={handleLike}>
+              <Favorite />
+            </IconButton>
+          </Box>
+          <Tooltip
+            slotProps={{
+              tooltip: {
+                sx: {
+                  bgcolor: 'success.dark',
+                  color: 'white',
+                },
+              },
+              arrow: {
+                sx: {
+                  color: 'success.dark',
+                },
+              },
+            }}
+            arrow
+            placement='top'
+            open={isClickedCopy}
+            title={'주소복사 완료!'}
+          >
+            <Button onClick={handleCopy} color='success' size='small' variant='outlined'>
+              <Typography variant='body2' noWrap>
+                주소복사
+              </Typography>
+            </Button>
+          </Tooltip>
+        </Stack>
       </Stack>
 
       <DeletedModal open={isDeletedModal} setOpen={setIsDeletedModal} />
