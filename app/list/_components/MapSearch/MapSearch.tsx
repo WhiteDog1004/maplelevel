@@ -1,3 +1,4 @@
+import { ErrorCard } from '@/app/_components/ErrorCard';
 import { Loading } from '@/app/_components/Loading';
 import { useMapIcon, useMinimap } from '@/hooks/api';
 import type { SearchInfoTypes } from '@/types/common';
@@ -32,7 +33,11 @@ export const MapSearch = ({ setValue, isResetting }: MapSearchProps) => {
   const [search, setSearch] = useState('');
   const [suggestions, setSuggestions] = useState<string[]>([]);
 
-  const { data: minimap, isLoading } = useMinimap({
+  const {
+    data: minimap,
+    isLoading,
+    isError,
+  } = useMinimap({
     code: MAP_CODE.filter((map) => map.kor.includes(selectMap))[0]?.code,
     uuid: selectMap,
     enabled: !!selectMap && !!search,
@@ -81,10 +86,12 @@ export const MapSearch = ({ setValue, isResetting }: MapSearchProps) => {
     <>
       <Card>
         <CardActionArea
-          className='group relative w-full h-max flex flex-col justify-center items-center gap-2 px-6 py-4'
+          className='group relative w-full h-max min-h-40 flex flex-col justify-center items-center gap-2 px-6 py-4'
           onClick={handleModal}
         >
-          {minimap ? (
+          {isError ? (
+            <ErrorCard />
+          ) : minimap ? (
             <Box className='relative w-full max-h-40 min-h-40 flex flex-col gap-4 justify-center items-center'>
               <Image
                 className='object-contain h-32'
@@ -96,6 +103,8 @@ export const MapSearch = ({ setValue, isResetting }: MapSearchProps) => {
                 src={minimap.url}
               />
             </Box>
+          ) : isLoading ? (
+            <Loading />
           ) : (
             <div className='flex flex-col justify-center items-center gap-2 min-h-40'>
               <AddCircle className='text-zinc-600' />
@@ -186,9 +195,8 @@ export const MapSearch = ({ setValue, isResetting }: MapSearchProps) => {
               fullWidth
               variant='outlined'
               color='success'
-              disabled={!minimap}
+              disabled={!search}
               onClick={() => {
-                if (!minimap) return;
                 setSearch('');
                 handleModal();
                 setValue(

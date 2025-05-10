@@ -17,8 +17,13 @@ export const useMinimap = ({ code, uuid, enabled }: UseMinimapProps) => {
         }/map/${code}/minimap`
       );
 
+      if (!response.ok) {
+        throw new Error(`Fetch failed with status: ${response.status}`);
+      }
+
       return response;
     },
+    retry: false,
     enabled,
   });
 

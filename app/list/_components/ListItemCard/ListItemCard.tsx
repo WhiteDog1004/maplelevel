@@ -1,3 +1,5 @@
+import { ErrorCard } from '@/app/_components/ErrorCard';
+import { Loading } from '@/app/_components/Loading';
 import { useMinimap } from '@/hooks/api';
 import { useDarkModeStore } from '@/store/useDarkModeStore';
 import type { Database } from '@/types_db';
@@ -51,7 +53,12 @@ export const ListItemCard = ({ data }: ListItemCardProps) => {
         })
       : null;
 
-  const { data: minimap, refetch } = useMinimap({
+  const {
+    data: minimap,
+    isError,
+    isPending,
+    refetch,
+  } = useMinimap({
     code: lowestMap?.map,
     uuid: resultData.uuid,
   });
@@ -92,19 +99,25 @@ export const ListItemCard = ({ data }: ListItemCardProps) => {
           </Typography>
           <Box className='flex flex-col gap-2'>
             <Box className='flex gap-4 items-start justify-between'>
-              <Box className='w-28 h-28 relative overflow-hidden'>
-                {minimap && (
-                  <Image
-                    className='h-full object-contain'
-                    unoptimized
-                    sizes='140px'
-                    width={140}
-                    height={140}
-                    src={minimap.url}
-                    alt='minimap'
-                  />
+              <Stack className='w-28 h-28 relative justify-center items-center overflow-hidden'>
+                {isPending ? (
+                  <Loading />
+                ) : isError ? (
+                  <ErrorCard />
+                ) : (
+                  minimap && (
+                    <Image
+                      className='h-full object-contain'
+                      unoptimized
+                      sizes='140px'
+                      width={140}
+                      height={140}
+                      src={minimap.url}
+                      alt='minimap'
+                    />
+                  )
                 )}
-              </Box>
+              </Stack>
               <Box className='flex flex-col items-end text-end gap-4 min-w-24'>
                 <Box className='flex flex-col gap-1'>
                   <Box className='flex gap-1 items-center justify-end'>

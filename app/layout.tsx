@@ -19,7 +19,18 @@ const pretendard = localFont({
 export const metadata: Metadata = {
   title: `메이플랜드 - ${SITE_TITLE}`,
   description: '메이플랜드에서 사냥터가 고민될 땐? 레벨지지',
-  keywords: ['메렙지지', '레벨지지', '메이플레벨지지', 'levelgg'],
+  keywords: [
+    '메렙지지',
+    '레벨지지',
+    '메이플레벨지지',
+    'levelgg',
+    '메이플랜드',
+    '메이플랜드 사냥터',
+    '메랜 사냥터',
+    '메랜 레벨업',
+    '메랜 레벨',
+    '메랜 육성법',
+  ],
   creator: 'WolfDog',
   icons: {
     icon: '/favicon.ico',
