@@ -6,6 +6,9 @@ export function GET() {
 User-agent: *
 Allow: /
 Disallow: /wolfdog/
+Disallow: /fonts/
+Disallow: /mypage/
+Disallow: /add/
 
 Sitemap: https://www.maplelevel.gg/sitemap.xml
   `.trim(),

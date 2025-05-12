@@ -180,7 +180,7 @@ export const Header = () => {
             onClick={() => handleMenuListClose(setProfileOpen)}
           >
             {user && (
-              <MenuItem className={menuItemStyles}>
+              <MenuItem className={menuItemStyles} onClick={() => router.push(SITE_MAP.MYPAGE)}>
                 <Avatar
                   sx={{
                     width: 24,
