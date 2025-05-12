@@ -74,8 +74,8 @@ export const MypageClientPage = ({ list, likeList }: MypageProps) => {
     <Stack width='100%' py={4}>
       <Box mx={3} sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={tabValue} onChange={handleChange} aria-label='mypage tabs'>
-          <Tab label={`작성한 글 : ${count}`} {...a11yProps(0)} />
-          <Tab label={`좋아요한 글 : ${likeList.count}`} {...a11yProps(1)} />
+          <Tab label={`작성한 글 : ${count || 0}`} {...a11yProps(0)} />
+          <Tab label={`좋아요한 글 : ${likeList.count || 0}`} {...a11yProps(1)} />
         </Tabs>
       </Box>
 
