@@ -9,7 +9,9 @@ export const metadata: Metadata = {
   description: '메이플랜드 마이페이지',
 };
 
-const List = async ({ searchParams }: { searchParams: { page?: string } }) => {
+type Params = Promise<{ page: string }>;
+
+const List = async ({ searchParams }: { searchParams: Params }) => {
   const { page } = await searchParams;
   const list = await getMyLists(page || '1');
   const likeList = await getMyLikeLists(page || '1');
