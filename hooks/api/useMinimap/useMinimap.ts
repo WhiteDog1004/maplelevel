@@ -14,7 +14,8 @@ export const useMinimap = ({ code, uuid, enabled }: UseMinimapProps) => {
       const response = await fetch(
         `https://maplestory.io/api/${
           MAP_CODE.filter((map) => map.code === code)[0].region ? 'jms/393' : 'gms/62'
-        }/map/${code}/minimap`
+        }/map/${code}/minimap`,
+        { cache: 'force-cache' }
       );
 
       if (!response.ok) {
