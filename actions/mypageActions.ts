@@ -69,7 +69,8 @@ export const getMyLikeLists = async (
   const { data, error, count } = await supabase
     .from('likes')
     .select('*', { count: 'exact' })
-    .eq('user_uuid', user?.user_metadata.provider_id);
+    .eq('user_uuid', user?.user_metadata.provider_id)
+    .order('created_at', { ascending: false });
 
   handleError(error);
 
@@ -91,9 +92,14 @@ export const getMyLikeLists = async (
     throw new Error('No data returned from the database');
   }
 
+  const sortedList = postUuids
+    .map((uuid) => list.find((post) => post.uuid === uuid))
+    .filter(Boolean);
+
   return {
     data:
-      list.filter((_, index) => offset <= index && offset + MYPAGE_PAGE_SIZE - 1 >= index) ?? [],
+      sortedList.filter((_, index) => offset <= index && offset + MYPAGE_PAGE_SIZE - 1 >= index) ??
+      [],
     count: listCount,
   };
 };
