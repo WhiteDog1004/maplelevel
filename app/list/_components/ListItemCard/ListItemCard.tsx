@@ -21,7 +21,6 @@ import {
 } from '@mui/material';
 import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect } from 'react';
 
 interface ListItemCardProps {
   data: Database['public']['Tables']['recommend-list']['Row'];
@@ -57,15 +56,10 @@ export const ListItemCard = ({ data }: ListItemCardProps) => {
     data: minimap,
     isError,
     isPending,
-    refetch,
   } = useMinimap({
     code: lowestMap?.map,
     uuid: resultData.uuid,
   });
-
-  useEffect(() => {
-    refetch();
-  }, [lowestMap]);
 
   if (!data) return;
   return (

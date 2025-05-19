@@ -9,7 +9,7 @@ interface UseMinimapProps {
 
 export const useMinimap = ({ code, uuid, enabled }: UseMinimapProps) => {
   const queryResult = useQuery({
-    queryKey: ['minimap', uuid],
+    queryKey: ['minimap', `${code}-${uuid}`],
     queryFn: async () => {
       const response = await fetch(
         `https://maplestory.io/api/${
@@ -25,6 +25,7 @@ export const useMinimap = ({ code, uuid, enabled }: UseMinimapProps) => {
     },
     retry: false,
     enabled,
+    staleTime: 1000 * 60 * 5,
   });
 
   return queryResult;
