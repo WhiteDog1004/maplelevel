@@ -108,7 +108,7 @@ export const Header = () => {
               className='flex items-center p-3'
             >
               <Typography
-                color={pathname === SITE_MAP.LIST ? 'warning' : 'textDisabled'}
+                color={pathname.includes(SITE_MAP.LIST) ? 'warning' : 'textDisabled'}
                 variant='body2'
               >
                 사냥터 리스트
