@@ -74,6 +74,14 @@ export default function RootLayout({
           crossOrigin='anonymous'
         />
         <link rel='preconnect' href='https://maplestory.io' crossOrigin='anonymous' />
+        <Script id='structured-data' type='application/ld+json' strategy='afterInteractive'>
+          {JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'WebSite',
+            name: '레벨지지',
+            url: 'https://maplelevel.gg',
+          })}
+        </Script>
       </head>
       <body className={pretendard.className}>
         <AnalyticsProvider />
