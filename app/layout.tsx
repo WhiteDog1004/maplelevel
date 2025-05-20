@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     ],
   },
   other: {
-    'google-adsense-account': 'ca-pub-3851224465271826',
+    // 'google-adsense-account': 'ca-pub-3851224465271826',
     'naver-site-verification': '0f6e3554f8d87a1e28b285181233e892020cb2a1',
     'google-site-verification': '03X0baq7nvptAptB-A_EYMNwF_9tEfa_FxSutHHSyMA',
     preloadFont: '../fonts/Pretendard-Regular.subset.woff2',
