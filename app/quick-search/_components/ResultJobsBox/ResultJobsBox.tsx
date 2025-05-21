@@ -54,8 +54,6 @@ export const ResultJobsBox = ({ mapCode }: ResultJobsBoxProps) => {
     return { min, max, jobName, minLev, maxLev };
   };
 
-  console.log(data);
-
   if (!data) return;
   return (
     <Paper sx={{ p: 1 }}>
@@ -138,9 +136,9 @@ export const ResultJobsBox = ({ mapCode }: ResultJobsBoxProps) => {
           })
         ) : (
           <Stack gap={1} justifyContent='center' alignItems='center' p={2}>
-            <Image src='/images/husky/eat_0.png' alt='logo' width={44} height={37} />
+            <Image width={44} height={37} src={'/images/husky/cry_0.png'} alt='husky' />
             <Typography variant='body2' color='textSecondary'>
-              사냥터를 먼저 선택해 주세요!
+              해당 사냥터의 데이터가 없어요...
             </Typography>
           </Stack>
         )}
