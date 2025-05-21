@@ -22,6 +22,7 @@ import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import { type Dispatch, type SetStateAction, useEffect, useState } from 'react';
 import { ToggleDarkMode } from '../ToggleDarkMode';
+import { MENU_LISTS } from './Header.const';
 
 export const Header = () => {
   const supabase = createBrowserSupabaseClient();
@@ -101,38 +102,28 @@ export const Header = () => {
             </Typography>
           </Link>
           <Box className='hidden md:flex'>
-            <Link
-              color='textSecondary'
-              href={SITE_MAP.LIST}
-              underline='hover'
-              className='flex items-center p-3'
-            >
-              <Typography
-                color={pathname.includes(SITE_MAP.LIST) ? 'warning' : 'textDisabled'}
-                variant='body2'
+            {MENU_LISTS.map((list) => (
+              <Link
+                key={list.link}
+                href={list.link}
+                onClick={(e) => {
+                  if (!user && list.needLogin) {
+                    e.preventDefault();
+                    setIsLoginModal(true);
+                  }
+                }}
+                color='textSecondary'
+                underline='hover'
+                className='flex items-center p-3'
               >
-                사냥터 리스트
-              </Typography>
-            </Link>
-            <Link
-              href={SITE_MAP.ADD}
-              onClick={(e) => {
-                if (!user) {
-                  e.preventDefault();
-                  setIsLoginModal(true);
-                }
-              }}
-              color='textSecondary'
-              underline='hover'
-              className='flex items-center p-3'
-            >
-              <Typography
-                color={pathname === SITE_MAP.ADD ? 'warning' : 'textDisabled'}
-                variant='body2'
-              >
-                사냥터 추천하기
-              </Typography>
-            </Link>
+                <Typography
+                  color={pathname.includes(list.link) ? 'warning' : 'textDisabled'}
+                  variant='body2'
+                >
+                  {list.label}
+                </Typography>
+              </Link>
+            ))}
           </Box>
         </Box>
 
@@ -149,22 +140,20 @@ export const Header = () => {
               onClose={() => handleMenuListClose(setMenuOpen)}
               onClick={() => handleMenuListClose(setMenuOpen)}
             >
-              <MenuItem className={menuItemStyles} onClick={() => handleMenuRouting(SITE_MAP.LIST)}>
-                <Typography
-                  color={pathname === SITE_MAP.LIST ? 'warning' : 'textDisabled'}
-                  variant='body2'
+              {MENU_LISTS.map((list) => (
+                <MenuItem
+                  key={list.link}
+                  className={menuItemStyles}
+                  onClick={() => handleMenuRouting(list.link)}
                 >
-                  사냥터 리스트
-                </Typography>
-              </MenuItem>
-              <MenuItem className={menuItemStyles} onClick={() => handleMenuRouting(SITE_MAP.ADD)}>
-                <Typography
-                  color={pathname === SITE_MAP.ADD ? 'warning' : 'textDisabled'}
-                  variant='body2'
-                >
-                  사냥터 추천하기
-                </Typography>
-              </MenuItem>
+                  <Typography
+                    color={pathname.includes(list.link) ? 'warning' : 'textDisabled'}
+                    variant='body2'
+                  >
+                    {list.label}
+                  </Typography>
+                </MenuItem>
+              ))}
             </Menu>
           </Box>
           <ToggleDarkMode />

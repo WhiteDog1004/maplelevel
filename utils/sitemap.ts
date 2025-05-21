@@ -8,4 +8,5 @@ export const SITE_MAP = {
   PRIVACY: '/privacy',
   NOTICE: '/notice',
   MYPAGE: '/mypage',
+  QUICK_SEARCH: '/quick-search',
 };
