@@ -77,7 +77,7 @@ export const SearchMapCard = ({ setMapCode }: SearchMapCardProps) => {
   }, [selectMap]);
 
   return (
-    <Card className='w-full min-w-60 md:min-w-[480]'>
+    <Card sx={{ p: 2 }} className='w-full'>
       <Box className='relative w-full h-max min-h-40 flex flex-col gap-4 justify-center items-center'>
         {isError ? (
           <ErrorCard />

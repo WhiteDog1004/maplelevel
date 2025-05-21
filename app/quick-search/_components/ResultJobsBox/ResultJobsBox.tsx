@@ -56,7 +56,7 @@ export const ResultJobsBox = ({ mapCode }: ResultJobsBoxProps) => {
 
   if (!data) return;
   return (
-    <Paper sx={{ p: 1 }}>
+    <Paper sx={{ p: 2, width: '100%' }}>
       <Stack gap={4}>
         {data?.length > 0 ? (
           jobs_lists.map((list) => {
