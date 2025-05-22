@@ -40,10 +40,10 @@ export const SelectCard = ({ id, completedCard, setCompletedCard }: SelectCardPr
     setCompletedCard(completedCard.filter((item) => item !== num));
   };
 
-  const { data: minimap, refetch } = useMinimap({
-    code: isEditPage ? MAP_CODE.filter((map) => map.kor.includes(recommendMap.label))[0].code : 0,
+  const { data: minimap } = useMinimap({
+    code: MAP_CODE.filter((map) => map.kor.includes(recommendMap.label))[0].code,
     uuid: recommendMap.label,
-    enabled: false,
+    enabled: !!recommendMap.code,
   });
 
   useEffect(() => {
@@ -53,12 +53,6 @@ export const SelectCard = ({ id, completedCard, setCompletedCard }: SelectCardPr
       minimap: minimap.url,
     });
   }, [minimap]);
-
-  useEffect(() => {
-    if (id !== completedCard.length) {
-      refetch();
-    }
-  }, []);
 
   return (
     <Card
