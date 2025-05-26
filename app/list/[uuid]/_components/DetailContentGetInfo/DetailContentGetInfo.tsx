@@ -65,7 +65,9 @@ export const DetailContentGetInfo = ({ data, job }: DetailContentGetInfoProps) =
             <Stack direction='row' spacing={0.5}>
               <Stack direction='row'>
                 <Typography noWrap variant='body2' color='primary'>
-                  {getTextByCode(Number(data.map))?.kor.split(':')[1]}
+                  {getTextByCode(Number(data.map))
+                    ?.kor.split(':')[1]
+                    .replace(/\s*\[[^\]]*\]/g, '')}
                 </Typography>
                 <Typography noWrap variant='body2' color='textSecondary'>
                   맵이

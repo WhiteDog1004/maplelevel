@@ -124,7 +124,9 @@ export const SelectInformation = ({
               <Typography variant='caption' color='textDisabled'>
                 {MAP_CODE.filter((map) => map.code === recommendMap.code)[0]?.kor.split(':')[0]}
               </Typography>
-              <Typography color='textSecondary'>{recommendMap.label}</Typography>
+              <Typography color='textSecondary'>
+                {recommendMap.label.replace(/\s*\[[^\]]*\]/g, '')}
+              </Typography>
             </Box>
           </Box>
 

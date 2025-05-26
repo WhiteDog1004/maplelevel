@@ -42,7 +42,7 @@ export const MAP_CODE = [
   },
   {
     code: 100020000,
-    kor: '빅토리아로드: 헤네시스동쪽풀숲',
+    kor: '빅토리아로드: 헤네시스동쪽풀숲 [리본돼지]',
     eng: 'Victoria Road: The Rain-Forest East of Henesys',
   },
   {
@@ -1282,22 +1282,22 @@ export const MAP_CODE = [
   },
   {
     code: 211041100,
-    kor: '폐광: 죽은나무의숲1',
+    kor: '폐광: 죽은나무의숲1 [쿨리좀비]',
     eng: 'El Nath: Forest of Dead Trees I',
   },
   {
     code: 211041200,
-    kor: '폐광: 죽은나무의숲2',
+    kor: '폐광: 죽은나무의숲2 [쿨리좀비]',
     eng: 'El Nath: Forest of Dead Trees II',
   },
   {
     code: 211041300,
-    kor: '폐광: 죽은나무의숲3',
+    kor: '폐광: 죽은나무의숲3 [쿨리좀비]',
     eng: 'El Nath: Forest of Dead Trees III',
   },
   {
     code: 211041400,
-    kor: '폐광: 죽은나무의숲4',
+    kor: '폐광: 죽은나무의숲4 [쿨리좀비]',
     eng: 'El Nath: Forest of Dead Trees IV',
   },
   {
@@ -1487,7 +1487,7 @@ export const MAP_CODE = [
   },
   {
     code: 220040000,
-    kor: '루디브리엄성: 시간의길<1>',
+    kor: '루디브리엄성: 시간의길<1> [플래툰 크로노스]',
     eng: 'Ludibrium: The Path of Time <1>',
   },
   {
@@ -1507,7 +1507,7 @@ export const MAP_CODE = [
   },
   {
     code: 220040400,
-    kor: '루디브리엄성: 시간의길<4>',
+    kor: '루디브리엄성: 시간의길<4> [마스터 크로노스]',
     eng: 'Ludibrium: The Path of Time <4>',
   },
   {
@@ -1547,7 +1547,7 @@ export const MAP_CODE = [
   },
   {
     code: 220060201,
-    kor: '히든스트리트: 삐뚤어진 시간',
+    kor: '히든스트리트: 삐뚤어진 시간 [듀미굴, 듀얼파이렛]',
     eng: 'Hidden Street: Unbalanced Time',
   },
   {
@@ -1582,7 +1582,7 @@ export const MAP_CODE = [
   },
   {
     code: 220070201,
-    kor: '히든스트리트: 사라진 시간',
+    kor: '히든스트리트: 사라진 시간 [마스터데스테니]',
     eng: 'Hidden Street: Lost Time',
   },
   {
@@ -1837,7 +1837,7 @@ export const MAP_CODE = [
   },
   {
     code: 221024400,
-    kor: '에오스탑: 에오스탑100층',
+    kor: '에오스탑: 에오스탑100층 [라츠]',
     eng: 'Ludibrium: Eos Tower 100th Floor',
   },
   {
@@ -2112,7 +2112,7 @@ export const MAP_CODE = [
   },
   {
     code: 230040000,
-    kor: '아쿠아로드: 깊은 바다 협곡1',
+    kor: '아쿠아로드: 깊은 바다 협곡1 [망둥이]',
     eng: 'Aqua Road: Deep Sea Gorge I',
   },
   {
@@ -2122,7 +2122,7 @@ export const MAP_CODE = [
   },
   {
     code: 230040100,
-    kor: '아쿠아로드: 깊은 바다 협곡2',
+    kor: '아쿠아로드: 깊은 바다 협곡2 [망둥이]',
     eng: 'Aqua Road: Deep Sea Gorge II',
   },
   {
@@ -2132,7 +2132,7 @@ export const MAP_CODE = [
   },
   {
     code: 230040300,
-    kor: '아쿠아로드: 위험한 바다 협곡2',
+    kor: '아쿠아로드: 위험한 바다 협곡2 [리셀스퀴드]',
     eng: 'Aqua Road: Dangerous Sea Gorge II',
   },
   {
@@ -2142,7 +2142,7 @@ export const MAP_CODE = [
   },
   {
     code: 230040400,
-    kor: '아쿠아로드: 난파선의 무덤',
+    kor: '아쿠아로드: 난파선의 무덤 [샾, 콜드샤크]',
     eng: 'Aqua Road: The Grave of a Wrecked Ship',
   },
   {
@@ -2187,7 +2187,7 @@ export const MAP_CODE = [
   },
   {
     code: 240010400,
-    kor: '미나르숲: 숲의 갈림길',
+    kor: '미나르숲: 숲의 갈림길[숲미굴, 버크, 듀얼버크]',
     eng: 'Leafre: Forest : Crossroad',
   },
   {
@@ -2237,7 +2237,7 @@ export const MAP_CODE = [
   },
   {
     code: 240020100,
-    kor: '미나르숲: 불과 어둠의 전장',
+    kor: '미나르숲: 불과 어둠의 전장 [검은켄타우로스, 붉은켄타우로스]',
     eng: 'Leafre: Battlefield of Fire and Darkness',
   },
   {
@@ -2332,7 +2332,7 @@ export const MAP_CODE = [
   },
   {
     code: 240040200,
-    kor: '미나르숲: 협곡의 동쪽길',
+    kor: '미나르숲: 협곡의 동쪽길 [다크 와이번]',
     eng: 'Leafre: Canyon : East Road',
   },
   {
@@ -2342,7 +2342,7 @@ export const MAP_CODE = [
   },
   {
     code: 240040300,
-    kor: '미나르숲: 협곡의 서쪽길',
+    kor: '미나르숲: 협곡의 서쪽길 [다크 와이번]',
     eng: 'Leafre: Canyon : West Road',
   },
   {
@@ -2362,27 +2362,27 @@ export const MAP_CODE = [
   },
   {
     code: 240040510,
-    kor: '미나르숲: 죽은 용의 둥지',
+    kor: '미나르숲: 죽은 용의 둥지 [스켈레곤, 스켈로스]',
     eng: 'Leafre: Nest of a Dead Dragon',
   },
   {
     code: 240040511,
-    kor: '미나르숲: 남겨진 용의 둥지1',
+    kor: '미나르숲: 남겨진 용의 둥지1 [스켈레곤, 스켈로스]',
     eng: 'Leafre: The Dragon Nest Left Behind',
   },
   {
     code: 240040520,
-    kor: '미나르숲: 망가진 용의 둥지',
+    kor: '미나르숲: 망가진 용의 둥지 [뉴트주니어, 네스트골렘]',
     eng: 'Leafre: Destroyed Dragon Nest',
   },
   {
     code: 240040521,
-    kor: '미나르숲: 위험한 용의 둥지',
+    kor: '미나르숲: 위험한 용의 둥지 [뉴트주니어, 네스트골렘]',
     eng: 'Leafre: Dangerous Dragon Nest',
   },
   {
     code: 240040600,
-    kor: '미나르숲: 큰 둥지 봉우리',
+    kor: '미나르숲: 큰 둥지 봉우리 [스켈로스, 네스트골렘]',
     eng: 'Leafre: Peak of the Big Nest',
   },
   {
@@ -2932,7 +2932,7 @@ export const MAP_CODE = [
     region: 'jms',
     version: 393,
     code: 741020000,
-    kor: '대만: 야시장 사잇길1',
+    kor: '대만: 야시장 사잇길1 [옐로우버블티, 인형자판기, 버블꾼]',
     eng: 'Taiwan: Night Market Alley 1',
   },
   {

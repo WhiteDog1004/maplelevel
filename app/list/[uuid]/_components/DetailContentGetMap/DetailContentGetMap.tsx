@@ -82,7 +82,9 @@ export const DetailContentGetMap = ({ data: list, job }: DetailContentGetMapProp
                         {MAP_CODE.filter((map) => map.code === list.map)[0]?.kor.split(':')[0]}
                       </Typography>
                       <Typography color='textSecondary'>
-                        {MAP_CODE.filter((map) => map.code === list.map)[0]?.kor.split(':')[1]}
+                        {MAP_CODE.filter((map) => map.code === list.map)[0]
+                          ?.kor.split(':')[1]
+                          .replace(/\s*\[[^\]]*\]/g, '')}
                       </Typography>
                     </Box>
                   </Box>

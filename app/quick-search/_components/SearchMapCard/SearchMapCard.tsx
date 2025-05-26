@@ -126,7 +126,11 @@ export const SearchMapCard = ({ setMapCode }: SearchMapCardProps) => {
                       )[0]?.kor.split(':')[0]}
                   </Typography>
                   <Typography color='textSecondary'>
-                    {selectMap && MAP_CODE.filter((map) => map.kor.includes(selectMap))[0]?.kor}
+                    {selectMap &&
+                      MAP_CODE.filter((map) => map.kor.includes(selectMap))[0]?.kor.replace(
+                        /\s*\[[^\]]*\]/g,
+                        ''
+                      )}
                   </Typography>
                 </Box>
               </Box>
@@ -172,7 +176,10 @@ export const SearchMapCard = ({ setMapCode }: SearchMapCardProps) => {
             setSelectMap(value?.split(':')[1]?.trimStart() || '');
           }}
           groupBy={(option) => option.split(':')[0].trimEnd()}
-          getOptionLabel={(option) => option.split(':')[1]?.trimStart() || option}
+          getOptionLabel={(option) => {
+            const label = option.split(':')[1]?.trimStart() || option;
+            return label.replace(/\s*\[[^\]]*\]/g, '');
+          }}
           options={suggestions}
         />
       </CardActions>

@@ -182,12 +182,16 @@ export const ListItemCard = ({ data }: ListItemCardProps) => {
               <Box className='flex flex-col items-center gap-1'>
                 {resultData.map_data.length <= 1 || searchLevel ? (
                   <Typography variant='body2'>
-                    {getTextByCode(Number(lowestMap?.map))?.kor?.split(':')[1]}
+                    {getTextByCode(Number(lowestMap?.map))
+                      ?.kor?.split(':')[1]
+                      .replace(/\s*\[[^\]]*\]/g, '')}
                   </Typography>
                 ) : (
                   <Box className='flex flex-row items-center gap-1 max-w-60'>
                     <Typography noWrap variant='body2'>
-                      {getTextByCode(Number(lowestMap?.map))?.kor?.split(':')[1]}
+                      {getTextByCode(Number(lowestMap?.map))
+                        ?.kor?.split(':')[1]
+                        .replace(/\s*\[[^\]]*\]/g, '')}
                     </Typography>
                     <Typography variant='caption' color='textDisabled'>
                       ~
@@ -198,7 +202,9 @@ export const ListItemCard = ({ data }: ListItemCardProps) => {
                       sx={{ lineHeight: 1 }}
                       color='textDisabled'
                     >
-                      {getTextByCode(Number(highestMap?.map))?.kor?.split(':')[1]}
+                      {getTextByCode(Number(highestMap?.map))
+                        ?.kor?.split(':')[1]
+                        .replace(/\s*\[[^\]]*\]/g, '')}
                     </Typography>
                   </Box>
                 )}

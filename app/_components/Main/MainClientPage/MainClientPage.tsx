@@ -4,6 +4,7 @@ import { Box, Stack, Typography } from '@mui/material';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
+import { MainQuickBox } from '../MainQuickBox';
 import { UsefulSite } from '../UsefulSite';
 
 const MainAddBox = dynamic(() => import('../MainAddBox').then((mod) => mod.MainAddBox), {
@@ -43,9 +44,12 @@ export const MainClientPage = () => {
             <Typography color='textSecondary'>메이플랜드 사냥터</Typography>
           </Stack>
         </Stack>
-        <Stack className='flex-col md:!flex-row' gap={2} p={2}>
-          <MainListBox />
-          <MainAddBox />
+        <Stack gap={2} p={2}>
+          <MainQuickBox />
+          <Stack className='flex-col md:!flex-row' gap={2}>
+            <MainListBox />
+            <MainAddBox />
+          </Stack>
         </Stack>
       </Stack>
 

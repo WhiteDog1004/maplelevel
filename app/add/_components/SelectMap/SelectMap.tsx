@@ -125,7 +125,10 @@ export const SelectMap = ({ id, recommendMap, setRecommendMap }: SelectMapProps)
                 setSelectMap(value?.split(':')[1]?.trimStart() || '');
               }}
               groupBy={(option) => option.split(':')[0].trimEnd()}
-              getOptionLabel={(option) => option.split(':')[1]?.trimStart() || option}
+              getOptionLabel={(option) => {
+                const label = option.split(':')[1]?.trimStart() || option;
+                return label.replace(/\s*\[[^\]]*\]/g, '');
+              }}
               options={suggestions}
             />
           </Stack>
