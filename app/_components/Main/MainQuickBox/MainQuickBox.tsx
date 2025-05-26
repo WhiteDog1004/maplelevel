@@ -41,7 +41,7 @@ export const MainQuickBox = () => {
             <Typography variant='body2' sx={{ color: 'text.secondary' }}>
               특정 사냥터의 정보를 빠르게 알아보고
               <br />
-              경험치 및 레벨을 체크하고 빠르게 레벨링을 해봐요!
+              경험치 및 적정 레벨을 체크해서 레벨링을 해봐요!
             </Typography>
           </CardContent>
         </CardActionArea>
