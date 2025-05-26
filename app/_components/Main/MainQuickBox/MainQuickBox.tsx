@@ -30,7 +30,7 @@ export const MainQuickBox = () => {
             sizes='304px'
             width={656}
             height={140}
-            src='https://www.maplelevel.gg/images/maplelevelgg.png'
+            src='https://www.maplelevel.gg/images/maplelevelgg.webp'
             alt='monsters'
             quality={60}
           />
