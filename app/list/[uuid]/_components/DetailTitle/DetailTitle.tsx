@@ -20,6 +20,7 @@ import {
   Stack,
   Tooltip,
   Typography,
+  useMediaQuery,
 } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
 import dayjs from 'dayjs';
@@ -36,6 +37,7 @@ export const DetailTitle = ({ list }: ListDetailOptions) => {
   const router = useRouter();
   const { user } = useDiscordStore();
   const { setIsLoginModal } = useLoginModalStore();
+  const isMobile = useMediaQuery('(max-width:640px)');
   const [moreOpen, setMoreOpen] = useState<HTMLElement | null>(null);
   const [isDeletedModal, setIsDeletedModal] = useState<DeletedModalTypes>(undefined);
   const [isLiked, setIsLiked] = useState(false);
@@ -114,10 +116,10 @@ export const DetailTitle = ({ list }: ListDetailOptions) => {
   }, [handleCopy]);
 
   return (
-    <Box className='flex gap-4 justify-between items-end w-full'>
-      <Box className='flex flex-col gap-8 w-10/12'>
-        <Box className='flex flex-col gap-1'>
-          <Typography noWrap variant='h4'>
+    <Stack gap={4} width='100%' justifyContent='space-between' alignItems='flex-end'>
+      <Stack width='100%' direction='row' alignItems='flex-start' justifyContent='space-between'>
+        <Stack width='88%' className='gap-1'>
+          <Typography noWrap variant={isMobile ? 'h5' : 'h4'}>
             {list.title}
           </Typography>
           <Box className='flex items-center gap-2'>
@@ -147,8 +149,47 @@ export const DetailTitle = ({ list }: ListDetailOptions) => {
               </Typography>
             </Box>
           </Box>
-        </Box>
+        </Stack>
 
+        {(user?.user_metadata.provider_id === list.user.uuid ||
+          user?.user_metadata.role === 'admin') && (
+          <Box>
+            <IconButton onClick={handleClick(setMoreOpen)}>
+              <MoreVert />
+            </IconButton>
+            <Menu
+              transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+              anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+              open={!!moreOpen}
+              anchorEl={moreOpen}
+              onClose={() => handleMenuListClose(setMoreOpen)}
+              onClick={() => handleMenuListClose(setMoreOpen)}
+            >
+              <MenuItem className='gap-2' onClick={handleEdit}>
+                <Edit />
+                <Typography>수정하기</Typography>
+              </MenuItem>
+              <Divider orientation='horizontal' />
+              <MenuItem className='gap-2' onClick={() => setIsDeletedModal('confirm')}>
+                <Delete color='error' />
+                <Typography color='error'>삭제하기</Typography>
+              </MenuItem>
+            </Menu>
+          </Box>
+        )}
+      </Stack>
+
+      <Stack
+        height='100%'
+        direction='row'
+        alignItems='space-between'
+        width='100%'
+        justifyContent={
+          user?.user_metadata.provider_id === list.user.uuid || user?.user_metadata.role === 'admin'
+            ? 'space-between'
+            : 'end'
+        }
+      >
         <Box className='flex items-center gap-2'>
           <Chip
             sx={{
@@ -189,44 +230,9 @@ export const DetailTitle = ({ list }: ListDetailOptions) => {
             )}
           </Stack>
         </Box>
-      </Box>
-      <Stack
-        height='100%'
-        direction='column'
-        alignItems='end'
-        justifyContent={
-          user?.user_metadata.provider_id === list.user.uuid || user?.user_metadata.role === 'admin'
-            ? 'space-between'
-            : 'end'
-        }
-      >
-        {(user?.user_metadata.provider_id === list.user.uuid ||
-          user?.user_metadata.role === 'admin') && (
-          <Box>
-            <IconButton onClick={handleClick(setMoreOpen)}>
-              <MoreVert />
-            </IconButton>
-            <Menu
-              transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-              anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-              open={!!moreOpen}
-              anchorEl={moreOpen}
-              onClose={() => handleMenuListClose(setMoreOpen)}
-              onClick={() => handleMenuListClose(setMoreOpen)}
-            >
-              <MenuItem className='gap-2' onClick={handleEdit}>
-                <Edit />
-                <Typography>수정하기</Typography>
-              </MenuItem>
-              <MenuItem className='gap-2' onClick={() => setIsDeletedModal('confirm')}>
-                <Delete color='error' />
-                <Typography color='error'>삭제하기</Typography>
-              </MenuItem>
-            </Menu>
-          </Box>
-        )}
+
         <Stack gap={1} direction='row'>
-          <Box className='flex items-center gap-1'>
+          <Box className='flex items-center'>
             {!isPending && <Typography>{(!error && getLike?.toLocaleString()) || 0}</Typography>}
             <IconButton onClick={handleLike}>
               <Favorite />
@@ -268,6 +274,6 @@ export const DetailTitle = ({ list }: ListDetailOptions) => {
         handleDelete={() => handleDelete(list.uuid)}
       />
       <LikedSnackBar isSnackBar={isLiked} setIsSnackBar={setIsLiked} />
-    </Box>
+    </Stack>
   );
 };
