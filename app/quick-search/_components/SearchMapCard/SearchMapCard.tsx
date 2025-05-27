@@ -2,6 +2,7 @@ import { ErrorCard } from '@/app/_components/ErrorCard';
 import { Loading } from '@/app/_components/Loading';
 import { useMapIcon, useMinimap } from '@/hooks/api';
 import { MAP_CODE } from '@/utils/mapCode';
+import { SITE_MAP } from '@/utils/sitemap';
 import {
   Autocomplete,
   Avatar,
@@ -16,6 +17,7 @@ import {
   Typography,
 } from '@mui/material';
 import Image from 'next/image';
+import { useRouter, useSearchParams } from 'next/navigation';
 import {
   type Dispatch,
   type SetStateAction,
@@ -30,6 +32,8 @@ interface SearchMapCardProps {
 }
 
 export const SearchMapCard = ({ setMapCode }: SearchMapCardProps) => {
+  const router = useRouter();
+  const params = useSearchParams();
   const [selectMap, setSelectMap] = useState('');
   const [search, setSearch] = useState('');
   const [suggestions, setSuggestions] = useState<string[]>([]);
@@ -71,10 +75,29 @@ export const SearchMapCard = ({ setMapCode }: SearchMapCardProps) => {
   }, [search]);
 
   useEffect(() => {
-    setMapCode('');
+    if (!params.get('map')) {
+      setMapCode('');
+    }
     if (!selectMap) return;
-    setMapCode(String(MAP_CODE.filter((map) => map.kor.includes(selectMap))[0]?.code));
+    router.replace(
+      `${SITE_MAP.QUICK_SEARCH}?map=${String(
+        MAP_CODE.filter((map) => map.kor.includes(selectMap))[0]?.code
+      )}`
+    );
   }, [selectMap]);
+
+  useEffect(() => {
+    if (params.get('map')) {
+      const map = MAP_CODE.find((map) => String(map.code) === params.get('map'));
+      if (map) {
+        setTimeout(() => {
+          setMapCode(params.get('map') || '');
+          setSearch(map.kor.split(':')[1]?.trimStart() || '');
+          setSelectMap(map.kor?.split(':')[1]?.trimStart() || '');
+        }, 0);
+      }
+    }
+  }, [params]);
 
   return (
     <Card sx={{ p: 2 }} className='w-full'>

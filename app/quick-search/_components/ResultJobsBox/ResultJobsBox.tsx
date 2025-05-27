@@ -1,5 +1,6 @@
 import { useGetQuickSearch } from '@/hooks/api/useGetQuickSearch/useGetQuickSearch';
 import { formatToKoreanUnits } from '@/utils/formatNumber';
+import { SITE_MAP } from '@/utils/sitemap';
 import {
   Paper,
   Stack,
@@ -12,6 +13,7 @@ import {
   Typography,
 } from '@mui/material';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { jobs_lists } from './ResultJobsBox.const';
 
 interface ResultJobsBoxProps {
@@ -19,6 +21,7 @@ interface ResultJobsBoxProps {
 }
 
 export const ResultJobsBox = ({ mapCode }: ResultJobsBoxProps) => {
+  const router = useRouter();
   const { data } = useGetQuickSearch({ map: mapCode });
   const getExpData = (jobName: string) => {
     if (!data) return;
@@ -95,8 +98,20 @@ export const ResultJobsBox = ({ mapCode }: ResultJobsBoxProps) => {
                               <TableRow
                                 sx={{
                                   bgcolor: index % 2 === 0 ? 'action.hover' : 'action.selected',
+                                  cursor: exp?.minLev && exp?.maxLev ? 'pointer' : 'default',
+                                  ':hover': {
+                                    bgcolor: exp?.minLev && exp?.maxLev ? 'Highlight' : undefined,
+                                    transition: 'background-color 0.2s ease',
+                                  },
                                 }}
                                 key={job.id}
+                                onClick={() =>
+                                  exp?.minLev && exp?.maxLev
+                                    ? router.push(
+                                        `${SITE_MAP.LIST}?map=${mapCode}&job=${job.name}&page=1`
+                                      )
+                                    : undefined
+                                }
                               >
                                 <TableCell component='th' scope='row'>
                                   {job.label}
