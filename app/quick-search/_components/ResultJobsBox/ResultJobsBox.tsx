@@ -1,6 +1,7 @@
 import { useGetQuickSearch } from '@/hooks/api/useGetQuickSearch/useGetQuickSearch';
 import { formatToKoreanUnits } from '@/utils/formatNumber';
 import { SITE_MAP } from '@/utils/sitemap';
+import { Report } from '@mui/icons-material';
 import {
   Paper,
   Stack,
@@ -61,6 +62,16 @@ export const ResultJobsBox = ({ mapCode }: ResultJobsBoxProps) => {
   return (
     <Paper sx={{ p: 2, width: '100%' }}>
       <Stack gap={4}>
+        {data?.length > 0 && (
+          <Stack direction='row' gap={1} alignItems='flex-start'>
+            <Report color='disabled' />
+            <Typography variant='caption' color='textDisabled'>
+              데이터가 있는 목록을 클릭하면
+              <br />
+              해당 사냥터의 목록들을 볼 수 있어요!
+            </Typography>
+          </Stack>
+        )}
         {data?.length > 0 ? (
           jobs_lists.map((list) => {
             const result = list.secondJobs.some((job) => {

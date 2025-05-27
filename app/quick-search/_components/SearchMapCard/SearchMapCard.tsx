@@ -37,6 +37,7 @@ export const SearchMapCard = ({ setMapCode }: SearchMapCardProps) => {
   const [selectMap, setSelectMap] = useState('');
   const [search, setSearch] = useState('');
   const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [defaultMap, setDefaultMap] = useState('');
 
   const {
     data: minimap,
@@ -70,6 +71,10 @@ export const SearchMapCard = ({ setMapCode }: SearchMapCardProps) => {
 
       setSuggestions([...new Set(filteredSuggestions.map((item) => item.kor))]);
     } else {
+      if (params.get('map')) {
+        setMapCode('');
+        router.replace(SITE_MAP.QUICK_SEARCH);
+      }
       setSuggestions([]);
     }
   }, [search]);
@@ -88,6 +93,7 @@ export const SearchMapCard = ({ setMapCode }: SearchMapCardProps) => {
 
   useEffect(() => {
     if (params.get('map')) {
+      setSelectMap(MAP_CODE.find((map) => String(map.code) === params.get('map'))?.kor || '');
       const map = MAP_CODE.find((map) => String(map.code) === params.get('map'));
       if (map) {
         setTimeout(() => {
@@ -177,6 +183,7 @@ export const SearchMapCard = ({ setMapCode }: SearchMapCardProps) => {
         <Autocomplete
           fullWidth
           freeSolo
+          defaultValue={defaultMap}
           onInputChange={handleInputChange}
           filterOptions={(list) => {
             return list.filter((item) => {
