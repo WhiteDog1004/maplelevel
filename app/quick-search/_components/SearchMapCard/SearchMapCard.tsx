@@ -37,7 +37,9 @@ export const SearchMapCard = ({ setMapCode }: SearchMapCardProps) => {
   const [selectMap, setSelectMap] = useState('');
   const [search, setSearch] = useState('');
   const [suggestions, setSuggestions] = useState<string[]>([]);
-  const [defaultMap, setDefaultMap] = useState('');
+  const [defaultMap] = useState(
+    MAP_CODE.find((map) => String(map.code) === params.get('map'))?.kor || ''
+  );
 
   const {
     data: minimap,
@@ -93,7 +95,6 @@ export const SearchMapCard = ({ setMapCode }: SearchMapCardProps) => {
 
   useEffect(() => {
     if (params.get('map')) {
-      setSelectMap(MAP_CODE.find((map) => String(map.code) === params.get('map'))?.kor || '');
       const map = MAP_CODE.find((map) => String(map.code) === params.get('map'));
       if (map) {
         setTimeout(() => {
