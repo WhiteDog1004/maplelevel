@@ -184,11 +184,7 @@ export const DetailTitle = ({ list }: ListDetailOptions) => {
         direction='row'
         alignItems='space-between'
         width='100%'
-        justifyContent={
-          user?.user_metadata.provider_id === list.user.uuid || user?.user_metadata.role === 'admin'
-            ? 'space-between'
-            : 'end'
-        }
+        justifyContent='space-between'
       >
         <Box className='flex items-center gap-2'>
           <Chip
