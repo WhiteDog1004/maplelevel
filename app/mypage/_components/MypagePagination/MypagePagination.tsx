@@ -1,4 +1,4 @@
-import { useMypagePaginationStore } from '@/store/useMypagePaginationStore copy';
+import { useMypagePaginationStore } from '@/store/useMypagePaginationStore';
 import { MYPAGE_PAGE_SIZE } from '@/utils/pageSize';
 import { SITE_MAP } from '@/utils/sitemap';
 import { Box, Pagination } from '@mui/material';
